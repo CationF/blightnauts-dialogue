@@ -13,7 +13,14 @@ namespace BlightnautsDialogue
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormTeam());
+            //Application.Run(new FormTeam());
+            // Disabled for now
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Exporter.Export(dialog.SelectedPath);
+            }
         }
     }
 }

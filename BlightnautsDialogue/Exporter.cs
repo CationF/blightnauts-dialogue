@@ -7,51 +7,50 @@ namespace BlightnautsDialogue
     {
         static string result = string.Empty;
 
-        public static int Export(string path, string character, Area[] areas)
+        public static int Export(string path)
         {
             if (!Directory.Exists(path))
             {
                 return 1;
             }
 
-            foreach (Area area in areas)
+            foreach (Area area in ProjectManager.Areas)
             {
                 result = string.Empty;
-                if (area.Name == "FinalIntro_Solo")
+                foreach (Area.Character naut in area.CharacterDialogue)
                 {
-                    AppendStartTextFinalIntro();
-                }
-                else
-                {
-                    AppendStartText(area);
-                }
-                PrintDialogues(area);
-                AppendEndText();
+                    if (Area.GetTotalDuration(naut.SoloDialogue.ToArray()) == 0)
+                        continue;
 
-                try
-                {
-                    File.WriteAllText
-                    (
-                        string.Format
+                    AppendStartText(naut.SoloDialogue.ToArray());
+                    PrintDialogues(naut.SoloDialogue.ToArray());
+                    AppendEndText();
+
+                    try
+                    {
+                        File.WriteAllText
                         (
-                            "{0}\\UI_Speech_{1}_{2}.xml",
-                            path,
-                            area.Name,
-                            character
-                        ),
-                        result
-                    );
-                }
-                catch
-                {
-                    return 2;
+                            string.Format
+                            (
+                                "{0}\\UI_Speech_{1}_{2}.xml",
+                                path,
+                                area.Name,
+                                naut.Name
+                            ),
+                            result
+                        );
+                    }
+                    catch
+                    {
+                        return 2;
+                    }
                 }
             }
 
             return 0;
         }
 
-        private static void AppendStartText(Area area)
+        private static void AppendStartText(Area.Dialogue[] dialogues)
         {
             result += string.Format
             (
@@ -88,11 +87,11 @@ namespace BlightnautsDialogue
                 "        <colour id=\"colourRGBA\" mode=\"KEY\" inCurveType=\"LINEAR_LINEAR_LINEAR_LINEAR\" outCurveType=\"LINEAR_LINEAR_LINEAR_LINEAR\" keyAnchor=\"0 0 0 0#{1}_0 0 0 255#{2}_0 0 0 255#{3}_0 0 0 0#{4}\">0 0 0 255</colour>\n" +
                 "        <int id=\"ownID\">866</int>\n" +
                 "    </animationVisual>\n",
-                area.TotalDuration,
+                Area.GetTotalDuration(dialogues),
                 0,
                 0.1f,
-                Convert.ToSingle(area.TotalDuration) - 0.1f,
-                Convert.ToSingle(area.TotalDuration)
+                Convert.ToSingle(Area.GetTotalDuration(dialogues)) - 0.1f,
+                Convert.ToSingle(Area.GetTotalDuration(dialogues))
             );
         }
 
@@ -139,9 +138,9 @@ namespace BlightnautsDialogue
             result += "</Animation>\n";
         }
 
-        private static void PrintDialogues(Area area)
+        private static void PrintDialogues(Area.Dialogue[] dialogues)
         {
-            foreach (Area.Dialogue dialogue in area.Dialogues)
+            foreach (Area.Dialogue dialogue in dialogues)
             {
                 result += string.Format
                 (
@@ -166,10 +165,10 @@ namespace BlightnautsDialogue
                     "        <int id=\"parentID\">39</int>\n" +
                     "        <int id=\"ownID\">689</int>\n" +
                     "    </animationText>\n",
-                    Convert.ToSingle(dialogue.Start),
-                    Convert.ToSingle(dialogue.Start) + 0.1f,
-                    Convert.ToSingle(dialogue.End) - 0.1f,
-                    Convert.ToSingle(dialogue.End),
+                    Convert.ToSingle(Area.GetStartTime(dialogue, dialogues)),
+                    Convert.ToSingle(Area.GetStartTime(dialogue, dialogues)) + 0.1f,
+                    Convert.ToSingle(Area.GetEndTime(dialogue, dialogues)) - 0.1f,
+                    Convert.ToSingle(Area.GetEndTime(dialogue, dialogues)),
                     dialogue.Portrait,
                     dialogue.Content
                 );

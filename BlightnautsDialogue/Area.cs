@@ -2,46 +2,90 @@
 
 namespace BlightnautsDialogue
 {
-    class Area
+    public class Area
     {
         public string Name;
-        public List<Dialogue> Dialogues;
-        public decimal TotalDuration
+        public Character[] CharacterDialogue { get; private set; }
+        public Character GetCharacter(string name)
         {
-            get
+            foreach (var character in CharacterDialogue)
             {
-                decimal result = 0;
-                foreach (Dialogue dialogue in Dialogues)
-                {
-                    if (dialogue.End > result)
-                    {
-                        result = dialogue.End;
-                    }
-                }
-                return result;
+                if (character.Name.ToLower() == name.ToLower())
+                    return character;
+            }
+            return null;
+        }
+        public static decimal GetTotalDuration(Dialogue[] dialogues)
+        {
+            decimal result = 0;
+            foreach (Dialogue dialogue in dialogues)
+            {
+                result += dialogue.Duration + dialogue.Delay;
+            }
+            return result;
+        }
+        public static decimal GetStartTime(Dialogue dialogue, Dialogue[] dialogueArray)
+        {
+            decimal result = 0;
+            foreach (var item in dialogueArray)
+            {
+                if (item == dialogue)
+                    return result + dialogue.Delay;
+
+                result += dialogue.Duration + dialogue.Delay;
+            }
+            return -1;
+        }
+
+        public static decimal GetEndTime(Dialogue dialogue, Dialogue[] dialogueArray)
+        {
+            return GetStartTime(dialogue, dialogueArray) + dialogue.Duration;
+        }
+
+        public class Character
+        {
+            public readonly string Name;
+            public readonly List<Dialogue> SoloDialogue;
+            public readonly List<Dialogue> TeamDialogue;
+
+            public Character(string name)
+            {
+                Name = name;
+                SoloDialogue = new List<Dialogue>();
+                TeamDialogue = new List<Dialogue>();
             }
         }
 
         public class Dialogue
         {
             public string Portrait, Content;
-            public decimal Start, End;
-            public decimal Duration { get => End - Start; }
+            public decimal Duration, Delay;
 
             public Dialogue()
             {
                 Portrait = string.Empty;
                 Content = string.Empty;
-                Start = 0;
-                End = 0;
+                Duration = 0;
+                Delay = 0;
+            }
+
+            public Dialogue(string content, string portrait, decimal duration, decimal delay)
+            {
+                Portrait = portrait;
+                Content = content;
+                Duration = duration;
+                Delay = delay;
             }
         }
 
         public Area(string name)
         {
             Name = name;
-            Dialogues = new List<Dialogue>();
-            Dialogues.Add(new Dialogue());
+            CharacterDialogue = new Character[ProjectManager.Characters.Length];
+            for (int i = 0; i < CharacterDialogue.Length; i++)
+            {
+                CharacterDialogue[i] = new Character(ProjectManager.Characters[i]);
+            }
         }
     }
 }
