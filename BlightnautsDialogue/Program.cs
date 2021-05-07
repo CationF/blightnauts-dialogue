@@ -15,6 +15,7 @@ namespace BlightnautsDialogue
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new FormTeam());
             // Disabled for now
+            ProjectManager.LoadProject();
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
