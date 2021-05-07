@@ -84,7 +84,7 @@ namespace BlightnautsDialogue
             CharacterDialogue = new Character[ProjectManager.Characters.Length];
             for (int i = 0; i < CharacterDialogue.Length; i++)
             {
-                CharacterDialogue[i] = new Character(ProjectManager.Characters[i]);
+                CharacterDialogue[i] = new Character(ProjectManager.Characters[i].IndexedName);
             }
         }
     }

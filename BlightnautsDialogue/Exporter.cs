@@ -32,10 +32,10 @@ namespace BlightnautsDialogue
                         (
                             string.Format
                             (
-                                "{0}\\UI_Speech_{1}_{2}.xml",
+                                "{0}\\Speech_{1}_{2}.xml",
                                 path,
-                                area.Name,
-                                naut.Name
+                                naut.Name,
+                                area.Name
                             ),
                             result
                         );
