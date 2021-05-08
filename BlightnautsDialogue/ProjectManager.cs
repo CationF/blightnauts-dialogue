@@ -206,19 +206,12 @@ namespace BlightnautsDialogue
         {
             // No arguments for now.
             Areas = new List<Area>();
-            Areas.Add(new Area("test_area"));
+            Areas.Add(new Area("test_area", 1));
             Areas[0].GetCharacter("blinker001").SoloDialogue.Add(new Area.Dialogue
             (
                 "ClementH doesn't like me :(",
                 "IconCharacterBlinker",
                 2,
-                0
-            ));
-            Areas[0].GetCharacter("blinker001").TeamDialogue.Add(new Area.Dialogue
-            (
-                "If ClementH likes me one day, I still won't forgive him!",
-                "IconCharacterBlinker",
-                3,
                 0
             ));
             Areas[0].GetCharacter("cowboy001").SoloDialogue.Add(new Area.Dialogue

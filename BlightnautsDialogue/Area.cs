@@ -5,6 +5,7 @@ namespace BlightnautsDialogue
     public class Area
     {
         public string Name;
+        public readonly int TeamDialogues;
         public Character[] CharacterDialogue { get; private set; }
         public Character GetCharacter(string name)
         {
@@ -46,13 +47,26 @@ namespace BlightnautsDialogue
         {
             public readonly string Name;
             public readonly List<Dialogue> SoloDialogue;
-            public readonly List<Dialogue> TeamDialogue;
+            public readonly TeamDialogue[] TeamDialogues;
+            public class TeamDialogue
+            {
+                public readonly List<Dialogue> Dialogues;
 
-            public Character(string name)
+                public TeamDialogue()
+                {
+                    Dialogues = new List<Dialogue>();
+                }
+            }
+
+            public Character(string name, int teamDialogues)
             {
                 Name = name;
                 SoloDialogue = new List<Dialogue>();
-                TeamDialogue = new List<Dialogue>();
+                TeamDialogues = new TeamDialogue[teamDialogues];
+                for (int i = 0; i < TeamDialogues.Length; i++)
+                {
+                    TeamDialogues[i] = new TeamDialogue();
+                }
             }
         }
 
@@ -78,13 +92,16 @@ namespace BlightnautsDialogue
             }
         }
 
-        public Area(string name)
+        public Area(string name, int teamDialogues)
         {
             Name = name;
+            if (teamDialogues < 1)
+                teamDialogues = 1;
+            TeamDialogues = teamDialogues;
             CharacterDialogue = new Character[ProjectManager.Characters.Length];
             for (int i = 0; i < CharacterDialogue.Length; i++)
             {
-                CharacterDialogue[i] = new Character(ProjectManager.Characters[i].IndexedName);
+                CharacterDialogue[i] = new Character(ProjectManager.Characters[i].IndexedName, TeamDialogues);
             }
         }
     }
