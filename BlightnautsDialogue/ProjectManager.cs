@@ -214,6 +214,13 @@ namespace BlightnautsDialogue
                 2,
                 0
             ));
+            Areas[0].GetCharacter("blinker001").TeamDialogues[0].Dialogues.Add(new Area.Dialogue
+            (
+                "If ClementH ever likes me, I'll give him an egg... not!",
+                "IconCharacterBlinker",
+                3,
+                0
+            ));
             Areas[0].GetCharacter("cowboy001").SoloDialogue.Add(new Area.Dialogue
             (
                 "This be an interestin' experiment, partner! This fella right here's trying somethin' fancy with \"Delays\" or somethin'.",
