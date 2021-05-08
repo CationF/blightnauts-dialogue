@@ -22,6 +22,7 @@ namespace BlightnautsDialogue
             {
                 Exporter.DialogueExporter.Export(dialog.SelectedPath + "\\AnimationTemplates");
                 Exporter.BehaviourExporter.Export(dialog.SelectedPath + "\\Behaviours");
+                Exporter.MapExporter.Export(dialog.SelectedPath + "\\Maps\\externalToolTest\\Gameplay.xml");
             }
         }
     }

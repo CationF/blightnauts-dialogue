@@ -173,6 +173,7 @@ namespace BlightnautsDialogue
                 try
                 {
                     File.WriteAllText(path + "\\speech_checkCharacter.xml", result);
+                    File.WriteAllText(path + "\\speech_pickCharacter.xml", PickCharacterFile());
                     return 0;
                 }
                 catch
@@ -326,6 +327,1827 @@ namespace BlightnautsDialogue
                     "        </root>\n" +
                     "    </behaviour>\n" +
                     "</enemy>";
+            }
+
+            private static string PickCharacterFile()
+            {
+                // I know that this is very dumb, but for now it's how I roll.
+                return "<?xml version=\"1.0\" ?>\n" +
+                    "<enemy>\n" +
+                    "    <behaviour>\n" +
+                    "        <root x=\"80\" y=\"20\">\n" +
+                    "            <string id=\"Comment\">Randomize Character</string>\n" +
+                    "            <normal>\n" +
+                    "                <condition id=\"IsLevelButtonDown\">\n" +
+                    "                    <string id=\"buttons\">players_1</string>\n" +
+                    "                    <string id=\"Minimized\">yes</string>\n" +
+                    "                    <normal>\n" +
+                    "                        <action id=\"adjustCounter\">\n" +
+                    "                            <string id=\"id\">character</string>\n" +
+                    "                            <string id=\"value\">1</string>\n" +
+                    "                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                        </action>\n" +
+                    "                        <action id=\"adjustCounter\">\n" +
+                    "                            <string id=\"id\">previous</string>\n" +
+                    "                            <string id=\"value\">1</string>\n" +
+                    "                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                        </action>\n" +
+                    "                    </normal>\n" +
+                    "                </condition>\n" +
+                    "                <condition id=\"IsLevelButtonDown\">\n" +
+                    "                    <string id=\"buttons\">players_2</string>\n" +
+                    "                    <string id=\"Minimized\">yes</string>\n" +
+                    "                    <normal>\n" +
+                    "                        <condition id=\"checkCounter\">\n" +
+                    "                            <string id=\"id\">previous</string>\n" +
+                    "                            <string id=\"value\">1</string>\n" +
+                    "                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                            <string id=\"Comment\">Don&apos;t choose character 1 again</string>\n" +
+                    "                            <normal>\n" +
+                    "                                <action id=\"adjustCounter\">\n" +
+                    "                                    <string id=\"id\">character</string>\n" +
+                    "                                    <string id=\"value\">2</string>\n" +
+                    "                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                </action>\n" +
+                    "                                <action id=\"adjustCounter\">\n" +
+                    "                                    <string id=\"id\">previous</string>\n" +
+                    "                                    <string id=\"value\">2</string>\n" +
+                    "                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                </action>\n" +
+                    "                            </normal>\n" +
+                    "                            <else>\n" +
+                    "                                <condition id=\"checkCounter\">\n" +
+                    "                                    <string id=\"id\">previous</string>\n" +
+                    "                                    <string id=\"value\">2</string>\n" +
+                    "                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                    <string id=\"Comment\">Don&apos;t choose character 2 again</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">character</string>\n" +
+                    "                                            <string id=\"value\">1</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">1</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <condition id=\"branch\">\n" +
+                    "                                            <string id=\"Comment\">Neutral random</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">2</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">2</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </normal>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </else>\n" +
+                    "                        </condition>\n" +
+                    "                    </normal>\n" +
+                    "                </condition>\n" +
+                    "                <condition id=\"IsLevelButtonDown\">\n" +
+                    "                    <string id=\"buttons\">players_3</string>\n" +
+                    "                    <string id=\"Minimized\">yes</string>\n" +
+                    "                    <normal>\n" +
+                    "                        <condition id=\"checkCounter\">\n" +
+                    "                            <string id=\"id\">previous</string>\n" +
+                    "                            <string id=\"value\">1</string>\n" +
+                    "                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                            <string id=\"Comment\">Don&apos;t choose character 1 again</string>\n" +
+                    "                            <normal>\n" +
+                    "                                <condition id=\"random\">\n" +
+                    "                                    <string id=\"amount\">2</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">character</string>\n" +
+                    "                                            <string id=\"value\">2</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">2</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">character</string>\n" +
+                    "                                            <string id=\"value\">3</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">3</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </normal>\n" +
+                    "                            <else>\n" +
+                    "                                <condition id=\"checkCounter\">\n" +
+                    "                                    <string id=\"id\">previous</string>\n" +
+                    "                                    <string id=\"value\">2</string>\n" +
+                    "                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                    <string id=\"Comment\">Don&apos;t choose character 2 again</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <condition id=\"random\">\n" +
+                    "                                            <string id=\"amount\">2</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">1</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">1</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">3</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">3</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <condition id=\"checkCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">3</string>\n" +
+                    "                                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                            <string id=\"Comment\">Don&apos;t choose character 3 again</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">2</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">2</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"branch\">\n" +
+                    "                                                    <string id=\"Comment\">Neutral random</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </else>\n" +
+                    "                        </condition>\n" +
+                    "                    </normal>\n" +
+                    "                </condition>\n" +
+                    "                <condition id=\"IsLevelButtonDown\">\n" +
+                    "                    <string id=\"buttons\">players_4</string>\n" +
+                    "                    <string id=\"Minimized\">yes</string>\n" +
+                    "                    <normal>\n" +
+                    "                        <condition id=\"checkCounter\">\n" +
+                    "                            <string id=\"id\">previous</string>\n" +
+                    "                            <string id=\"value\">1</string>\n" +
+                    "                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                            <string id=\"Comment\">Don&apos;t choose character 1 again</string>\n" +
+                    "                            <normal>\n" +
+                    "                                <condition id=\"random\">\n" +
+                    "                                    <string id=\"amount\">3</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">character</string>\n" +
+                    "                                            <string id=\"value\">2</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">2</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <condition id=\"random\">\n" +
+                    "                                            <string id=\"amount\">2</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">3</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">3</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">4</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">4</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </normal>\n" +
+                    "                            <else>\n" +
+                    "                                <condition id=\"checkCounter\">\n" +
+                    "                                    <string id=\"id\">previous</string>\n" +
+                    "                                    <string id=\"value\">2</string>\n" +
+                    "                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                    <string id=\"Comment\">Don&apos;t choose character 2 again</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <condition id=\"random\">\n" +
+                    "                                            <string id=\"amount\">3</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">1</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">1</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">3</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">3</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">4</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">4</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <condition id=\"checkCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">3</string>\n" +
+                    "                                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                            <string id=\"Comment\">Don&apos;t choose character 3 again</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">3</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">2</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"checkCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">4</string>\n" +
+                    "                                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                                    <string id=\"Comment\">Don&apos;t choose character 4 again</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"branch\">\n" +
+                    "                                                            <string id=\"Comment\">Neutral random</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">4</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">1</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">1</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <condition id=\"random\">\n" +
+                    "                                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                            <else>\n" +
+                    "                                                                                <condition id=\"random\">\n" +
+                    "                                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                                    <normal>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </normal>\n" +
+                    "                                                                                    <else>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </else>\n" +
+                    "                                                                                </condition>\n" +
+                    "                                                                            </else>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </else>\n" +
+                    "                        </condition>\n" +
+                    "                    </normal>\n" +
+                    "                </condition>\n" +
+                    "                <condition id=\"IsLevelButtonDown\">\n" +
+                    "                    <string id=\"buttons\">players_5</string>\n" +
+                    "                    <string id=\"Minimized\">yes</string>\n" +
+                    "                    <normal>\n" +
+                    "                        <condition id=\"checkCounter\">\n" +
+                    "                            <string id=\"id\">previous</string>\n" +
+                    "                            <string id=\"value\">1</string>\n" +
+                    "                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                            <string id=\"Comment\">Don&apos;t choose character 1 again</string>\n" +
+                    "                            <normal>\n" +
+                    "                                <condition id=\"random\">\n" +
+                    "                                    <string id=\"amount\">4</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">character</string>\n" +
+                    "                                            <string id=\"value\">2</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">2</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <condition id=\"random\">\n" +
+                    "                                            <string id=\"amount\">3</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">3</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">3</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">4</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">4</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">5</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">5</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </normal>\n" +
+                    "                            <else>\n" +
+                    "                                <condition id=\"checkCounter\">\n" +
+                    "                                    <string id=\"id\">previous</string>\n" +
+                    "                                    <string id=\"value\">2</string>\n" +
+                    "                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                    <string id=\"Comment\">Don&apos;t choose character 2 again</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <condition id=\"random\">\n" +
+                    "                                            <string id=\"amount\">4</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">1</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">1</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">3</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">3</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">3</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">2</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">5</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">5</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <condition id=\"checkCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">3</string>\n" +
+                    "                                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                            <string id=\"Comment\">Don&apos;t choose character 3 again</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">4</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"checkCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">4</string>\n" +
+                    "                                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                                    <string id=\"Comment\">Don&apos;t choose character 4 again</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">4</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">3</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <condition id=\"random\">\n" +
+                    "                                                                            <string id=\"amount\">2</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">3</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">3</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                            <else>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">5</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">5</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </else>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"checkCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">5</string>\n" +
+                    "                                                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                                            <string id=\"Comment\">Don&apos;t choose character 5 again</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">4</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">1</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">1</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <condition id=\"random\">\n" +
+                    "                                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                            <else>\n" +
+                    "                                                                                <condition id=\"random\">\n" +
+                    "                                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                                    <normal>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </normal>\n" +
+                    "                                                                                    <else>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </else>\n" +
+                    "                                                                                </condition>\n" +
+                    "                                                                            </else>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"branch\">\n" +
+                    "                                                                    <string id=\"Comment\">Neutral random</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <condition id=\"random\">\n" +
+                    "                                                                            <string id=\"amount\">5</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                            <else>\n" +
+                    "                                                                                <condition id=\"random\">\n" +
+                    "                                                                                    <string id=\"amount\">4</string>\n" +
+                    "                                                                                    <normal>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </normal>\n" +
+                    "                                                                                    <else>\n" +
+                    "                                                                                        <condition id=\"random\">\n" +
+                    "                                                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                                                            <normal>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                                    <string id=\"value\">3</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                                    <string id=\"value\">3</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                            </normal>\n" +
+                    "                                                                                            <else>\n" +
+                    "                                                                                                <condition id=\"random\">\n" +
+                    "                                                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                                                    <normal>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                    </normal>\n" +
+                    "                                                                                                    <else>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                    </else>\n" +
+                    "                                                                                                </condition>\n" +
+                    "                                                                                            </else>\n" +
+                    "                                                                                        </condition>\n" +
+                    "                                                                                    </else>\n" +
+                    "                                                                                </condition>\n" +
+                    "                                                                            </else>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </else>\n" +
+                    "                        </condition>\n" +
+                    "                    </normal>\n" +
+                    "                </condition>\n" +
+                    "                <condition id=\"IsLevelButtonDown\">\n" +
+                    "                    <string id=\"buttons\">players_6</string>\n" +
+                    "                    <string id=\"Minimized\">yes</string>\n" +
+                    "                    <normal>\n" +
+                    "                        <condition id=\"checkCounter\">\n" +
+                    "                            <string id=\"id\">previous</string>\n" +
+                    "                            <string id=\"value\">1</string>\n" +
+                    "                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                            <string id=\"Comment\">Don&apos;t choose character 1 again</string>\n" +
+                    "                            <normal>\n" +
+                    "                                <condition id=\"random\">\n" +
+                    "                                    <string id=\"amount\">5</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">character</string>\n" +
+                    "                                            <string id=\"value\">2</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                        <action id=\"adjustCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">2</string>\n" +
+                    "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                        </action>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <condition id=\"random\">\n" +
+                    "                                            <string id=\"amount\">4</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">3</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">3</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">3</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">4</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">4</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">2</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">5</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">5</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">6</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">6</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </normal>\n" +
+                    "                            <else>\n" +
+                    "                                <condition id=\"checkCounter\">\n" +
+                    "                                    <string id=\"id\">previous</string>\n" +
+                    "                                    <string id=\"value\">2</string>\n" +
+                    "                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                    <string id=\"Comment\">Don&apos;t choose character 2 again</string>\n" +
+                    "                                    <normal>\n" +
+                    "                                        <condition id=\"random\">\n" +
+                    "                                            <string id=\"amount\">5</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">character</string>\n" +
+                    "                                                    <string id=\"value\">1</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                                <action id=\"adjustCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">1</string>\n" +
+                    "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                </action>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">4</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">3</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">3</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">6</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">6</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </normal>\n" +
+                    "                                    <else>\n" +
+                    "                                        <condition id=\"checkCounter\">\n" +
+                    "                                            <string id=\"id\">previous</string>\n" +
+                    "                                            <string id=\"value\">3</string>\n" +
+                    "                                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                            <string id=\"Comment\">Don&apos;t choose character 3 again</string>\n" +
+                    "                                            <normal>\n" +
+                    "                                                <condition id=\"random\">\n" +
+                    "                                                    <string id=\"amount\">5</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">character</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">1</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                        </action>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">4</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">3</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <condition id=\"random\">\n" +
+                    "                                                                            <string id=\"amount\">2</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">5</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">5</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                            <else>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">6</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">6</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </else>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </normal>\n" +
+                    "                                            <else>\n" +
+                    "                                                <condition id=\"checkCounter\">\n" +
+                    "                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                    <string id=\"value\">4</string>\n" +
+                    "                                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                                    <string id=\"Comment\">Don&apos;t choose character 4 again</string>\n" +
+                    "                                                    <normal>\n" +
+                    "                                                        <condition id=\"random\">\n" +
+                    "                                                            <string id=\"amount\">5</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                </action>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">4</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <condition id=\"random\">\n" +
+                    "                                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">3</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">3</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                            <else>\n" +
+                    "                                                                                <condition id=\"random\">\n" +
+                    "                                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                                    <normal>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </normal>\n" +
+                    "                                                                                    <else>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">6</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">6</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </else>\n" +
+                    "                                                                                </condition>\n" +
+                    "                                                                            </else>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </normal>\n" +
+                    "                                                    <else>\n" +
+                    "                                                        <condition id=\"checkCounter\">\n" +
+                    "                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                            <string id=\"value\">5</string>\n" +
+                    "                                                            <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                                            <string id=\"Comment\">Don&apos;t choose character 5 again</string>\n" +
+                    "                                                            <normal>\n" +
+                    "                                                                <condition id=\"random\">\n" +
+                    "                                                                    <string id=\"amount\">5</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                            <string id=\"value\">1</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                            <string id=\"value\">1</string>\n" +
+                    "                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                        </action>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <condition id=\"random\">\n" +
+                    "                                                                            <string id=\"amount\">4</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                            <else>\n" +
+                    "                                                                                <condition id=\"random\">\n" +
+                    "                                                                                    <string id=\"amount\">3</string>\n" +
+                    "                                                                                    <normal>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </normal>\n" +
+                    "                                                                                    <else>\n" +
+                    "                                                                                        <condition id=\"random\">\n" +
+                    "                                                                                            <string id=\"amount\">2</string>\n" +
+                    "                                                                                            <normal>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                            </normal>\n" +
+                    "                                                                                            <else>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                                    <string id=\"value\">6</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                                    <string id=\"value\">6</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                            </else>\n" +
+                    "                                                                                        </condition>\n" +
+                    "                                                                                    </else>\n" +
+                    "                                                                                </condition>\n" +
+                    "                                                                            </else>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </normal>\n" +
+                    "                                                            <else>\n" +
+                    "                                                                <condition id=\"checkCounter\">\n" +
+                    "                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                    <string id=\"value\">6</string>\n" +
+                    "                                                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
+                    "                                                                    <string id=\"Comment\">Don&apos;t choose character 6 again</string>\n" +
+                    "                                                                    <normal>\n" +
+                    "                                                                        <condition id=\"random\">\n" +
+                    "                                                                            <string id=\"amount\">5</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                    <string id=\"value\">1</string>\n" +
+                    "                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                </action>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                            <else>\n" +
+                    "                                                                                <condition id=\"random\">\n" +
+                    "                                                                                    <string id=\"amount\">4</string>\n" +
+                    "                                                                                    <normal>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">2</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </normal>\n" +
+                    "                                                                                    <else>\n" +
+                    "                                                                                        <condition id=\"random\">\n" +
+                    "                                                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                                                            <normal>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                                    <string id=\"value\">3</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                                    <string id=\"value\">3</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                            </normal>\n" +
+                    "                                                                                            <else>\n" +
+                    "                                                                                                <condition id=\"random\">\n" +
+                    "                                                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                                                    <normal>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                                            <string id=\"value\">4</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                    </normal>\n" +
+                    "                                                                                                    <else>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                    </else>\n" +
+                    "                                                                                                </condition>\n" +
+                    "                                                                                            </else>\n" +
+                    "                                                                                        </condition>\n" +
+                    "                                                                                    </else>\n" +
+                    "                                                                                </condition>\n" +
+                    "                                                                            </else>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </normal>\n" +
+                    "                                                                    <else>\n" +
+                    "                                                                        <condition id=\"branch\">\n" +
+                    "                                                                            <string id=\"Comment\">Neutral random</string>\n" +
+                    "                                                                            <normal>\n" +
+                    "                                                                                <condition id=\"random\">\n" +
+                    "                                                                                    <string id=\"amount\">6</string>\n" +
+                    "                                                                                    <normal>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                            <string id=\"value\">1</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                            <string id=\"value\">1</string>\n" +
+                    "                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                        </action>\n" +
+                    "                                                                                    </normal>\n" +
+                    "                                                                                    <else>\n" +
+                    "                                                                                        <condition id=\"random\">\n" +
+                    "                                                                                            <string id=\"amount\">5</string>\n" +
+                    "                                                                                            <normal>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                                    <string id=\"value\">2</string>\n" +
+                    "                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                </action>\n" +
+                    "                                                                                            </normal>\n" +
+                    "                                                                                            <else>\n" +
+                    "                                                                                                <condition id=\"random\">\n" +
+                    "                                                                                                    <string id=\"amount\">4</string>\n" +
+                    "                                                                                                    <normal>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                                            <string id=\"value\">3</string>\n" +
+                    "                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                        </action>\n" +
+                    "                                                                                                    </normal>\n" +
+                    "                                                                                                    <else>\n" +
+                    "                                                                                                        <condition id=\"random\">\n" +
+                    "                                                                                                            <string id=\"amount\">3</string>\n" +
+                    "                                                                                                            <normal>\n" +
+                    "                                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                                    <string id=\"id\">character</string>\n" +
+                    "                                                                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                                </action>\n" +
+                    "                                                                                                                <action id=\"adjustCounter\">\n" +
+                    "                                                                                                                    <string id=\"id\">previous</string>\n" +
+                    "                                                                                                                    <string id=\"value\">4</string>\n" +
+                    "                                                                                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                                </action>\n" +
+                    "                                                                                                            </normal>\n" +
+                    "                                                                                                            <else>\n" +
+                    "                                                                                                                <condition id=\"random\">\n" +
+                    "                                                                                                                    <string id=\"amount\">2</string>\n" +
+                    "                                                                                                                    <normal>\n" +
+                    "                                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                                        </action>\n" +
+                    "                                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                                                            <string id=\"value\">5</string>\n" +
+                    "                                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                                        </action>\n" +
+                    "                                                                                                                    </normal>\n" +
+                    "                                                                                                                    <else>\n" +
+                    "                                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                                            <string id=\"id\">character</string>\n" +
+                    "                                                                                                                            <string id=\"value\">6</string>\n" +
+                    "                                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                                        </action>\n" +
+                    "                                                                                                                        <action id=\"adjustCounter\">\n" +
+                    "                                                                                                                            <string id=\"id\">previous</string>\n" +
+                    "                                                                                                                            <string id=\"value\">6</string>\n" +
+                    "                                                                                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                                                                                        </action>\n" +
+                    "                                                                                                                    </else>\n" +
+                    "                                                                                                                </condition>\n" +
+                    "                                                                                                            </else>\n" +
+                    "                                                                                                        </condition>\n" +
+                    "                                                                                                    </else>\n" +
+                    "                                                                                                </condition>\n" +
+                    "                                                                                            </else>\n" +
+                    "                                                                                        </condition>\n" +
+                    "                                                                                    </else>\n" +
+                    "                                                                                </condition>\n" +
+                    "                                                                            </normal>\n" +
+                    "                                                                        </condition>\n" +
+                    "                                                                    </else>\n" +
+                    "                                                                </condition>\n" +
+                    "                                                            </else>\n" +
+                    "                                                        </condition>\n" +
+                    "                                                    </else>\n" +
+                    "                                                </condition>\n" +
+                    "                                            </else>\n" +
+                    "                                        </condition>\n" +
+                    "                                    </else>\n" +
+                    "                                </condition>\n" +
+                    "                            </else>\n" +
+                    "                        </condition>\n" +
+                    "                    </normal>\n" +
+                    "                </condition>\n" +
+                    "            </normal>\n" +
+                    "        </root>\n" +
+                    "    </behaviour>\n" +
+                    "</enemy>\n";
+            }
+        }
+
+        public static class MapExporter
+        {
+            public static int Export(string mapPath)
+            {
+                if (!File.Exists(mapPath))
+                    return 1;
+
+                string content = File.ReadAllText(mapPath);
+                string result = string.Empty;
+                float positionX = -28.995f;
+                float positionY = 28.995f;
+                int start = content.IndexOf("<level>") + "<level>".Length;
+
+                foreach (ProjectManager.Actor actor in ProjectManager.Characters)
+                {
+                    string buttonName = "speech_actorSpeaking_" + actor.IndexedName;
+
+                    // Skip if it already exists to avoid duplicates.
+                    if (content.Contains("<string id=\"influenceName\">" + buttonName + "</string>"))
+                        continue;
+
+                    // Create actor buttons.
+                    result += string.Format
+                    (
+                        "    <levelObjectButton>\n" +
+                        "        <vector2 id=\"position\">{1} {2}</vector2>\n" +
+                        "        <vector2 id=\"size\">0.01 0.01</vector2>\n" +
+                        "        <bool id=\"pressableByHumanPlayers\">0</bool>\n" +
+                        "        <bool id=\"pressableByBotPlayers\">0</bool>\n" +
+                        "        <bool id=\"pressableByCreeps\">0</bool>\n" +
+                        "        <bool id=\"pressableByTeamZero\">0</bool>\n" +
+                        "        <bool id=\"pressableByTeamOne\">0</bool>\n" +
+                        "        <bool id=\"pressableByTeamNone\">0</bool>\n" +
+                        "        <string id=\"pressableOnlyByClass\"></string>\n" +
+                        "        <bool id=\"notPressableWhileTeamZeroOnIt\">0</bool>\n" +
+                        "        <bool id=\"notPressableWhileTeamOneOnIt\">0</bool>\n" +
+                        "        <bool id=\"notPressableWhileTeamNoneOnIt\">0</bool>\n" +
+                        "        <int id=\"minimumCharactersRequired\">1</int>\n" +
+                        "        <int id=\"maximumCharactersAllowed\">999</int>\n" +
+                        "        <float id=\"timeRequiredBeforeCountsAsPress\">0</float>\n" +
+                        "        <float id=\"timeToRemainPressedAfter\">0</float>\n" +
+                        "        <bool id=\"invertOnOff\">0</bool>\n" +
+                        "        <string id=\"influenceName\">{0}</string>\n" +
+                        "        <float id=\"reactionSpeedForward\">10</float>\n" +
+                        "        <float id=\"reactionSpeedBackward\">10</float>\n" +
+                        "        <float id=\"autoPressAfterGameTime\">-1</float>\n" +
+                        "        <bool id=\"networkSynchingEnabled\">1</bool>\n" +
+                        "        <bool id=\"frozen\">0</bool>\n" +
+                        "        <bool id=\"hidden\">0</bool>\n" +
+                        "        <int id=\"ownID\">-1</int>\n" +
+                        "    </levelObjectButton>\n",
+                        buttonName,
+                        positionX,
+                        positionY
+                    );
+                    positionX += 0.01f;
+                    if (positionX > 28.995f)
+                    {
+                        positionX = -28.995f;
+                        positionY -= 0.01f;
+                    }
+                }
+
+                // Create area dialogue buttons.
+                foreach (Area area in ProjectManager.Areas)
+                {
+                    string buttonName = "speech_active_" + area.Name;
+
+                    // Skip if it already exists to avoid duplicates.
+                    if (content.Contains("<string id=\"influenceName\">" + buttonName + "</string>"))
+                        continue;
+
+                    result += string.Format
+                    (
+                        "    <levelObjectButton>\n" +
+                        "        <vector2 id=\"position\">{1} {2}</vector2>\n" +
+                        "        <vector2 id=\"size\">0.01 0.01</vector2>\n" +
+                        "        <bool id=\"pressableByHumanPlayers\">0</bool>\n" +
+                        "        <bool id=\"pressableByBotPlayers\">0</bool>\n" +
+                        "        <bool id=\"pressableByCreeps\">0</bool>\n" +
+                        "        <bool id=\"pressableByTeamZero\">0</bool>\n" +
+                        "        <bool id=\"pressableByTeamOne\">0</bool>\n" +
+                        "        <bool id=\"pressableByTeamNone\">0</bool>\n" +
+                        "        <string id=\"pressableOnlyByClass\"></string>\n" +
+                        "        <bool id=\"notPressableWhileTeamZeroOnIt\">0</bool>\n" +
+                        "        <bool id=\"notPressableWhileTeamOneOnIt\">0</bool>\n" +
+                        "        <bool id=\"notPressableWhileTeamNoneOnIt\">0</bool>\n" +
+                        "        <int id=\"minimumCharactersRequired\">1</int>\n" +
+                        "        <int id=\"maximumCharactersAllowed\">999</int>\n" +
+                        "        <float id=\"timeRequiredBeforeCountsAsPress\">0</float>\n" +
+                        "        <float id=\"timeToRemainPressedAfter\">0</float>\n" +
+                        "        <bool id=\"invertOnOff\">0</bool>\n" +
+                        "        <string id=\"influenceName\">{0}</string>\n" +
+                        "        <float id=\"reactionSpeedForward\">10</float>\n" +
+                        "        <float id=\"reactionSpeedBackward\">10</float>\n" +
+                        "        <float id=\"autoPressAfterGameTime\">-1</float>\n" +
+                        "        <bool id=\"networkSynchingEnabled\">1</bool>\n" +
+                        "        <bool id=\"frozen\">0</bool>\n" +
+                        "        <bool id=\"hidden\">0</bool>\n" +
+                        "        <int id=\"ownID\">-1</int>\n" +
+                        "    </levelObjectButton>\n",
+                        buttonName,
+                        positionX,
+                        positionY
+                    );
+                    positionX += 0.01f;
+                    if (positionX > 28.995f)
+                    {
+                        positionX = -28.995f;
+                        positionY -= 0.01f;
+                    }
+                }
+
+                positionX = 0;
+                positionY = 0;
+
+                // Iterating through the same array again is inefficient but easier to manage.
+                // Create trigger buttons that the modder must position manually.
+                // These are larger and appear around the 0,0 coordinates so they are easier to find.
+                foreach (Area area in ProjectManager.Areas)
+                {
+                    string buttonName = "speech_trigger_" + area.Name;
+
+                    // Skip if it already exists to avoid duplicates.
+                    if (content.Contains("<string id=\"influenceName\">" + buttonName + "</string>"))
+                        continue;
+
+                    result += string.Format
+                    (
+                        "    <levelObjectButton>\n" +
+                        "        <vector2 id=\"position\">{1} {2}</vector2>\n" +
+                        "        <vector2 id=\"size\">0.1 0.1</vector2>\n" +
+                        "        <bool id=\"pressableByHumanPlayers\">1</bool>\n" +
+                        "        <bool id=\"pressableByBotPlayers\">1</bool>\n" +
+                        "        <bool id=\"pressableByCreeps\">0</bool>\n" +
+                        "        <bool id=\"pressableByTeamZero\">1</bool>\n" +
+                        "        <bool id=\"pressableByTeamOne\">1</bool>\n" +
+                        "        <bool id=\"pressableByTeamNone\">1</bool>\n" +
+                        "        <string id=\"pressableOnlyByClass\"></string>\n" +
+                        "        <bool id=\"notPressableWhileTeamZeroOnIt\">0</bool>\n" +
+                        "        <bool id=\"notPressableWhileTeamOneOnIt\">0</bool>\n" +
+                        "        <bool id=\"notPressableWhileTeamNoneOnIt\">0</bool>\n" +
+                        "        <int id=\"minimumCharactersRequired\">1</int>\n" +
+                        "        <int id=\"maximumCharactersAllowed\">999</int>\n" +
+                        "        <float id=\"timeRequiredBeforeCountsAsPress\">0</float>\n" +
+                        "        <float id=\"timeToRemainPressedAfter\">0</float>\n" +
+                        "        <bool id=\"invertOnOff\">0</bool>\n" +
+                        "        <string id=\"influenceName\">{0}</string>\n" +
+                        "        <float id=\"reactionSpeedForward\">10</float>\n" +
+                        "        <float id=\"reactionSpeedBackward\">10</float>\n" +
+                        "        <float id=\"autoPressAfterGameTime\">-1</float>\n" +
+                        "        <bool id=\"networkSynchingEnabled\">1</bool>\n" +
+                        "        <bool id=\"frozen\">0</bool>\n" +
+                        "        <bool id=\"hidden\">0</bool>\n" +
+                        "        <int id=\"ownID\">-1</int>\n" +
+                        "    </levelObjectButton>\n",
+                        buttonName,
+                        positionX,
+                        positionY
+                    );
+                    positionX += 0.1f;
+                    if (positionX > 10)
+                    {
+                        positionX = 0;
+                        positionY -= 0.1f;
+                    }
+                }
+
+                try
+                {
+                    File.WriteAllText(mapPath, content.Substring(0, start) + "\n" + result + content.Substring(start));
+                    return 0;
+                }
+                catch
+                {
+                    return 2;
+                }
             }
         }
     }
