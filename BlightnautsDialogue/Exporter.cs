@@ -461,11 +461,19 @@ namespace BlightnautsDialogue
                             "                                                                                            <string id=\"button\">speech_actorSpeaking_{1}</string>\n" +
                             "                                                                                            <string id=\"down\" values=\"yesno\">yes</string>\n" +
                             "                                                                                        </action>\n" +
+                            "                                                                                        <action id=\"setLevelButton\">\n" +
+                            "                                                                                            <string id=\"button\">speech_active_{2}</string>\n" +
+                            "                                                                                            <string id=\"down\" values=\"yesno\">yes</string>\n" +
+                            "                                                                                        </action>\n" +
                             "                                                                                        <action id=\"wait\">\n" +
                             "                                                                                            <float id=\"time\">0.30</float>\n" +
                             "                                                                                        </action>\n" +
                             "                                                                                        <action id=\"setLevelButton\">\n" +
                             "                                                                                            <string id=\"button\">speech_actorSpeaking_{1}</string>\n" +
+                            "                                                                                            <string id=\"down\" values=\"yesno\">no</string>\n" +
+                            "                                                                                        </action>\n" +
+                            "                                                                                        <action id=\"setLevelButton\">\n" +
+                            "                                                                                            <string id=\"button\">speech_active_{2}</string>\n" +
                             "                                                                                            <string id=\"down\" values=\"yesno\">no</string>\n" +
                             "                                                                                        </action>\n" +
                             "                                                                                    </normal>\n" +
@@ -480,7 +488,7 @@ namespace BlightnautsDialogue
                             "                                                                            <string id=\"compare method\" values=\"valuecompare\">greater</string>\n" +
                             "                                                                        </condition>\n" +
                             "                                                                        <condition id=\"getBoolEquals\">\n" +
-                            "                                                                            <string id=\"id\">speech_actorExists_{1}</string>\n" +
+                            "                                                                            <string id=\"id\">actorExists_{1}</string>\n" +
                             "                                                                            <string id=\"value\" values=\"yesno\">yes</string>\n" +
                             "                                                                        </condition>\n" +
                             "                                                                    </or>\n" +
@@ -621,11 +629,19 @@ namespace BlightnautsDialogue
                         "                                                                                            <string id=\"button\">speech_actorSpeaking_{1}</string>\n" +
                         "                                                                                            <string id=\"down\" values=\"yesno\">yes</string>\n" +
                         "                                                                                        </action>\n" +
+                        "                                                                                        <action id=\"setLevelButton\">\n" +
+                        "                                                                                            <string id=\"button\">speech_active_{2}</string>\n" +
+                        "                                                                                            <string id=\"down\" values=\"yesno\">yes</string>\n" +
+                        "                                                                                        </action>\n" +
                         "                                                                                        <action id=\"wait\">\n" +
                         "                                                                                            <float id=\"time\">0.30</float>\n" +
                         "                                                                                        </action>\n" +
                         "                                                                                        <action id=\"setLevelButton\">\n" +
                         "                                                                                            <string id=\"button\">speech_actorSpeaking_{1}</string>\n" +
+                        "                                                                                            <string id=\"down\" values=\"yesno\">no</string>\n" +
+                        "                                                                                        </action>\n" +
+                        "                                                                                        <action id=\"setLevelButton\">\n" +
+                        "                                                                                            <string id=\"button\">speech_active_{2}</string>\n" +
                         "                                                                                            <string id=\"down\" values=\"yesno\">no</string>\n" +
                         "                                                                                        </action>\n" +
                         "                                                                                    </normal>\n" +
@@ -640,7 +656,7 @@ namespace BlightnautsDialogue
                         "                                                                            <string id=\"compare method\" values=\"valuecompare\">greater</string>\n" +
                         "                                                                        </condition>\n" +
                         "                                                                        <condition id=\"getBoolEquals\">\n" +
-                        "                                                                            <string id=\"id\">speech_actorExists_{1}</string>\n" +
+                        "                                                                            <string id=\"id\">actorExists_{1}</string>\n" +
                         "                                                                            <string id=\"value\" values=\"yesno\">yes</string>\n" +
                         "                                                                        </condition>\n" +
                         "                                                                    </or>\n" +
@@ -707,7 +723,7 @@ namespace BlightnautsDialogue
                     "                    <string id=\"buttons\">speech_active_{0}</string>\n" +
                     "                    <normal>\n" +
                     "                        <condition id=\"isInArea\">\n" +
-                    "                            <string id=\"condition\" values=\"yesno\">yes</string>\n" +
+                    "                            <string id=\"condition\" values=\"yesno\">no</string>\n" +
                     "                            <string id=\"collision groups\" values=\"collison groups\" multiselect=\"true\">PLAYERS;;</string>\n" +
                     "                            <string id=\"check green obstacles only\" values=\"yesno\">no</string>\n" +
                     "                            <string id=\"count characters out of combat\" values=\"yesno\">yes</string>\n" +
