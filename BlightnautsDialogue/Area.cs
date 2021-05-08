@@ -32,7 +32,7 @@ namespace BlightnautsDialogue
                 if (item == dialogue)
                     return result + dialogue.Delay;
 
-                result += dialogue.Duration + dialogue.Delay;
+                result += item.Duration + item.Delay;
             }
             return -1;
         }

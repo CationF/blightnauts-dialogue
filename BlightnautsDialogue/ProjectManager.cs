@@ -203,12 +203,40 @@ namespace BlightnautsDialogue
             // No arguments for now.
             Areas = new List<Area>();
             Areas.Add(new Area("test_area"));
-            Areas[0].GetCharacter("Blinker").SoloDialogue.Add(new Area.Dialogue
+            Areas[0].GetCharacter("blinker001").SoloDialogue.Add(new Area.Dialogue
             (
                 "ClementH doesn't like me :(",
                 "IconCharacterBlinker",
                 2,
                 0
+            ));
+            Areas[0].GetCharacter("blinker001").TeamDialogue.Add(new Area.Dialogue
+            (
+                "If ClementH likes me one day, I still won't forgive him!",
+                "IconCharacterBlinker",
+                3,
+                0
+            ));
+            Areas[0].GetCharacter("cowboy001").SoloDialogue.Add(new Area.Dialogue
+            (
+                "This be an interestin' experiment, partner! This fella right here's trying somethin' fancy with \"Delays\" or somethin'.",
+                "IconCharacterCowboy",
+                4,
+                2
+            ));
+            Areas[0].GetCharacter("assassin001").SoloDialogue.Add(new Area.Dialogue
+            (
+                "Pah! You think that's interesting?! Then let me show you something much cooler!",
+                "IconCharacterAssassin",
+                4,
+                0
+            ));
+            Areas[0].GetCharacter("assassin001").SoloDialogue.Add(new Area.Dialogue
+            (
+                "You see, my internal name has not one but two bad words in a row: Ass Ass In!",
+                "IconCharacterAssassin",
+                Convert.ToDecimal(3.5f),
+                1
             ));
         }
     }
