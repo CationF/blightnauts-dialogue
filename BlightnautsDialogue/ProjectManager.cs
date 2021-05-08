@@ -48,12 +48,12 @@ namespace BlightnautsDialogue
             new Actor("Assassin", "Desperado Penny", 2),
             new Actor("Assassin", "Cheerleader Penny", 3),
 
-            new Actor("Bird", "Vinnie & Spike"),
-            new Actor("Bird", "Pirate Vinnie", 2),
-            new Actor("Bird", "Cynical Vinnie", 3),
+            new Actor("Bird", "Vinnie and Spike"),
+            new Actor("Bird", "Cap'n Vinnie & Seadog Spike", 2),
+            new Actor("Bird", "Cynical Vinnie and Total Spike", 3),
 
             new Actor("Blazer", "Coco Nebulon"),
-            new Actor("Blazer", "Hawai Coco", 2),
+            new Actor("Blazer", "Coco Hawaii", 2),
             new Actor("Blazer", "Coco McFly", 3),
             new Actor("Blazer", "Cyber Coco", 4),
             new Actor("Blazer", "Wicked Coco", 5),
@@ -68,11 +68,11 @@ namespace BlightnautsDialogue
             new Actor("Brute", "Skolldir"),
             new Actor("Brute", "Honeydew Skolldir", 2),
             new Actor("Brute", "Demon Skolldir", 3),
-            new Actor("Brute", "Jotun Skolldir", 4),
+            new Actor("Brute", "Jotunn Skolldir", 4),
 
             new Actor("Butterfly", "Genji"),
             new Actor("Butterfly", "Kage Genji", 2),
-            new Actor("Butterfly", "Genji the Gray", 3),
+            new Actor("Butterfly", "Genji the Grey", 3),
             new Actor("Butterfly", "Grim Genji", 4),
 
             new Actor("Captain", "Admiral Swiggins"),
@@ -80,28 +80,31 @@ namespace BlightnautsDialogue
             new Actor("Captain", "Admiral Swiggins, PHD", 3),
 
             new Actor("Chameleon", "Leon Chameleon"),
-            new Actor("Chameleon", "Leon Musketeer", 2),
-            new Actor("Chameleon", "Leon Pirate", 3),
-            new Actor("Chameleon", "Ghosts Leon", 4),
+            new Actor("Chameleon", "Mousquetaire Leon", 2),
+            new Actor("Chameleon", "Pirate Leon", 3),
+            new Actor("Chameleon", "Ghost Leon", 4),
+            new Actor("Chameleon", "Leon Legionnaire", 5),
 
             new Actor("Commando", "Ted McPain"),
             new Actor("Commando", "Titanium Ted", 2),
             new Actor("Commando", "Party Boy McPain", 3),
-            new Actor("Commando", "Captain McPain", 4),
+            new Actor("Commando", "Scourge Capitain McPain", 4),
 
             new Actor("Cowboy", "Sheriff Lonestar"),
             new Actor("Cowboy", "Officer Lonestar", 2),
             new Actor("Cowboy", "Private Mels", 3),
-            new Actor("Cowboy", "Loninator", 4),
+            new Actor("Cowboy", "The Loninator", 4),
+            new Actor("Cowboy", "Goldstar", 5),
 
             new Actor("Crawler", "Ksenia"),
-            new Actor("Crawler", "Huntres Ksenia", 2),
+            new Actor("Crawler", "Dragon Huntress Ksenia", 2),
+            new Actor("Crawler", "Cosmic Captain Ksenia", 3),
 
             new Actor("Crumple", "Deadlift"),
-            new Actor("Crumple", "Bullbarian", 2),
+            new Actor("Crumple", "Bullbarian Deadlift", 2),
 
             new Actor("Dasher", "Froggy G"),
-            new Actor("Dasher", "Grand Master Splash", 2),
+            new Actor("Dasher", "Grandmaster Splash", 2),
             new Actor("Dasher", "Pimpy G", 3),
             new Actor("Dasher", "Digital G", 4),
 
@@ -110,26 +113,27 @@ namespace BlightnautsDialogue
             new Actor("Ellipto", "8 bit Yoolip", 3),
 
             new Actor("Gantlet", "Qi'Tara"),
-            new Actor("Gantlet", "Masquerade Qi'Tara", 2),
+            new Actor("Gantlet", "Dark Masquerade Qi'Tara", 2),
 
             new Actor("Gladiator", "Snork Gunk"),
             new Actor("Galdiator", "Bozo Gunk", 2),
 
             new Actor("Heavy", "Derpl Zork"),
             new Actor("Heavy", "Hotrod Derpl", 2),
-            new Actor("Heavy", "Aarhpl", 3),
+            new Actor("Heavy", "Ahrpl", 3),
 
             new Actor("Hunter", "Raelynn"),
             new Actor("Hunter", "Ravishing Raelynn", 2),
             new Actor("Hunter", "Bionic Raelynn", 3),
-            new Actor("Hunter", "Huntress Raelynn", 4),
+            new Actor("Hunter", "Soulhuntress Raelynn", 4),
 
             new Actor("Hyper", "Chucho Krokk"),
-            new Actor("Hyper", "Skull-Chopper Chucho", 2),
+            new Actor("Hyper", "Skull Chopper Chucho", 2),
+            new Actor("Hyper", "Summertime Chucho", 3),
 
             new Actor("Jetter", "Yuri"),
-            new Actor("Jetter", "Astronaut Yuri", 2),
-            new Actor("Jetter", "Double-O Yuri", 3),
+            new Actor("Jetter", "Kosmonaut Yuri", 2),
+            new Actor("Jetter", "Double-O-Yuri", 3),
 
             new Actor("Maw", "Gnaw"),
             new Actor("Maw", "Bumble Gnaw", 2),
@@ -137,52 +141,52 @@ namespace BlightnautsDialogue
             new Actor("Maw", "Gnariachi", 4),
 
             new Actor("Paladin", "Scoop of Justice"),
-            new Actor("Paladin", "Scoop of Doom", 2),
+            new Actor("Paladin", "Wraithlord Scoop", 2),
             new Actor("Paladin", "Roboscoop", 3),
-            new Actor("Paladin", "FF7 Scoop", 4),
+            new Actor("Paladin", "Bravely Scoop IV: Eternal Fantasy", 4),
             new Actor("Paladin", "Helgo Scoop", 5),
 
             new Actor("Poacher", "Smiles"),
             new Actor("Poacher", "Pyromancer Smiles", 2),
 
             new Actor("Rascal", "Dizzy"),
-            new Actor("Rascal", "Cringe Dizzy", 2),
+            new Actor("Rascal", "Kunoichi Dizzy", 2),
 
             new Actor("Shaman", "Skree"),
             new Actor("Shaman", "Skreeletor", 2),
-            new Actor("Shaman", "Cloud Skree", 3),
+            new Actor("Shaman", "Sun Wukong Skree", 3),
 
             new Actor("Shifter", "Ix the Interloper"),
             new Actor("Shifter", "Steel Seraph Ix", 2),
 
-            new Actor("Spy", "Sentry"),
-            new Actor("Spy", "Sentorii", 2),
-            new Actor("Spy", "Setnry mosnter", 3),
+            new Actor("Spy", "Sentry X-58"),
+            new Actor("Spy", "Giga Sentorii", 2),
+            new Actor("Spy", "Specimen X-58", 3),
 
             new Actor("Summoner", "Voltar the Omniscient"),
             new Actor("Summoner", "Disco Voltar", 2),
-            new Actor("Summoner", "Aztec Voltar", 3),
+            new Actor("Summoner", "Necro Voltar", 3),
             new Actor("Summoner", "Voltar Bonaparte", 4),
 
             new Actor("Tank", "Clunk"),
             new Actor("Tank", "Expendable Clunk", 2),
             new Actor("Tank", "Creeper Clunk", 3),
-            new Actor("Tank", "Cluck", 4),
+            new Actor("Tank", "Cluck Clunk", 4),
 
             new Actor("Vampire", "Ayla"),
             new Actor("Vampire", "Shaolin Ayla", 2),
             new Actor("Vampire", "Teddy Ayla", 3),
-            new Actor("Vampire", "Commander Ayla", 4),
+            new Actor("Vampire", "Augmented Ayla", 4),
 
             new Actor("Wakuwaku", "Commander Rocket"),
             new Actor("Wakuwaku", "Commander Cook-it", 2),
 
-            new Actor("Warrior", "Jimmy & the Lux5000"),
-            new Actor("Warrior", "Sir Jimmy", 2),
+            new Actor("Warrior", "Jimmy and the Lux5000"),
+            new Actor("Warrior", "Sir Jimmy Lionheart", 2),
 
             new Actor("Wozzle", "Rocco"),
             new Actor("Wozzle", "Shinobi Rocco", 2),
-            new Actor("Wozzle", "Supersonic Rocco", 3)
+            new Actor("Wozzle", "Electronic Supersonic Cybertronic Rocco", 3)
     };
 
         public static Actor GetDefaultSkin(Actor actor)

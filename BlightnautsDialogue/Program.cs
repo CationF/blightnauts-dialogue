@@ -20,7 +20,8 @@ namespace BlightnautsDialogue
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                Exporter.Export(dialog.SelectedPath);
+                Exporter.DialogueExporter.Export(dialog.SelectedPath + "\\AnimationTemplates");
+                Exporter.BehaviourExporter.Export(dialog.SelectedPath + "\\Behaviours");
             }
         }
     }
