@@ -51,13 +51,17 @@ namespace BlightnautsDialogue
             System.Windows.Forms.Label labelPortrait;
             System.Windows.Forms.ToolTip toolTipSimple;
             System.Windows.Forms.ToolTip toolTipLong;
+            System.Windows.Forms.ToolStripMenuItem topBarView;
+            System.Windows.Forms.ToolStripMenuItem topBarTextbox;
+            System.Windows.Forms.ToolStripMenuItem topBarTextboxBackgroundColor;
+            System.Windows.Forms.ToolStripMenuItem topBarTextboxForegroundColor;
+            System.Windows.Forms.ToolStripMenuItem topBarSetDirectory;
             this.topBarNew = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSave = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarExit = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarNewTrigger = new System.Windows.Forms.ToolStripMenuItem();
-            this.topBarLoadTrigger = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.labelCharacterStatus = new System.Windows.Forms.Label();
@@ -77,6 +81,9 @@ namespace BlightnautsDialogue
             this.textBoxMain = new System.Windows.Forms.TextBox();
             this.buttonSequenceNext = new System.Windows.Forms.Button();
             this.buttonSequencePrevious = new System.Windows.Forms.Button();
+            this.topBarTextboxZoomIn = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarTextboxZoomOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorDialogTextboxMain = new System.Windows.Forms.ColorDialog();
             topBar = new System.Windows.Forms.MenuStrip();
             topBarFile = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -97,6 +104,11 @@ namespace BlightnautsDialogue
             labelPortrait = new System.Windows.Forms.Label();
             toolTipSimple = new System.Windows.Forms.ToolTip(this.components);
             toolTipLong = new System.Windows.Forms.ToolTip(this.components);
+            topBarView = new System.Windows.Forms.ToolStripMenuItem();
+            topBarTextbox = new System.Windows.Forms.ToolStripMenuItem();
+            topBarTextboxBackgroundColor = new System.Windows.Forms.ToolStripMenuItem();
+            topBarTextboxForegroundColor = new System.Windows.Forms.ToolStripMenuItem();
+            topBarSetDirectory = new System.Windows.Forms.ToolStripMenuItem();
             topBar.SuspendLayout();
             generalLayout.SuspendLayout();
             topLayout.SuspendLayout();
@@ -111,6 +123,7 @@ namespace BlightnautsDialogue
             // 
             topBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             topBarFile,
+            topBarView,
             topBarProject,
             topBarInfo});
             topBar.Location = new System.Drawing.Point(0, 0);
@@ -187,8 +200,8 @@ namespace BlightnautsDialogue
             // topBarProject
             // 
             topBarProject.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.topBarNewTrigger,
-            this.topBarLoadTrigger});
+            topBarSetDirectory,
+            this.topBarNewTrigger});
             topBarProject.Name = "topBarProject";
             topBarProject.Size = new System.Drawing.Size(56, 20);
             topBarProject.Text = "Project";
@@ -196,16 +209,9 @@ namespace BlightnautsDialogue
             // topBarNewTrigger
             // 
             this.topBarNewTrigger.Name = "topBarNewTrigger";
-            this.topBarNewTrigger.Size = new System.Drawing.Size(139, 22);
+            this.topBarNewTrigger.Size = new System.Drawing.Size(180, 22);
             this.topBarNewTrigger.Text = "New Trigger";
             this.topBarNewTrigger.Click += new System.EventHandler(this.topBarNewTrigger_Click);
-            // 
-            // topBarLoadTrigger
-            // 
-            this.topBarLoadTrigger.Name = "topBarLoadTrigger";
-            this.topBarLoadTrigger.Size = new System.Drawing.Size(139, 22);
-            this.topBarLoadTrigger.Text = "Load Trigger";
-            this.topBarLoadTrigger.Click += new System.EventHandler(this.topBarLoadTrigger_Click);
             // 
             // topBarInfo
             // 
@@ -395,7 +401,7 @@ namespace BlightnautsDialogue
             this.dropdownTexture.Size = new System.Drawing.Size(192, 21);
             this.dropdownTexture.TabIndex = 2;
             toolTipLong.SetToolTip(this.dropdownTexture, resources.GetString("dropdownTexture.ToolTip"));
-            this.dropdownTexture.SelectedIndexChanged += new System.EventHandler(this.dropdownTexture_SelectedIndexChanged);
+            this.dropdownTexture.TextUpdate += new System.EventHandler(this.dropdownTexture_TextUpdate);
             // 
             // dropdownDialogues
             // 
@@ -449,6 +455,7 @@ namespace BlightnautsDialogue
             this.checkBoxGenerateAnimationTemplate.Text = "Generate AnimationTemplate";
             toolTipLong.SetToolTip(this.checkBoxGenerateAnimationTemplate, resources.GetString("checkBoxGenerateAnimationTemplate.ToolTip"));
             this.checkBoxGenerateAnimationTemplate.UseVisualStyleBackColor = true;
+            this.checkBoxGenerateAnimationTemplate.CheckedChanged += new System.EventHandler(this.checkBoxGenerateAnimationTemplate_CheckedChanged);
             // 
             // textBoxDelay
             // 
@@ -562,6 +569,60 @@ namespace BlightnautsDialogue
             this.buttonSequencePrevious.UseVisualStyleBackColor = true;
             this.buttonSequencePrevious.Click += new System.EventHandler(this.buttonSequencePrevious_Click);
             // 
+            // topBarView
+            // 
+            topBarView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            topBarTextbox});
+            topBarView.Name = "topBarView";
+            topBarView.Size = new System.Drawing.Size(44, 20);
+            topBarView.Text = "View";
+            // 
+            // topBarTextbox
+            // 
+            topBarTextbox.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.topBarTextboxZoomIn,
+            this.topBarTextboxZoomOut,
+            topBarTextboxBackgroundColor,
+            topBarTextboxForegroundColor});
+            topBarTextbox.Name = "topBarTextbox";
+            topBarTextbox.Size = new System.Drawing.Size(180, 22);
+            topBarTextbox.Text = "Textbox";
+            // 
+            // topBarTextboxZoomIn
+            // 
+            this.topBarTextboxZoomIn.Name = "topBarTextboxZoomIn";
+            this.topBarTextboxZoomIn.Size = new System.Drawing.Size(180, 22);
+            this.topBarTextboxZoomIn.Text = "Zoom In";
+            this.topBarTextboxZoomIn.Click += new System.EventHandler(this.topBarTextboxZoomIn_Click);
+            // 
+            // topBarTextboxZoomOut
+            // 
+            this.topBarTextboxZoomOut.Name = "topBarTextboxZoomOut";
+            this.topBarTextboxZoomOut.Size = new System.Drawing.Size(180, 22);
+            this.topBarTextboxZoomOut.Text = "Zoom Out";
+            this.topBarTextboxZoomOut.Click += new System.EventHandler(this.topBarTextboxZoomOut_Click);
+            // 
+            // topBarTextboxBackgroundColor
+            // 
+            topBarTextboxBackgroundColor.Name = "topBarTextboxBackgroundColor";
+            topBarTextboxBackgroundColor.Size = new System.Drawing.Size(180, 22);
+            topBarTextboxBackgroundColor.Text = "Background Color";
+            topBarTextboxBackgroundColor.Click += new System.EventHandler(this.topBarTextboxBackgroundColor_Click);
+            // 
+            // topBarTextboxForegroundColor
+            // 
+            topBarTextboxForegroundColor.Name = "topBarTextboxForegroundColor";
+            topBarTextboxForegroundColor.Size = new System.Drawing.Size(180, 22);
+            topBarTextboxForegroundColor.Text = "Foreground Color";
+            topBarTextboxForegroundColor.Click += new System.EventHandler(this.topBarTextboxForegroundColor_Click);
+            // 
+            // topBarSetDirectory
+            // 
+            topBarSetDirectory.Name = "topBarSetDirectory";
+            topBarSetDirectory.Size = new System.Drawing.Size(180, 22);
+            topBarSetDirectory.Text = "Set Mod Directory";
+            topBarSetDirectory.Click += new System.EventHandler(this.topBarSetDirectory_Click);
+            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -569,10 +630,11 @@ namespace BlightnautsDialogue
             this.ClientSize = new System.Drawing.Size(601, 661);
             this.Controls.Add(generalLayout);
             this.Controls.Add(topBar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = topBar;
             this.MinimumSize = new System.Drawing.Size(617, 500);
             this.Name = "EditorWindow";
-            this.Text = "EditorWindow";
+            this.Text = "Blightnauts Dialogue Editor";
             topBar.ResumeLayout(false);
             topBar.PerformLayout();
             generalLayout.ResumeLayout(false);
@@ -597,7 +659,6 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ToolStripMenuItem topBarSaveAs;
         private System.Windows.Forms.ToolStripMenuItem topBarExit;
         private System.Windows.Forms.ToolStripMenuItem topBarNewTrigger;
-        private System.Windows.Forms.ToolStripMenuItem topBarLoadTrigger;
         private System.Windows.Forms.ToolStripMenuItem topBarHelp;
         private System.Windows.Forms.ToolStripMenuItem topBarAbout;
         private System.Windows.Forms.ComboBox dropdownCharacters;
@@ -617,5 +678,8 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ComboBox dropdownTexture;
         private System.Windows.Forms.Button buttonSequencePrevious;
         private System.Windows.Forms.Button buttonSequenceNext;
+        private System.Windows.Forms.ToolStripMenuItem topBarTextboxZoomIn;
+        private System.Windows.Forms.ToolStripMenuItem topBarTextboxZoomOut;
+        private System.Windows.Forms.ColorDialog colorDialogTextboxMain;
     }
 }

@@ -15,6 +15,8 @@ namespace BlightnautsDialogue
         private bool initializing;
         private bool refreshing;
         private int sequence;
+        private float zoom;
+        private string filePath, modPath;
 
         public EditorWindow()
         {
@@ -32,6 +34,8 @@ namespace BlightnautsDialogue
                 dropdownTriggers.Items.Add(area.Name);
             }
             dropdownTriggers.SelectedIndex = 0;
+            zoom = 12;
+            SetFontSize(zoom);
             initializing = false;
             RefreshWindow();
         }
@@ -50,6 +54,11 @@ namespace BlightnautsDialogue
                     CharacterDialogue[dropdownCharacters.SelectedIndex].
                     TeamDialogues[index].Dialogues;
             }
+        }
+
+        private void SetFontSize(float size)
+        {
+            textBoxMain.Font = new Font(textBoxMain.Font.FontFamily, size, textBoxMain.Font.Style, textBoxMain.Font.Unit);
         }
 
         private void RefreshWindow()
@@ -81,7 +90,7 @@ namespace BlightnautsDialogue
                 textBoxDelay.Text = dialogues[sequence].Delay.ToString();
                 textBoxDelay.Enabled = true;
 
-                checkBoxGenerateAnimationTemplate.Checked = true;
+                checkBoxGenerateAnimationTemplate.Checked = dialogues[sequence].GenerateAnimationTemplate;
                 checkBoxGenerateAnimationTemplate.Enabled = true;
 
                 textBoxMain.Text = dialogues[sequence].Content;
@@ -115,6 +124,9 @@ namespace BlightnautsDialogue
             buttonSequencePrevious.Enabled = sequence > 0 ? true : false;
             buttonSequenceNext.Enabled = sequence < dialogues.Count - 1 ? true : false;
             buttonSequenceMinus.Enabled = dialogues.Count > 0 ? true : false;
+
+            textBoxDuration.Text = ValidateNumericInput(textBoxDuration.Text);
+            textBoxDelay.Text = ValidateNumericInput(textBoxDelay.Text);
 
             refreshing = false;
         }
@@ -204,6 +216,11 @@ namespace BlightnautsDialogue
             Close();
         }
 
+        private void topBarSetDirectory_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void topBarNewTrigger_Click(object sender, EventArgs e)
         {
             // For now.
@@ -214,9 +231,34 @@ namespace BlightnautsDialogue
             RefreshWindow();
         }
 
-        private void topBarLoadTrigger_Click(object sender, EventArgs e)
+        private void topBarTextboxZoomIn_Click(object sender, EventArgs e)
         {
+            if (zoom < 40)
+            {
+                zoom += 4;
+                SetFontSize(zoom);
+            }
+        }
 
+        private void topBarTextboxZoomOut_Click(object sender, EventArgs e)
+        {
+            if (zoom > 8)
+            {
+                zoom -= 4;
+                SetFontSize(zoom);
+            }
+        }
+
+        private void topBarTextboxBackgroundColor_Click(object sender, EventArgs e)
+        {
+            colorDialogTextboxMain.ShowDialog();
+            textBoxMain.BackColor = colorDialogTextboxMain.Color;
+        }
+
+        private void topBarTextboxForegroundColor_Click(object sender, EventArgs e)
+        {
+            colorDialogTextboxMain.ShowDialog();
+            textBoxMain.ForeColor = colorDialogTextboxMain.Color;
         }
 
         private void dropdownCharacters_SelectedIndexChanged(object sender, EventArgs e)
@@ -243,6 +285,7 @@ namespace BlightnautsDialogue
                 dropdownDialogues.Items.Add("team" + i.ToString());
             }
             dropdownDialogues.SelectedIndex = 0;
+            sequence = 0;
             RefreshWindow();
         }
 
@@ -296,11 +339,11 @@ namespace BlightnautsDialogue
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Portrait = textBoxPortrait.Text;
         }
 
-        private void dropdownTexture_SelectedIndexChanged(object sender, EventArgs e)
+        private void dropdownTexture_TextUpdate(object sender, EventArgs e)
         {
             if (refreshing)
                 return;
-            GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Texture = dropdownTexture.Items[dropdownTexture.SelectedIndex].ToString();
+            GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Texture = dropdownTexture.Text;
         }
 
         private void textBoxDuration_TextChanged(object sender, EventArgs e)
@@ -313,7 +356,7 @@ namespace BlightnautsDialogue
             }
             catch
             {
-                MessageBox.Show("An error has occurred", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBoxDuration.Text = "0";
             }
         }
 
@@ -327,7 +370,7 @@ namespace BlightnautsDialogue
             }
             catch
             {
-                MessageBox.Show("An error has occurred", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBoxDelay.Text = "0";
             }
         }
 
@@ -336,6 +379,13 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Content = textBoxMain.Text;
+        }
+
+        private void checkBoxGenerateAnimationTemplate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (refreshing)
+                return;
+            GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].GenerateAnimationTemplate = checkBoxGenerateAnimationTemplate.Checked;
         }
     }
 }

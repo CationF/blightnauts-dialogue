@@ -74,6 +74,7 @@ namespace BlightnautsDialogue
         {
             public string Portrait, Texture, Content;
             public float Duration, Delay;
+            public bool GenerateAnimationTemplate { get; set; }
 
             public Dialogue()
             {
@@ -82,6 +83,7 @@ namespace BlightnautsDialogue
                 Content = string.Empty;
                 Duration = 0;
                 Delay = 0;
+                GenerateAnimationTemplate = true;
             }
 
             public Dialogue(string content, string portrait, string texture, float duration, float delay)
@@ -91,6 +93,17 @@ namespace BlightnautsDialogue
                 Content = content;
                 Duration = duration;
                 Delay = delay;
+                GenerateAnimationTemplate = true;
+            }
+
+            public Dialogue(string content, string portrait, string texture, float duration, float delay, bool generateAnimationTemplate)
+            {
+                Portrait = portrait;
+                Texture = texture;
+                Content = content;
+                Duration = duration;
+                Delay = delay;
+                GenerateAnimationTemplate = generateAnimationTemplate;
             }
         }
 
