@@ -10,6 +10,7 @@ namespace BlightnautsDialogue
             public readonly string ClassName;
             public readonly string RealName;
             public readonly int SkinIndex;
+            public bool UseDefaultSkin { get; set; }
             public string IndexedName { get => ClassName.ToLower() + GetIndexString(SkinIndex); }
             private string GetIndexString(int index)
             {
@@ -30,6 +31,7 @@ namespace BlightnautsDialogue
                 ClassName = className;
                 RealName = realName;
                 SkinIndex = 1;
+                UseDefaultSkin = true;
             }
 
             public Actor(string className, string realName, int skinIndex)
@@ -39,6 +41,7 @@ namespace BlightnautsDialogue
                 if (skinIndex < 2)
                     skinIndex = 999;
                 SkinIndex = skinIndex;
+                UseDefaultSkin = false;
             }
         }
 
@@ -49,7 +52,7 @@ namespace BlightnautsDialogue
             new Actor("Assassin", "Cheerleader Penny", 3),
 
             new Actor("Bird", "Vinnie and Spike"),
-            new Actor("Bird", "Cap'n Vinnie & Seadog Spike", 2),
+            new Actor("Bird", "Cap'n Vinnie and Seadog Spike", 2),
             new Actor("Bird", "Cynical Vinnie and Total Spike", 3),
 
             new Actor("Blazer", "Coco Nebulon"),
@@ -211,6 +214,7 @@ namespace BlightnautsDialogue
             (
                 "ClementH doesn't like me :(",
                 "IconCharacterBlinker",
+                "Texture",
                 2,
                 0
             ));
@@ -218,6 +222,7 @@ namespace BlightnautsDialogue
             (
                 "If ClementH ever likes me, I'll give him an egg... not!",
                 "IconCharacterBlinker",
+                "Texture",
                 3,
                 0
             ));
@@ -225,6 +230,7 @@ namespace BlightnautsDialogue
             (
                 "This be an interestin' experiment, partner! This fella right here's trying somethin' fancy with \"Delays\" or somethin'.",
                 "IconCharacterCowboy",
+                "Texture",
                 4,
                 2
             ));
@@ -232,6 +238,7 @@ namespace BlightnautsDialogue
             (
                 "Pah! You think that's interesting?! Then let me show you something much cooler!",
                 "IconCharacterAssassin",
+                "Texture",
                 4,
                 0
             ));
@@ -239,7 +246,8 @@ namespace BlightnautsDialogue
             (
                 "You see, my internal name has not one but two bad words in a row: Ass Ass In!",
                 "IconCharacterAssassin",
-                Convert.ToDecimal(3.5f),
+                "Texture",
+                3.5f,
                 1
             ));
         }

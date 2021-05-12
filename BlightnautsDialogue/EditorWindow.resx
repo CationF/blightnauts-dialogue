@@ -186,7 +186,7 @@
   <metadata name="labelDuration.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="labelDialogueBox.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="labelTexture.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
   <metadata name="labelPortrait.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -198,16 +198,63 @@
   <metadata name="groupTrigger.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="labelPortrait.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="toolTipLong.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="labelDialogueBox.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="toolTipLong.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>232, 17</value>
+  </metadata>
+  <data name="dropdownTexture.ToolTip" xml:space="preserve">
+    <value>The texture used for the textbox.
+
+It is recommended that you use the included textures in the "/images" folder,
+but you can also use your own by dragging them into that folder, which will
+then be copied to the mod directory during export.
+
+Alternatively you can also write the name manually, however make sure your
+mod has that texture in the "Textures" folder.
+
+Remember to use "(mod)" before the name if it's a custom texture.
+</value>
+  </data>
+  <data name="dropdownDialogues.ToolTip" xml:space="preserve">
+    <value>The current dialogue group.
+
+Triggers are split into two or more groups: solo and team. Solo is shown in single player, and team is shown in co-op.
+Depending on how you set up each trigger, there may only be team0 or there can be several team dialogues.
+These are shown in order, so team0 is shown first, then team1, etc.
+
+Each dialogue group then has a dialgue sequence, which controls how many dialogue boxes appear before the next character speaks.
+Most only have single piece of dialogue in the sequence.</value>
+  </data>
+  <data name="checkBoxGenerateAnimationTemplate.ToolTip" xml:space="preserve">
+    <value>If enabled, will generate the .xml files for the AnimationTemplates folder.
+If disabled, will only generate the times and triggers for the associated character.
+Only disable if you have custom-made animations for the textboxes, so they are not overwritten during export.
+</value>
+  </data>
+  <metadata name="labelDelay.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
   <metadata name="labelDuration.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
   </metadata>
-  <metadata name="labelDelay.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="labelTexture.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>
+  </metadata>
+  <metadata name="labelPortrait.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="toolTipSimple.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="toolTipSimple.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>105, 17</value>
+  </metadata>
+  <metadata name="toolTipSimple.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="toolTipSimple.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>105, 17</value>
   </metadata>
 </root>

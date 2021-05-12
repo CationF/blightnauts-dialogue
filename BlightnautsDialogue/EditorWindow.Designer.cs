@@ -29,6 +29,7 @@ namespace BlightnautsDialogue
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.MenuStrip topBar;
             System.Windows.Forms.ToolStripMenuItem topBarFile;
             System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -43,10 +44,13 @@ namespace BlightnautsDialogue
             System.Windows.Forms.GroupBox groupBoxDialogue;
             System.Windows.Forms.TableLayoutPanel dialogueLayout;
             System.Windows.Forms.GroupBox groupBoxDialogueOptions;
-            System.Windows.Forms.Label labelPortrait;
-            System.Windows.Forms.Label labelDialogueBox;
-            System.Windows.Forms.Label labelDuration;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorWindow));
             System.Windows.Forms.Label labelDelay;
+            System.Windows.Forms.Label labelDuration;
+            System.Windows.Forms.Label labelTexture;
+            System.Windows.Forms.Label labelPortrait;
+            System.Windows.Forms.ToolTip toolTipSimple;
+            System.Windows.Forms.ToolTip toolTipLong;
             this.topBarNew = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSave = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,20 +60,23 @@ namespace BlightnautsDialogue
             this.topBarLoadTrigger = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.characterDropdown = new System.Windows.Forms.ComboBox();
-            this.triggerDropdown = new System.Windows.Forms.ComboBox();
-            this.checkBoxUseDefault = new System.Windows.Forms.CheckBox();
             this.labelCharacterStatus = new System.Windows.Forms.Label();
+            this.checkBoxUseDefault = new System.Windows.Forms.CheckBox();
+            this.dropdownCharacters = new System.Windows.Forms.ComboBox();
             this.labelTriggerStatus = new System.Windows.Forms.Label();
-            this.textBoxPortrait = new System.Windows.Forms.TextBox();
-            this.textBoxDialogueBox = new System.Windows.Forms.TextBox();
-            this.textBoxDuration = new System.Windows.Forms.TextBox();
-            this.textBoxDelay = new System.Windows.Forms.TextBox();
-            this.checkBoxGenerateAnimationTemplate = new System.Windows.Forms.CheckBox();
-            this.buttonSequenceMinus = new System.Windows.Forms.Button();
-            this.buttonSequencePlus = new System.Windows.Forms.Button();
+            this.dropdownTriggers = new System.Windows.Forms.ComboBox();
+            this.dropdownTexture = new System.Windows.Forms.ComboBox();
+            this.dropdownDialogues = new System.Windows.Forms.ComboBox();
             this.labelSequence = new System.Windows.Forms.Label();
+            this.buttonSequencePlus = new System.Windows.Forms.Button();
+            this.buttonSequenceMinus = new System.Windows.Forms.Button();
+            this.checkBoxGenerateAnimationTemplate = new System.Windows.Forms.CheckBox();
+            this.textBoxDelay = new System.Windows.Forms.TextBox();
+            this.textBoxDuration = new System.Windows.Forms.TextBox();
+            this.textBoxPortrait = new System.Windows.Forms.TextBox();
             this.textBoxMain = new System.Windows.Forms.TextBox();
+            this.buttonSequenceNext = new System.Windows.Forms.Button();
+            this.buttonSequencePrevious = new System.Windows.Forms.Button();
             topBar = new System.Windows.Forms.MenuStrip();
             topBarFile = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -84,10 +91,12 @@ namespace BlightnautsDialogue
             groupBoxDialogue = new System.Windows.Forms.GroupBox();
             dialogueLayout = new System.Windows.Forms.TableLayoutPanel();
             groupBoxDialogueOptions = new System.Windows.Forms.GroupBox();
-            labelPortrait = new System.Windows.Forms.Label();
-            labelDialogueBox = new System.Windows.Forms.Label();
-            labelDuration = new System.Windows.Forms.Label();
             labelDelay = new System.Windows.Forms.Label();
+            labelDuration = new System.Windows.Forms.Label();
+            labelTexture = new System.Windows.Forms.Label();
+            labelPortrait = new System.Windows.Forms.Label();
+            toolTipSimple = new System.Windows.Forms.ToolTip(this.components);
+            toolTipLong = new System.Windows.Forms.ToolTip(this.components);
             topBar.SuspendLayout();
             generalLayout.SuspendLayout();
             topLayout.SuspendLayout();
@@ -257,7 +266,7 @@ namespace BlightnautsDialogue
             // 
             groupCharacter.Controls.Add(this.labelCharacterStatus);
             groupCharacter.Controls.Add(this.checkBoxUseDefault);
-            groupCharacter.Controls.Add(this.characterDropdown);
+            groupCharacter.Controls.Add(this.dropdownCharacters);
             groupCharacter.Dock = System.Windows.Forms.DockStyle.Fill;
             groupCharacter.Location = new System.Drawing.Point(3, 3);
             groupCharacter.Name = "groupCharacter";
@@ -265,46 +274,6 @@ namespace BlightnautsDialogue
             groupCharacter.TabIndex = 0;
             groupCharacter.TabStop = false;
             groupCharacter.Text = "Character";
-            // 
-            // characterDropdown
-            // 
-            this.characterDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.characterDropdown.FormattingEnabled = true;
-            this.characterDropdown.Location = new System.Drawing.Point(6, 19);
-            this.characterDropdown.Name = "characterDropdown";
-            this.characterDropdown.Size = new System.Drawing.Size(282, 21);
-            this.characterDropdown.TabIndex = 0;
-            // 
-            // groupTrigger
-            // 
-            groupTrigger.Controls.Add(this.labelTriggerStatus);
-            groupTrigger.Controls.Add(this.triggerDropdown);
-            groupTrigger.Dock = System.Windows.Forms.DockStyle.Fill;
-            groupTrigger.Location = new System.Drawing.Point(303, 3);
-            groupTrigger.Name = "groupTrigger";
-            groupTrigger.Size = new System.Drawing.Size(294, 69);
-            groupTrigger.TabIndex = 1;
-            groupTrigger.TabStop = false;
-            groupTrigger.Text = "Trigger";
-            // 
-            // triggerDropdown
-            // 
-            this.triggerDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.triggerDropdown.FormattingEnabled = true;
-            this.triggerDropdown.Location = new System.Drawing.Point(7, 19);
-            this.triggerDropdown.Name = "triggerDropdown";
-            this.triggerDropdown.Size = new System.Drawing.Size(281, 21);
-            this.triggerDropdown.TabIndex = 0;
-            // 
-            // checkBoxUseDefault
-            // 
-            this.checkBoxUseDefault.AutoSize = true;
-            this.checkBoxUseDefault.Location = new System.Drawing.Point(186, 47);
-            this.checkBoxUseDefault.Name = "checkBoxUseDefault";
-            this.checkBoxUseDefault.Size = new System.Drawing.Size(102, 17);
-            this.checkBoxUseDefault.TabIndex = 1;
-            this.checkBoxUseDefault.Text = "Use default skin";
-            this.checkBoxUseDefault.UseVisualStyleBackColor = true;
             // 
             // labelCharacterStatus
             // 
@@ -315,6 +284,39 @@ namespace BlightnautsDialogue
             this.labelCharacterStatus.Text = "Status";
             this.labelCharacterStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // checkBoxUseDefault
+            // 
+            this.checkBoxUseDefault.AutoSize = true;
+            this.checkBoxUseDefault.Location = new System.Drawing.Point(186, 47);
+            this.checkBoxUseDefault.Name = "checkBoxUseDefault";
+            this.checkBoxUseDefault.Size = new System.Drawing.Size(102, 17);
+            this.checkBoxUseDefault.TabIndex = 1;
+            this.checkBoxUseDefault.Text = "Use default skin";
+            this.checkBoxUseDefault.UseVisualStyleBackColor = true;
+            this.checkBoxUseDefault.CheckedChanged += new System.EventHandler(this.checkBoxUseDefault_CheckedChanged);
+            // 
+            // dropdownCharacters
+            // 
+            this.dropdownCharacters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownCharacters.FormattingEnabled = true;
+            this.dropdownCharacters.Location = new System.Drawing.Point(6, 19);
+            this.dropdownCharacters.Name = "dropdownCharacters";
+            this.dropdownCharacters.Size = new System.Drawing.Size(282, 21);
+            this.dropdownCharacters.TabIndex = 0;
+            this.dropdownCharacters.SelectedIndexChanged += new System.EventHandler(this.dropdownCharacters_SelectedIndexChanged);
+            // 
+            // groupTrigger
+            // 
+            groupTrigger.Controls.Add(this.labelTriggerStatus);
+            groupTrigger.Controls.Add(this.dropdownTriggers);
+            groupTrigger.Dock = System.Windows.Forms.DockStyle.Fill;
+            groupTrigger.Location = new System.Drawing.Point(303, 3);
+            groupTrigger.Name = "groupTrigger";
+            groupTrigger.Size = new System.Drawing.Size(294, 69);
+            groupTrigger.TabIndex = 1;
+            groupTrigger.TabStop = false;
+            groupTrigger.Text = "Trigger";
+            // 
             // labelTriggerStatus
             // 
             this.labelTriggerStatus.Location = new System.Drawing.Point(7, 47);
@@ -323,6 +325,16 @@ namespace BlightnautsDialogue
             this.labelTriggerStatus.TabIndex = 1;
             this.labelTriggerStatus.Text = "Status";
             this.labelTriggerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // dropdownTriggers
+            // 
+            this.dropdownTriggers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownTriggers.FormattingEnabled = true;
+            this.dropdownTriggers.Location = new System.Drawing.Point(7, 19);
+            this.dropdownTriggers.Name = "dropdownTriggers";
+            this.dropdownTriggers.Size = new System.Drawing.Size(281, 21);
+            this.dropdownTriggers.TabIndex = 0;
+            this.dropdownTriggers.SelectedIndexChanged += new System.EventHandler(this.dropdownTriggers_SelectedIndexChanged);
             // 
             // groupBoxDialogue
             // 
@@ -352,6 +364,10 @@ namespace BlightnautsDialogue
             // 
             // groupBoxDialogueOptions
             // 
+            groupBoxDialogueOptions.Controls.Add(this.buttonSequencePrevious);
+            groupBoxDialogueOptions.Controls.Add(this.buttonSequenceNext);
+            groupBoxDialogueOptions.Controls.Add(this.dropdownTexture);
+            groupBoxDialogueOptions.Controls.Add(this.dropdownDialogues);
             groupBoxDialogueOptions.Controls.Add(this.labelSequence);
             groupBoxDialogueOptions.Controls.Add(this.buttonSequencePlus);
             groupBoxDialogueOptions.Controls.Add(this.buttonSequenceMinus);
@@ -360,8 +376,7 @@ namespace BlightnautsDialogue
             groupBoxDialogueOptions.Controls.Add(labelDelay);
             groupBoxDialogueOptions.Controls.Add(labelDuration);
             groupBoxDialogueOptions.Controls.Add(this.textBoxDuration);
-            groupBoxDialogueOptions.Controls.Add(this.textBoxDialogueBox);
-            groupBoxDialogueOptions.Controls.Add(labelDialogueBox);
+            groupBoxDialogueOptions.Controls.Add(labelTexture);
             groupBoxDialogueOptions.Controls.Add(labelPortrait);
             groupBoxDialogueOptions.Controls.Add(this.textBoxPortrait);
             groupBoxDialogueOptions.Dock = System.Windows.Forms.DockStyle.Left;
@@ -372,67 +387,68 @@ namespace BlightnautsDialogue
             groupBoxDialogueOptions.TabStop = false;
             groupBoxDialogueOptions.Text = "Options";
             // 
-            // textBoxPortrait
+            // dropdownTexture
             // 
-            this.textBoxPortrait.Location = new System.Drawing.Point(6, 32);
-            this.textBoxPortrait.MaxLength = 200;
-            this.textBoxPortrait.Name = "textBoxPortrait";
-            this.textBoxPortrait.Size = new System.Drawing.Size(192, 20);
-            this.textBoxPortrait.TabIndex = 1;
+            this.dropdownTexture.FormattingEnabled = true;
+            this.dropdownTexture.Location = new System.Drawing.Point(6, 71);
+            this.dropdownTexture.Name = "dropdownTexture";
+            this.dropdownTexture.Size = new System.Drawing.Size(192, 21);
+            this.dropdownTexture.TabIndex = 2;
+            toolTipLong.SetToolTip(this.dropdownTexture, resources.GetString("dropdownTexture.ToolTip"));
+            this.dropdownTexture.SelectedIndexChanged += new System.EventHandler(this.dropdownTexture_SelectedIndexChanged);
             // 
-            // labelPortrait
+            // dropdownDialogues
             // 
-            labelPortrait.AutoSize = true;
-            labelPortrait.Location = new System.Drawing.Point(3, 16);
-            labelPortrait.Name = "labelPortrait";
-            labelPortrait.Size = new System.Drawing.Size(40, 13);
-            labelPortrait.TabIndex = 1;
-            labelPortrait.Text = "Portrait";
+            this.dropdownDialogues.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownDialogues.FormattingEnabled = true;
+            this.dropdownDialogues.Location = new System.Drawing.Point(360, 16);
+            this.dropdownDialogues.Name = "dropdownDialogues";
+            this.dropdownDialogues.Size = new System.Drawing.Size(217, 21);
+            this.dropdownDialogues.TabIndex = 2;
+            toolTipLong.SetToolTip(this.dropdownDialogues, resources.GetString("dropdownDialogues.ToolTip"));
+            this.dropdownDialogues.SelectedIndexChanged += new System.EventHandler(this.dropdownDialogues_SelectedIndexChanged);
             // 
-            // labelDialogueBox
+            // labelSequence
             // 
-            labelDialogueBox.AutoSize = true;
-            labelDialogueBox.Location = new System.Drawing.Point(3, 55);
-            labelDialogueBox.Name = "labelDialogueBox";
-            labelDialogueBox.Size = new System.Drawing.Size(70, 13);
-            labelDialogueBox.TabIndex = 2;
-            labelDialogueBox.Text = "Dialogue Box";
+            this.labelSequence.Location = new System.Drawing.Point(360, 71);
+            this.labelSequence.Name = "labelSequence";
+            this.labelSequence.Size = new System.Drawing.Size(101, 20);
+            this.labelSequence.TabIndex = 11;
+            this.labelSequence.Text = "Sequence: 0 of 0";
+            this.labelSequence.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // textBoxDialogueBox
+            // buttonSequencePlus
             // 
-            this.textBoxDialogueBox.Location = new System.Drawing.Point(6, 71);
-            this.textBoxDialogueBox.MaxLength = 200;
-            this.textBoxDialogueBox.Name = "textBoxDialogueBox";
-            this.textBoxDialogueBox.Size = new System.Drawing.Size(192, 20);
-            this.textBoxDialogueBox.TabIndex = 2;
+            this.buttonSequencePlus.Location = new System.Drawing.Point(554, 68);
+            this.buttonSequencePlus.Name = "buttonSequencePlus";
+            this.buttonSequencePlus.Size = new System.Drawing.Size(23, 23);
+            this.buttonSequencePlus.TabIndex = 7;
+            this.buttonSequencePlus.Text = "+";
+            toolTipSimple.SetToolTip(this.buttonSequencePlus, "Add a textbox to this sequence.");
+            this.buttonSequencePlus.UseVisualStyleBackColor = true;
+            this.buttonSequencePlus.Click += new System.EventHandler(this.buttonSequencePlus_Click);
             // 
-            // textBoxDuration
+            // buttonSequenceMinus
             // 
-            this.textBoxDuration.Location = new System.Drawing.Point(232, 32);
-            this.textBoxDuration.MaxLength = 10;
-            this.textBoxDuration.Name = "textBoxDuration";
-            this.textBoxDuration.Size = new System.Drawing.Size(100, 20);
-            this.textBoxDuration.TabIndex = 3;
-            this.textBoxDuration.Text = "0.00";
-            this.textBoxDuration.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.buttonSequenceMinus.Location = new System.Drawing.Point(525, 68);
+            this.buttonSequenceMinus.Name = "buttonSequenceMinus";
+            this.buttonSequenceMinus.Size = new System.Drawing.Size(23, 23);
+            this.buttonSequenceMinus.TabIndex = 6;
+            this.buttonSequenceMinus.Text = "-";
+            toolTipSimple.SetToolTip(this.buttonSequenceMinus, "Remove this textbox from the sequence.");
+            this.buttonSequenceMinus.UseVisualStyleBackColor = true;
+            this.buttonSequenceMinus.Click += new System.EventHandler(this.buttonSequenceMinus_Click);
             // 
-            // labelDuration
+            // checkBoxGenerateAnimationTemplate
             // 
-            labelDuration.AutoSize = true;
-            labelDuration.Location = new System.Drawing.Point(229, 16);
-            labelDuration.Name = "labelDuration";
-            labelDuration.Size = new System.Drawing.Size(47, 13);
-            labelDuration.TabIndex = 5;
-            labelDuration.Text = "Duration";
-            // 
-            // labelDelay
-            // 
-            labelDelay.AutoSize = true;
-            labelDelay.Location = new System.Drawing.Point(229, 55);
-            labelDelay.Name = "labelDelay";
-            labelDelay.Size = new System.Drawing.Size(34, 13);
-            labelDelay.TabIndex = 6;
-            labelDelay.Text = "Delay";
+            this.checkBoxGenerateAnimationTemplate.AutoSize = true;
+            this.checkBoxGenerateAnimationTemplate.Location = new System.Drawing.Point(366, 45);
+            this.checkBoxGenerateAnimationTemplate.Name = "checkBoxGenerateAnimationTemplate";
+            this.checkBoxGenerateAnimationTemplate.Size = new System.Drawing.Size(163, 17);
+            this.checkBoxGenerateAnimationTemplate.TabIndex = 5;
+            this.checkBoxGenerateAnimationTemplate.Text = "Generate AnimationTemplate";
+            toolTipLong.SetToolTip(this.checkBoxGenerateAnimationTemplate, resources.GetString("checkBoxGenerateAnimationTemplate.ToolTip"));
+            this.checkBoxGenerateAnimationTemplate.UseVisualStyleBackColor = true;
             // 
             // textBoxDelay
             // 
@@ -443,43 +459,67 @@ namespace BlightnautsDialogue
             this.textBoxDelay.TabIndex = 4;
             this.textBoxDelay.Text = "0.00";
             this.textBoxDelay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxDelay.TextChanged += new System.EventHandler(this.textBoxDelay_TextChanged);
             // 
-            // checkBoxGenerateAnimationTemplate
+            // labelDelay
             // 
-            this.checkBoxGenerateAnimationTemplate.AutoSize = true;
-            this.checkBoxGenerateAnimationTemplate.Location = new System.Drawing.Point(366, 34);
-            this.checkBoxGenerateAnimationTemplate.Name = "checkBoxGenerateAnimationTemplate";
-            this.checkBoxGenerateAnimationTemplate.Size = new System.Drawing.Size(163, 17);
-            this.checkBoxGenerateAnimationTemplate.TabIndex = 5;
-            this.checkBoxGenerateAnimationTemplate.Text = "Generate AnimationTemplate";
-            this.checkBoxGenerateAnimationTemplate.UseVisualStyleBackColor = true;
+            labelDelay.AutoSize = true;
+            labelDelay.Location = new System.Drawing.Point(229, 55);
+            labelDelay.Name = "labelDelay";
+            labelDelay.Size = new System.Drawing.Size(34, 13);
+            labelDelay.TabIndex = 6;
+            labelDelay.Text = "Delay";
+            toolTipSimple.SetToolTip(labelDelay, "The delay in seconds before this dialogue box is shown.");
             // 
-            // buttonSequenceMinus
+            // labelDuration
             // 
-            this.buttonSequenceMinus.Location = new System.Drawing.Point(525, 68);
-            this.buttonSequenceMinus.Name = "buttonSequenceMinus";
-            this.buttonSequenceMinus.Size = new System.Drawing.Size(23, 23);
-            this.buttonSequenceMinus.TabIndex = 6;
-            this.buttonSequenceMinus.Text = "-";
-            this.buttonSequenceMinus.UseVisualStyleBackColor = true;
+            labelDuration.AutoSize = true;
+            labelDuration.Location = new System.Drawing.Point(229, 16);
+            labelDuration.Name = "labelDuration";
+            labelDuration.Size = new System.Drawing.Size(47, 13);
+            labelDuration.TabIndex = 5;
+            labelDuration.Text = "Duration";
+            toolTipSimple.SetToolTip(labelDuration, "The amount of seconds this dialogue box will be shown.");
             // 
-            // buttonSequencePlus
+            // textBoxDuration
             // 
-            this.buttonSequencePlus.Location = new System.Drawing.Point(554, 68);
-            this.buttonSequencePlus.Name = "buttonSequencePlus";
-            this.buttonSequencePlus.Size = new System.Drawing.Size(23, 23);
-            this.buttonSequencePlus.TabIndex = 7;
-            this.buttonSequencePlus.Text = "+";
-            this.buttonSequencePlus.UseVisualStyleBackColor = true;
+            this.textBoxDuration.Location = new System.Drawing.Point(232, 32);
+            this.textBoxDuration.MaxLength = 10;
+            this.textBoxDuration.Name = "textBoxDuration";
+            this.textBoxDuration.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDuration.TabIndex = 3;
+            this.textBoxDuration.Text = "0.00";
+            this.textBoxDuration.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxDuration.TextChanged += new System.EventHandler(this.textBoxDuration_TextChanged);
             // 
-            // labelSequence
+            // labelTexture
             // 
-            this.labelSequence.Location = new System.Drawing.Point(363, 71);
-            this.labelSequence.Name = "labelSequence";
-            this.labelSequence.Size = new System.Drawing.Size(156, 20);
-            this.labelSequence.TabIndex = 11;
-            this.labelSequence.Text = "Sequence: 0 of 0";
-            this.labelSequence.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            labelTexture.AutoSize = true;
+            labelTexture.Location = new System.Drawing.Point(3, 55);
+            labelTexture.Name = "labelTexture";
+            labelTexture.Size = new System.Drawing.Size(80, 13);
+            labelTexture.TabIndex = 2;
+            labelTexture.Text = "Textbox texture";
+            // 
+            // labelPortrait
+            // 
+            labelPortrait.AutoSize = true;
+            labelPortrait.Location = new System.Drawing.Point(3, 16);
+            labelPortrait.Name = "labelPortrait";
+            labelPortrait.Size = new System.Drawing.Size(40, 13);
+            labelPortrait.TabIndex = 1;
+            labelPortrait.Text = "Portrait";
+            toolTipSimple.SetToolTip(labelPortrait, "The texture name used for the portrait.\r\nIf using a custom texture, remember to i" +
+        "nclude \"(mod)\" before the name.\r\n");
+            // 
+            // textBoxPortrait
+            // 
+            this.textBoxPortrait.Location = new System.Drawing.Point(6, 32);
+            this.textBoxPortrait.MaxLength = 200;
+            this.textBoxPortrait.Name = "textBoxPortrait";
+            this.textBoxPortrait.Size = new System.Drawing.Size(192, 20);
+            this.textBoxPortrait.TabIndex = 1;
+            this.textBoxPortrait.TextChanged += new System.EventHandler(this.textBoxPortrait_TextChanged);
             // 
             // textBoxMain
             // 
@@ -492,6 +532,35 @@ namespace BlightnautsDialogue
             this.textBoxMain.Name = "textBoxMain";
             this.textBoxMain.Size = new System.Drawing.Size(583, 431);
             this.textBoxMain.TabIndex = 0;
+            this.textBoxMain.TextChanged += new System.EventHandler(this.textBoxMain_TextChanged);
+            // 
+            // toolTipLong
+            // 
+            toolTipLong.AutoPopDelay = 15000;
+            toolTipLong.InitialDelay = 500;
+            toolTipLong.ReshowDelay = 100;
+            // 
+            // buttonSequenceNext
+            // 
+            this.buttonSequenceNext.Location = new System.Drawing.Point(496, 68);
+            this.buttonSequenceNext.Name = "buttonSequenceNext";
+            this.buttonSequenceNext.Size = new System.Drawing.Size(23, 23);
+            this.buttonSequenceNext.TabIndex = 12;
+            this.buttonSequenceNext.Text = ">";
+            toolTipSimple.SetToolTip(this.buttonSequenceNext, "Next textbox in the sequence.");
+            this.buttonSequenceNext.UseVisualStyleBackColor = true;
+            this.buttonSequenceNext.Click += new System.EventHandler(this.buttonSequenceNext_Click);
+            // 
+            // buttonSequencePrevious
+            // 
+            this.buttonSequencePrevious.Location = new System.Drawing.Point(467, 68);
+            this.buttonSequencePrevious.Name = "buttonSequencePrevious";
+            this.buttonSequencePrevious.Size = new System.Drawing.Size(23, 23);
+            this.buttonSequencePrevious.TabIndex = 13;
+            this.buttonSequencePrevious.Text = "<";
+            toolTipSimple.SetToolTip(this.buttonSequencePrevious, "Previous textbox in the sequence.");
+            this.buttonSequencePrevious.UseVisualStyleBackColor = true;
+            this.buttonSequencePrevious.Click += new System.EventHandler(this.buttonSequencePrevious_Click);
             // 
             // EditorWindow
             // 
@@ -531,12 +600,11 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ToolStripMenuItem topBarLoadTrigger;
         private System.Windows.Forms.ToolStripMenuItem topBarHelp;
         private System.Windows.Forms.ToolStripMenuItem topBarAbout;
-        private System.Windows.Forms.ComboBox characterDropdown;
-        private System.Windows.Forms.ComboBox triggerDropdown;
+        private System.Windows.Forms.ComboBox dropdownCharacters;
+        private System.Windows.Forms.ComboBox dropdownTriggers;
         private System.Windows.Forms.Label labelCharacterStatus;
         private System.Windows.Forms.CheckBox checkBoxUseDefault;
         private System.Windows.Forms.Label labelTriggerStatus;
-        private System.Windows.Forms.TextBox textBoxDialogueBox;
         private System.Windows.Forms.TextBox textBoxPortrait;
         private System.Windows.Forms.TextBox textBoxDelay;
         private System.Windows.Forms.TextBox textBoxDuration;
@@ -545,5 +613,9 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.Button buttonSequencePlus;
         private System.Windows.Forms.Button buttonSequenceMinus;
         private System.Windows.Forms.TextBox textBoxMain;
+        private System.Windows.Forms.ComboBox dropdownDialogues;
+        private System.Windows.Forms.ComboBox dropdownTexture;
+        private System.Windows.Forms.Button buttonSequencePrevious;
+        private System.Windows.Forms.Button buttonSequenceNext;
     }
 }

@@ -16,18 +16,18 @@ namespace BlightnautsDialogue
             }
             return null;
         }
-        public static decimal GetTotalDuration(Dialogue[] dialogues)
+        public static float GetTotalDuration(Dialogue[] dialogues)
         {
-            decimal result = 0;
+            float result = 0;
             foreach (Dialogue dialogue in dialogues)
             {
                 result += dialogue.Duration + dialogue.Delay;
             }
             return result;
         }
-        public static decimal GetStartTime(Dialogue dialogue, Dialogue[] dialogueArray)
+        public static float GetStartTime(Dialogue dialogue, Dialogue[] dialogueArray)
         {
-            decimal result = 0;
+            float result = 0;
             foreach (var item in dialogueArray)
             {
                 if (item == dialogue)
@@ -38,7 +38,7 @@ namespace BlightnautsDialogue
             return -1;
         }
 
-        public static decimal GetEndTime(Dialogue dialogue, Dialogue[] dialogueArray)
+        public static float GetEndTime(Dialogue dialogue, Dialogue[] dialogueArray)
         {
             return GetStartTime(dialogue, dialogueArray) + dialogue.Duration;
         }
@@ -72,20 +72,22 @@ namespace BlightnautsDialogue
 
         public class Dialogue
         {
-            public string Portrait, Content;
-            public decimal Duration, Delay;
+            public string Portrait, Texture, Content;
+            public float Duration, Delay;
 
             public Dialogue()
             {
                 Portrait = string.Empty;
+                Texture = string.Empty;
                 Content = string.Empty;
                 Duration = 0;
                 Delay = 0;
             }
 
-            public Dialogue(string content, string portrait, decimal duration, decimal delay)
+            public Dialogue(string content, string portrait, string texture, float duration, float delay)
             {
                 Portrait = portrait;
+                Texture = texture;
                 Content = content;
                 Duration = duration;
                 Delay = delay;
