@@ -26,6 +26,14 @@ namespace BlightnautsDialogue
                 return result + index.ToString();
             }
 
+            public void Reset()
+            {
+                if (SkinIndex == 1)
+                    UseDefaultSkin = true;
+                else
+                    UseDefaultSkin = false;
+            }
+
             public Actor(string className, string realName)
             {
                 ClassName = className;
@@ -202,8 +210,21 @@ namespace BlightnautsDialogue
             return null;
         }
 
-        public static string Path { get; private set; }
+        public static string FilePath { get; private set; }
+        public static string ModPath { get; private set; }
         public static List<Area> Areas { get; private set; }
+
+        public static void NewProject()
+        {
+            FilePath = string.Empty;
+            ModPath = string.Empty;
+            Areas = new List<Area>();
+
+            foreach (var actor in Characters)
+            {
+                actor.Reset();
+            }
+        }
 
         public static void LoadProject()
         {

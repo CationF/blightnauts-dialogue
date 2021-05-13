@@ -57,11 +57,20 @@
       <DependentUpon>EditorWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Exporter.cs" />
+    <Compile Include="NewTriggerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewTriggerWindow.Designer.cs">
+      <DependentUpon>NewTriggerWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="EditorWindow.resx">
       <DependentUpon>EditorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewTriggerWindow.resx">
+      <DependentUpon>NewTriggerWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

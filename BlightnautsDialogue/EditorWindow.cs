@@ -16,7 +16,7 @@ namespace BlightnautsDialogue
         private bool refreshing;
         private int sequence;
         private float zoom;
-        private string filePath, modPath;
+        private bool unsaved;
 
         public EditorWindow()
         {
@@ -28,12 +28,7 @@ namespace BlightnautsDialogue
                 dropdownCharacters.Items.Add(naut.IndexedName + " (" + naut.RealName + ")");
             }
             dropdownCharacters.SelectedIndex = 0;
-            ProjectManager.LoadProject();
-            foreach (var area in ProjectManager.Areas)
-            {
-                dropdownTriggers.Items.Add(area.Name);
-            }
-            dropdownTriggers.SelectedIndex = 0;
+            ProjectManager.NewProject();
             zoom = 12;
             SetFontSize(zoom);
             initializing = false;
@@ -42,6 +37,11 @@ namespace BlightnautsDialogue
 
         private List<Area.Dialogue> GetDialogues(int index)
         {
+            if (dropdownTriggers.Items.Count == 0 || ProjectManager.Areas.Count == 0)
+            {
+                return null;
+            }
+
             if (index < 0)
             {
                 return ProjectManager.Areas[dropdownTriggers.SelectedIndex].
@@ -72,10 +72,54 @@ namespace BlightnautsDialogue
             else
                 checkBoxUseDefault.Enabled = true;
 
+            if (dropdownTriggers.Items.Count == 0)
+            {
+                dropdownTriggers.Enabled = false;
+                buttonSequencePlus.Enabled = false;
+                dropdownDialogues.Enabled = false;
+            }
+            else
+            {
+                dropdownTriggers.Enabled = true;
+                buttonSequencePlus.Enabled = true;
+                dropdownDialogues.Enabled = true;
+            }
+
             // Dialogue
             var dialogues = GetDialogues(dropdownDialogues.SelectedIndex - 1);
 
-            if (dialogues.Count > 0)
+            if (dialogues == null)
+            {
+                textBoxPortrait.Text = string.Empty;
+                textBoxPortrait.Enabled = false;
+
+                dropdownTexture.Text = string.Empty;
+                dropdownTexture.Enabled = false;
+
+                textBoxDuration.Text = string.Empty;
+                textBoxDuration.Enabled = false;
+
+                textBoxDelay.Text = string.Empty;
+                textBoxDelay.Enabled = false;
+
+                checkBoxGenerateAnimationTemplate.Checked = true;
+                checkBoxGenerateAnimationTemplate.Enabled = false;
+
+                textBoxMain.Text = string.Empty;
+                textBoxMain.Enabled = false;
+
+                labelSequence.Text = "No dialogue";
+
+                buttonSequencePrevious.Enabled = false;
+                buttonSequenceNext.Enabled = false;
+                buttonSequenceMinus.Enabled = false;
+
+                textBoxDuration.Text = "0";
+                textBoxDelay.Text = "0";
+                refreshing = false;
+                return;
+            }
+            else if (dialogues.Count > 0)
             {
                 textBoxPortrait.Text = dialogues[sequence].Portrait;
                 textBoxPortrait.Enabled = true;
@@ -193,7 +237,23 @@ namespace BlightnautsDialogue
 
         private void topBarNew_Click(object sender, EventArgs e)
         {
-
+            if (unsaved)
+            {
+                DialogResult result = MessageBox.Show("All unsaved changes will be lost, do you want to save them before creating a new project?", "New Project",
+                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Cancel)
+                    return;
+                // else if yes, save.
+            }
+            ProjectManager.NewProject();
+            dropdownTriggers.Items.Clear();
+            dropdownDialogues.Items.Clear();
+            dropdownTexture.Items.Clear();
+            sequence = 0;
+            initializing = true;
+            dropdownCharacters.SelectedIndex = 0;
+            initializing = false;
+            RefreshWindow();
         }
 
         private void topBarOpen_Click(object sender, EventArgs e)
@@ -223,11 +283,12 @@ namespace BlightnautsDialogue
 
         private void topBarNewTrigger_Click(object sender, EventArgs e)
         {
-            // For now.
-            ProjectManager.Areas.Add(new Area("test", 3));
-            dropdownTriggers.Items.Add("test");
-            if (dropdownTriggers.Items.Count == 1)
-                dropdownTriggers.SelectedIndex = 0;
+            DialogResult result = new NewTriggerWindow().ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                dropdownTriggers.SelectedIndex = dropdownTriggers.Items.Count - 1;
+            }
+            unsaved = true;
             RefreshWindow();
         }
 
@@ -274,6 +335,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             ProjectManager.Characters[dropdownCharacters.SelectedIndex].UseDefaultSkin = checkBoxUseDefault.Checked;
+            unsaved = true;
         }
 
         private void dropdownTriggers_SelectedIndexChanged(object sender, EventArgs e)
@@ -293,6 +355,7 @@ namespace BlightnautsDialogue
         {
             if (initializing)
                 return;
+            sequence = 0;
             RefreshWindow();
         }
 
@@ -322,6 +385,7 @@ namespace BlightnautsDialogue
             sequence--;
             if (sequence < 0)
                 sequence = 0;
+            unsaved = true;
             RefreshWindow();
         }
 
@@ -329,6 +393,7 @@ namespace BlightnautsDialogue
         {
             GetDialogues(dropdownDialogues.SelectedIndex - 1).Add(new Area.Dialogue());
             sequence = GetDialogues(dropdownDialogues.SelectedIndex - 1).Count - 1;
+            unsaved = true;
             RefreshWindow();
         }
 
@@ -336,6 +401,7 @@ namespace BlightnautsDialogue
         {
             if (refreshing)
                 return;
+            unsaved = true;
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Portrait = textBoxPortrait.Text;
         }
 
@@ -343,6 +409,7 @@ namespace BlightnautsDialogue
         {
             if (refreshing)
                 return;
+            unsaved = true;
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Texture = dropdownTexture.Text;
         }
 
@@ -350,6 +417,7 @@ namespace BlightnautsDialogue
         {
             if (refreshing)
                 return;
+            unsaved = true;
             try
             {
                 GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Duration = float.Parse(ValidateNumericInput(textBoxDuration.Text));
@@ -364,6 +432,7 @@ namespace BlightnautsDialogue
         {
             if (refreshing)
                 return;
+            unsaved = true;
             try
             {
                 GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Delay = float.Parse(ValidateNumericInput(textBoxDelay.Text));
@@ -378,6 +447,7 @@ namespace BlightnautsDialogue
         {
             if (refreshing)
                 return;
+            unsaved = true;
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Content = textBoxMain.Text;
         }
 
@@ -385,6 +455,7 @@ namespace BlightnautsDialogue
         {
             if (refreshing)
                 return;
+            unsaved = true;
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].GenerateAnimationTemplate = checkBoxGenerateAnimationTemplate.Checked;
         }
     }
