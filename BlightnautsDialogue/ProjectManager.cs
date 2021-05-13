@@ -366,12 +366,33 @@ namespace BlightnautsDialogue
                 string line = content[i];
                 if (line.StartsWith("[GLOBAL]"))
                 {
-                    string directory = content[i + 1].Substring("MODDIRECTORY=".Length);
-                    ModPath = directory;
+                    if (content[i + 1].StartsWith("MODDIRECTORY="))
+                    {
+                        ModPath = content[i + 1].Substring("MODDIRECTORY=".Length);
+                    }
+                    if (content[i + 2].StartsWith("USEDEFAULTSKIN="))
+                    {
+                        LoadUseDefaultSkin(content[i + 2].Substring("USEDEFAULTSKIN=".Length));
+                    }
                 }
             }
 
             return 0;
+        }
+
+        private static void LoadUseDefaultSkin(string content)
+        {
+            for (int i = 0; i < Characters.Length; i++)
+            {
+                if (content[i] == '1')
+                {
+                    Characters[i].UseDefaultSkin = true;
+                }
+                else
+                {
+                    Characters[i].UseDefaultSkin = false;
+                }
+            }
         }
     }
 }
