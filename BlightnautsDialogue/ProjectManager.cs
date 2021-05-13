@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace BlightnautsDialogue
@@ -211,8 +212,10 @@ namespace BlightnautsDialogue
         }
 
         public static string FilePath { get; private set; }
-        public static string ModPath { get; private set; }
+        public static string ModPath { get; set; }
         public static List<Area> Areas { get; private set; }
+
+        public static bool SaveFileExists { get => File.Exists(FilePath); }
 
         public static void NewProject()
         {
@@ -226,51 +229,149 @@ namespace BlightnautsDialogue
             }
         }
 
-        public static void LoadProject()
+        public static int SaveProject(string path)
         {
-            // No arguments for now.
-            Areas = new List<Area>();
-            Areas.Add(new Area("test_area", 1));
-            Areas[0].GetCharacter("blinker001").SoloDialogue.Add(new Area.Dialogue
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                return 1;
+            }
+
+            string content = string.Format
             (
-                "ClementH doesn't like me :(",
-                "IconCharacterBlinker",
-                "Texture",
-                2,
-                0
-            ));
-            Areas[0].GetCharacter("blinker001").TeamDialogues[0].Dialogues.Add(new Area.Dialogue
+                "[GLOBAL]\nMODDIRECTORY={0}\nUSEDEFAULTSKIN=",
+                ModPath
+            );
+
+            foreach (Actor actor in Characters)
+            {
+                content += actor.UseDefaultSkin ? "1" : "0";
+            }
+            content += "\n\n\n";
+
+            foreach (Area area in Areas)
+            {
+                content += SerializeArea(area) + "\n\n";
+            }
+
+            try
+            {
+                File.WriteAllText(path, content);
+                FilePath = path;
+            }
+            catch
+            {
+                return 2;
+            }
+            return 0;
+        }
+
+        private static string SerializeArea(Area area)
+        {
+            string content = string.Format("[AREA]\nNAME={0}\nDIALOGUES={1}\n", area.Name, area.TeamDialogues);
+
+            foreach (var naut in area.CharacterDialogue)
+            {
+                content += SerializeCharacter(naut, area);
+            }
+
+            return content;
+        }
+
+        private static string SerializeCharacter(Area.Character character, Area area)
+        {
+            bool empty = true;
+            if (character.SoloDialogue.Count > 0)
+                empty = false;
+            for (int i = 0; i < area.TeamDialogues; i++)
+            {
+                if (character.TeamDialogues[i].Dialogues.Count > 0)
+                {
+                    empty = false;
+                    break;
+                }
+            }
+
+            if (empty)
+                return string.Empty;
+
+            string content = string.Format
             (
-                "If ClementH ever likes me, I'll give him an egg... not!",
-                "IconCharacterBlinker",
-                "Texture",
-                3,
-                0
-            ));
-            Areas[0].GetCharacter("cowboy001").SoloDialogue.Add(new Area.Dialogue
-            (
-                "This be an interestin' experiment, partner! This fella right here's trying somethin' fancy with \"Delays\" or somethin'.",
-                "IconCharacterCowboy",
-                "Texture",
-                4,
-                2
-            ));
-            Areas[0].GetCharacter("assassin001").SoloDialogue.Add(new Area.Dialogue
-            (
-                "Pah! You think that's interesting?! Then let me show you something much cooler!",
-                "IconCharacterAssassin",
-                "Texture",
-                4,
-                0
-            ));
-            Areas[0].GetCharacter("assassin001").SoloDialogue.Add(new Area.Dialogue
-            (
-                "You see, my internal name has not one but two bad words in a row: Ass Ass In!",
-                "IconCharacterAssassin",
-                "Texture",
-                3.5f,
-                1
-            ));
+                "[CHARACTER]\nNAME={0}\n",
+                character.Name
+            );
+
+            if (character.SoloDialogue.Count > 0)
+            {
+                content += string.Format
+                (
+                    "[SEQUENCE]\nCOUNT={0}\n",
+                    character.SoloDialogue.Count
+                );
+
+                foreach (var dialogue in character.SoloDialogue)
+                {
+                    content += string.Format
+                    (
+                        "CONTENT={0}\nPORTRAIT={1}\nTEXTURE={2}\nVALUES={3};{4};{5}\n",
+                        dialogue.Content,
+                        dialogue.Portrait,
+                        dialogue.Texture,
+                        dialogue.Duration,
+                        dialogue.Delay,
+                        dialogue.GenerateAnimationTemplate ? "1" : "0"
+                    );
+                }
+            }
+
+            for (int i = 0; i < area.TeamDialogues; i++)
+            {
+                if (character.TeamDialogues[i].Dialogues.Count > 0)
+                {
+                    content += string.Format
+                    (
+                        "[SEQUENCE]\nCOUNT={0}",
+                        character.TeamDialogues[i].Dialogues.Count
+                    );
+
+                    foreach (var dialogue in character.TeamDialogues[i].Dialogues)
+                    {
+                        content += string.Format
+                        (
+                            "{0}\n{1}\n{2}\n{3};{4};{5}",
+                            dialogue.Content,
+                            dialogue.Portrait,
+                            dialogue.Texture,
+                            dialogue.Duration,
+                            dialogue.Delay,
+                            dialogue.GenerateAnimationTemplate ? "1" : "0"
+                        );
+                    }
+                }
+            }
+
+            return content;
+        }
+
+        public static int LoadProject(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return 1;
+            }
+
+            string[] content = File.ReadAllLines(path);
+
+            for (int i = 0; i < content.Length; i++)
+            {
+                string line = content[i];
+                if (line.StartsWith("[GLOBAL]"))
+                {
+                    string directory = content[i + 1].Substring("MODDIRECTORY=".Length);
+                    ModPath = directory;
+                }
+            }
+
+            return 0;
         }
     }
 }

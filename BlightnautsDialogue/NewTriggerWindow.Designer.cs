@@ -61,7 +61,7 @@ namespace BlightnautsDialogue
             // textBoxTriggerName
             // 
             this.textBoxTriggerName.Location = new System.Drawing.Point(12, 29);
-            this.textBoxTriggerName.MaxLength = 20;
+            this.textBoxTriggerName.MaxLength = 50;
             this.textBoxTriggerName.Name = "textBoxTriggerName";
             this.textBoxTriggerName.Size = new System.Drawing.Size(253, 20);
             this.textBoxTriggerName.TabIndex = 0;
@@ -113,8 +113,10 @@ namespace BlightnautsDialogue
             // 
             // NewTriggerWindow
             // 
+            this.AcceptButton = this.buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(277, 102);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
@@ -126,6 +128,7 @@ namespace BlightnautsDialogue
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NewTriggerWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New Trigger";
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownTeamDialogues)).EndInit();

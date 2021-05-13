@@ -258,17 +258,70 @@ namespace BlightnautsDialogue
 
         private void topBarOpen_Click(object sender, EventArgs e)
         {
-
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                switch (ProjectManager.LoadProject(openFileDialog.FileName))
+                {
+                    case 1:
+                        MessageBox.Show("An error has occurred while opening the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                }
+            }
         }
 
         private void topBarSave_Click(object sender, EventArgs e)
         {
+            if (ProjectManager.SaveFileExists)
+            {
+                switch (ProjectManager.SaveProject(ProjectManager.FilePath))
+                {
+                    case 1:
+                        MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
 
+                    case 2:
+                        MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                }
+                return;
+            }
+            DialogResult result = saveFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                switch (ProjectManager.SaveProject(saveFileDialog.FileName))
+                {
+                    case 1:
+                        MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    case 2:
+                        MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                }
+            }
         }
 
         private void topBarSaveAs_Click(object sender, EventArgs e)
         {
+            if (ProjectManager.SaveFileExists)
+            {
+                saveFileDialog.InitialDirectory = ProjectManager.FilePath;
+            }
+            DialogResult result = saveFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                switch (ProjectManager.SaveProject(saveFileDialog.FileName))
+                {
+                    case 1:
+                        MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
 
+                    case 2:
+                        MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                }
+            }
         }
 
         private void topBarExit_Click(object sender, EventArgs e)
@@ -278,7 +331,12 @@ namespace BlightnautsDialogue
 
         private void topBarSetDirectory_Click(object sender, EventArgs e)
         {
-
+            DialogResult result = folderBrowserDialogModDirectory.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                ProjectManager.ModPath = folderBrowserDialogModDirectory.SelectedPath;
+                unsaved = true;
+            }
         }
 
         private void topBarNewTrigger_Click(object sender, EventArgs e)
@@ -286,10 +344,15 @@ namespace BlightnautsDialogue
             DialogResult result = new NewTriggerWindow().ShowDialog();
             if (result == DialogResult.OK)
             {
+                dropdownTriggers.Items.Clear();
+                foreach (var area in ProjectManager.Areas)
+                {
+                    dropdownTriggers.Items.Add(area.Name);
+                }
                 dropdownTriggers.SelectedIndex = dropdownTriggers.Items.Count - 1;
+                unsaved = true;
+                RefreshWindow();
             }
-            unsaved = true;
-            RefreshWindow();
         }
 
         private void topBarTextboxZoomIn_Click(object sender, EventArgs e)

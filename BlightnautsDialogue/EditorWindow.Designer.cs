@@ -35,7 +35,12 @@ namespace BlightnautsDialogue
             System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
             System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
             System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+            System.Windows.Forms.ToolStripMenuItem topBarView;
+            System.Windows.Forms.ToolStripMenuItem topBarTextbox;
+            System.Windows.Forms.ToolStripMenuItem topBarTextboxBackgroundColor;
+            System.Windows.Forms.ToolStripMenuItem topBarTextboxForegroundColor;
             System.Windows.Forms.ToolStripMenuItem topBarProject;
+            System.Windows.Forms.ToolStripMenuItem topBarSetDirectory;
             System.Windows.Forms.ToolStripMenuItem topBarInfo;
             System.Windows.Forms.TableLayoutPanel generalLayout;
             System.Windows.Forms.TableLayoutPanel topLayout;
@@ -51,16 +56,13 @@ namespace BlightnautsDialogue
             System.Windows.Forms.Label labelPortrait;
             System.Windows.Forms.ToolTip toolTipSimple;
             System.Windows.Forms.ToolTip toolTipLong;
-            System.Windows.Forms.ToolStripMenuItem topBarView;
-            System.Windows.Forms.ToolStripMenuItem topBarTextbox;
-            System.Windows.Forms.ToolStripMenuItem topBarTextboxBackgroundColor;
-            System.Windows.Forms.ToolStripMenuItem topBarTextboxForegroundColor;
-            System.Windows.Forms.ToolStripMenuItem topBarSetDirectory;
             this.topBarNew = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSave = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarTextboxZoomIn = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarTextboxZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarNewTrigger = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,6 +71,8 @@ namespace BlightnautsDialogue
             this.dropdownCharacters = new System.Windows.Forms.ComboBox();
             this.labelTriggerStatus = new System.Windows.Forms.Label();
             this.dropdownTriggers = new System.Windows.Forms.ComboBox();
+            this.buttonSequencePrevious = new System.Windows.Forms.Button();
+            this.buttonSequenceNext = new System.Windows.Forms.Button();
             this.dropdownTexture = new System.Windows.Forms.ComboBox();
             this.dropdownDialogues = new System.Windows.Forms.ComboBox();
             this.labelSequence = new System.Windows.Forms.Label();
@@ -79,17 +83,21 @@ namespace BlightnautsDialogue
             this.textBoxDuration = new System.Windows.Forms.TextBox();
             this.textBoxPortrait = new System.Windows.Forms.TextBox();
             this.textBoxMain = new System.Windows.Forms.TextBox();
-            this.buttonSequenceNext = new System.Windows.Forms.Button();
-            this.buttonSequencePrevious = new System.Windows.Forms.Button();
-            this.topBarTextboxZoomIn = new System.Windows.Forms.ToolStripMenuItem();
-            this.topBarTextboxZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialogTextboxMain = new System.Windows.Forms.ColorDialog();
+            this.folderBrowserDialogModDirectory = new System.Windows.Forms.FolderBrowserDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             topBar = new System.Windows.Forms.MenuStrip();
             topBarFile = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            topBarView = new System.Windows.Forms.ToolStripMenuItem();
+            topBarTextbox = new System.Windows.Forms.ToolStripMenuItem();
+            topBarTextboxBackgroundColor = new System.Windows.Forms.ToolStripMenuItem();
+            topBarTextboxForegroundColor = new System.Windows.Forms.ToolStripMenuItem();
             topBarProject = new System.Windows.Forms.ToolStripMenuItem();
+            topBarSetDirectory = new System.Windows.Forms.ToolStripMenuItem();
             topBarInfo = new System.Windows.Forms.ToolStripMenuItem();
             generalLayout = new System.Windows.Forms.TableLayoutPanel();
             topLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -104,11 +112,6 @@ namespace BlightnautsDialogue
             labelPortrait = new System.Windows.Forms.Label();
             toolTipSimple = new System.Windows.Forms.ToolTip(this.components);
             toolTipLong = new System.Windows.Forms.ToolTip(this.components);
-            topBarView = new System.Windows.Forms.ToolStripMenuItem();
-            topBarTextbox = new System.Windows.Forms.ToolStripMenuItem();
-            topBarTextboxBackgroundColor = new System.Windows.Forms.ToolStripMenuItem();
-            topBarTextboxForegroundColor = new System.Windows.Forms.ToolStripMenuItem();
-            topBarSetDirectory = new System.Windows.Forms.ToolStripMenuItem();
             topBar.SuspendLayout();
             generalLayout.SuspendLayout();
             topLayout.SuspendLayout();
@@ -197,6 +200,53 @@ namespace BlightnautsDialogue
             this.topBarExit.Text = "Exit";
             this.topBarExit.Click += new System.EventHandler(this.topBarExit_Click);
             // 
+            // topBarView
+            // 
+            topBarView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            topBarTextbox});
+            topBarView.Name = "topBarView";
+            topBarView.Size = new System.Drawing.Size(44, 20);
+            topBarView.Text = "View";
+            // 
+            // topBarTextbox
+            // 
+            topBarTextbox.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.topBarTextboxZoomIn,
+            this.topBarTextboxZoomOut,
+            topBarTextboxBackgroundColor,
+            topBarTextboxForegroundColor});
+            topBarTextbox.Name = "topBarTextbox";
+            topBarTextbox.Size = new System.Drawing.Size(115, 22);
+            topBarTextbox.Text = "Textbox";
+            // 
+            // topBarTextboxZoomIn
+            // 
+            this.topBarTextboxZoomIn.Name = "topBarTextboxZoomIn";
+            this.topBarTextboxZoomIn.Size = new System.Drawing.Size(170, 22);
+            this.topBarTextboxZoomIn.Text = "Zoom In";
+            this.topBarTextboxZoomIn.Click += new System.EventHandler(this.topBarTextboxZoomIn_Click);
+            // 
+            // topBarTextboxZoomOut
+            // 
+            this.topBarTextboxZoomOut.Name = "topBarTextboxZoomOut";
+            this.topBarTextboxZoomOut.Size = new System.Drawing.Size(170, 22);
+            this.topBarTextboxZoomOut.Text = "Zoom Out";
+            this.topBarTextboxZoomOut.Click += new System.EventHandler(this.topBarTextboxZoomOut_Click);
+            // 
+            // topBarTextboxBackgroundColor
+            // 
+            topBarTextboxBackgroundColor.Name = "topBarTextboxBackgroundColor";
+            topBarTextboxBackgroundColor.Size = new System.Drawing.Size(170, 22);
+            topBarTextboxBackgroundColor.Text = "Background Color";
+            topBarTextboxBackgroundColor.Click += new System.EventHandler(this.topBarTextboxBackgroundColor_Click);
+            // 
+            // topBarTextboxForegroundColor
+            // 
+            topBarTextboxForegroundColor.Name = "topBarTextboxForegroundColor";
+            topBarTextboxForegroundColor.Size = new System.Drawing.Size(170, 22);
+            topBarTextboxForegroundColor.Text = "Foreground Color";
+            topBarTextboxForegroundColor.Click += new System.EventHandler(this.topBarTextboxForegroundColor_Click);
+            // 
             // topBarProject
             // 
             topBarProject.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -206,10 +256,17 @@ namespace BlightnautsDialogue
             topBarProject.Size = new System.Drawing.Size(56, 20);
             topBarProject.Text = "Project";
             // 
+            // topBarSetDirectory
+            // 
+            topBarSetDirectory.Name = "topBarSetDirectory";
+            topBarSetDirectory.Size = new System.Drawing.Size(169, 22);
+            topBarSetDirectory.Text = "Set Mod Directory";
+            topBarSetDirectory.Click += new System.EventHandler(this.topBarSetDirectory_Click);
+            // 
             // topBarNewTrigger
             // 
             this.topBarNewTrigger.Name = "topBarNewTrigger";
-            this.topBarNewTrigger.Size = new System.Drawing.Size(180, 22);
+            this.topBarNewTrigger.Size = new System.Drawing.Size(169, 22);
             this.topBarNewTrigger.Text = "New Trigger";
             this.topBarNewTrigger.Click += new System.EventHandler(this.topBarNewTrigger_Click);
             // 
@@ -393,6 +450,28 @@ namespace BlightnautsDialogue
             groupBoxDialogueOptions.TabStop = false;
             groupBoxDialogueOptions.Text = "Options";
             // 
+            // buttonSequencePrevious
+            // 
+            this.buttonSequencePrevious.Location = new System.Drawing.Point(467, 68);
+            this.buttonSequencePrevious.Name = "buttonSequencePrevious";
+            this.buttonSequencePrevious.Size = new System.Drawing.Size(23, 23);
+            this.buttonSequencePrevious.TabIndex = 13;
+            this.buttonSequencePrevious.Text = "<";
+            toolTipSimple.SetToolTip(this.buttonSequencePrevious, "Previous textbox in the sequence.");
+            this.buttonSequencePrevious.UseVisualStyleBackColor = true;
+            this.buttonSequencePrevious.Click += new System.EventHandler(this.buttonSequencePrevious_Click);
+            // 
+            // buttonSequenceNext
+            // 
+            this.buttonSequenceNext.Location = new System.Drawing.Point(496, 68);
+            this.buttonSequenceNext.Name = "buttonSequenceNext";
+            this.buttonSequenceNext.Size = new System.Drawing.Size(23, 23);
+            this.buttonSequenceNext.TabIndex = 12;
+            this.buttonSequenceNext.Text = ">";
+            toolTipSimple.SetToolTip(this.buttonSequenceNext, "Next textbox in the sequence.");
+            this.buttonSequenceNext.UseVisualStyleBackColor = true;
+            this.buttonSequenceNext.Click += new System.EventHandler(this.buttonSequenceNext_Click);
+            // 
             // dropdownTexture
             // 
             this.dropdownTexture.FormattingEnabled = true;
@@ -547,81 +626,20 @@ namespace BlightnautsDialogue
             toolTipLong.InitialDelay = 500;
             toolTipLong.ReshowDelay = 100;
             // 
-            // buttonSequenceNext
+            // folderBrowserDialogModDirectory
             // 
-            this.buttonSequenceNext.Location = new System.Drawing.Point(496, 68);
-            this.buttonSequenceNext.Name = "buttonSequenceNext";
-            this.buttonSequenceNext.Size = new System.Drawing.Size(23, 23);
-            this.buttonSequenceNext.TabIndex = 12;
-            this.buttonSequenceNext.Text = ">";
-            toolTipSimple.SetToolTip(this.buttonSequenceNext, "Next textbox in the sequence.");
-            this.buttonSequenceNext.UseVisualStyleBackColor = true;
-            this.buttonSequenceNext.Click += new System.EventHandler(this.buttonSequenceNext_Click);
+            this.folderBrowserDialogModDirectory.Description = "Select the folder where your mod is located.";
+            this.folderBrowserDialogModDirectory.ShowNewFolderButton = false;
             // 
-            // buttonSequencePrevious
+            // saveFileDialog
             // 
-            this.buttonSequencePrevious.Location = new System.Drawing.Point(467, 68);
-            this.buttonSequencePrevious.Name = "buttonSequencePrevious";
-            this.buttonSequencePrevious.Size = new System.Drawing.Size(23, 23);
-            this.buttonSequencePrevious.TabIndex = 13;
-            this.buttonSequencePrevious.Text = "<";
-            toolTipSimple.SetToolTip(this.buttonSequencePrevious, "Previous textbox in the sequence.");
-            this.buttonSequencePrevious.UseVisualStyleBackColor = true;
-            this.buttonSequencePrevious.Click += new System.EventHandler(this.buttonSequencePrevious_Click);
+            this.saveFileDialog.DefaultExt = "bnp";
+            this.saveFileDialog.Filter = "Blightnauts Project|*.bnp";
             // 
-            // topBarView
+            // openFileDialog
             // 
-            topBarView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            topBarTextbox});
-            topBarView.Name = "topBarView";
-            topBarView.Size = new System.Drawing.Size(44, 20);
-            topBarView.Text = "View";
-            // 
-            // topBarTextbox
-            // 
-            topBarTextbox.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.topBarTextboxZoomIn,
-            this.topBarTextboxZoomOut,
-            topBarTextboxBackgroundColor,
-            topBarTextboxForegroundColor});
-            topBarTextbox.Name = "topBarTextbox";
-            topBarTextbox.Size = new System.Drawing.Size(180, 22);
-            topBarTextbox.Text = "Textbox";
-            // 
-            // topBarTextboxZoomIn
-            // 
-            this.topBarTextboxZoomIn.Name = "topBarTextboxZoomIn";
-            this.topBarTextboxZoomIn.Size = new System.Drawing.Size(180, 22);
-            this.topBarTextboxZoomIn.Text = "Zoom In";
-            this.topBarTextboxZoomIn.Click += new System.EventHandler(this.topBarTextboxZoomIn_Click);
-            // 
-            // topBarTextboxZoomOut
-            // 
-            this.topBarTextboxZoomOut.Name = "topBarTextboxZoomOut";
-            this.topBarTextboxZoomOut.Size = new System.Drawing.Size(180, 22);
-            this.topBarTextboxZoomOut.Text = "Zoom Out";
-            this.topBarTextboxZoomOut.Click += new System.EventHandler(this.topBarTextboxZoomOut_Click);
-            // 
-            // topBarTextboxBackgroundColor
-            // 
-            topBarTextboxBackgroundColor.Name = "topBarTextboxBackgroundColor";
-            topBarTextboxBackgroundColor.Size = new System.Drawing.Size(180, 22);
-            topBarTextboxBackgroundColor.Text = "Background Color";
-            topBarTextboxBackgroundColor.Click += new System.EventHandler(this.topBarTextboxBackgroundColor_Click);
-            // 
-            // topBarTextboxForegroundColor
-            // 
-            topBarTextboxForegroundColor.Name = "topBarTextboxForegroundColor";
-            topBarTextboxForegroundColor.Size = new System.Drawing.Size(180, 22);
-            topBarTextboxForegroundColor.Text = "Foreground Color";
-            topBarTextboxForegroundColor.Click += new System.EventHandler(this.topBarTextboxForegroundColor_Click);
-            // 
-            // topBarSetDirectory
-            // 
-            topBarSetDirectory.Name = "topBarSetDirectory";
-            topBarSetDirectory.Size = new System.Drawing.Size(180, 22);
-            topBarSetDirectory.Text = "Set Mod Directory";
-            topBarSetDirectory.Click += new System.EventHandler(this.topBarSetDirectory_Click);
+            this.openFileDialog.DefaultExt = "bnp";
+            this.openFileDialog.Filter = "Blightnauts Project|*.bnp";
             // 
             // EditorWindow
             // 
@@ -681,5 +699,8 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ToolStripMenuItem topBarTextboxZoomIn;
         private System.Windows.Forms.ToolStripMenuItem topBarTextboxZoomOut;
         private System.Windows.Forms.ColorDialog colorDialogTextboxMain;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogModDirectory;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
