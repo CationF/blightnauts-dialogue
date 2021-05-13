@@ -269,15 +269,15 @@ namespace BlightnautsDialogue
         {
             string content = string.Format("[AREA]\nNAME={0}\nDIALOGUES={1}\n", area.Name, area.TeamDialogues);
 
-            foreach (var naut in area.CharacterDialogue)
+            for (int i = 0; i < area.CharacterDialogue.Length; i++)
             {
-                content += SerializeCharacter(naut, area);
+                content += SerializeCharacter(area.CharacterDialogue[i], area, i);
             }
 
             return content;
         }
 
-        private static string SerializeCharacter(Area.Character character, Area area)
+        private static string SerializeCharacter(Area.Character character, Area area, int characterIndex)
         {
             bool empty = true;
             if (character.SoloDialogue.Count > 0)
@@ -296,15 +296,15 @@ namespace BlightnautsDialogue
 
             string content = string.Format
             (
-                "[CHARACTER]\nNAME={0}\n",
-                character.Name
+                "[CHARACTER]\nINDEX={0}\n",
+                characterIndex
             );
 
             if (character.SoloDialogue.Count > 0)
             {
                 content += string.Format
                 (
-                    "[SEQUENCE]\nCOUNT={0}\n",
+                    "[SEQUENCE]\nINDEX=-1\nCOUNT={0}\n",
                     character.SoloDialogue.Count
                 );
 
@@ -329,7 +329,8 @@ namespace BlightnautsDialogue
                 {
                     content += string.Format
                     (
-                        "[SEQUENCE]\nCOUNT={0}",
+                        "[SEQUENCE]\nINDEX={0}\nCOUNT={1}\n",
+                        i,
                         character.TeamDialogues[i].Dialogues.Count
                     );
 
@@ -337,7 +338,7 @@ namespace BlightnautsDialogue
                     {
                         content += string.Format
                         (
-                            "{0}\n{1}\n{2}\n{3};{4};{5}",
+                            "CONTENT={0}\nPORTRAIT={1}\nTEXTURE={2}\nVALUES={3};{4};{5}\n",
                             dialogue.Content,
                             dialogue.Portrait,
                             dialogue.Texture,
@@ -359,6 +360,8 @@ namespace BlightnautsDialogue
                 return 1;
             }
 
+            NewProject();
+
             string[] content = File.ReadAllLines(path);
 
             for (int i = 0; i < content.Length; i++)
@@ -374,6 +377,11 @@ namespace BlightnautsDialogue
                     {
                         LoadUseDefaultSkin(content[i + 2].Substring("USEDEFAULTSKIN=".Length));
                     }
+                }
+
+                if (line.StartsWith("[AREA]"))
+                {
+                    LoadArea(content, i);
                 }
             }
 
@@ -391,6 +399,162 @@ namespace BlightnautsDialogue
                 else
                 {
                     Characters[i].UseDefaultSkin = false;
+                }
+            }
+        }
+
+        private static void LoadArea(string[] content, int index)
+        {
+            Area area;
+            string name;
+            int dialogues;
+            if (content[index + 1].StartsWith("NAME="))
+            {
+                name = content[index + 1].Substring("NAME=".Length);
+            }
+            else
+                return;
+
+            if (content[index + 2].StartsWith("DIALOGUES="))
+            {
+                try
+                {
+                    dialogues = int.Parse(content[index + 2].Substring("DIALOGUES=".Length));
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                return;
+
+            area = new Area(name, dialogues);
+            Areas.Add(area);
+
+            for (int i = index; i < content.Length; i++)
+            {
+                if (content[i].StartsWith("[CHARACTER]"))
+                {
+                    LoadCharacter(content, i, area);
+                }
+            }
+        }
+
+        private static void LoadCharacter(string[] content, int index, Area area)
+        {
+            int characterIndex;
+            if (content[index + 1].StartsWith("INDEX="))
+            {
+                try
+                {
+                    characterIndex = int.Parse(content[index + 1].Substring("INDEX=".Length));
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                return;
+
+            for (int i = index; i < content.Length; i++)
+            {
+                if (content[i].StartsWith("[SEQUENCE]"))
+                {
+                    LoadSequence(content, i, area, characterIndex);
+                }
+                else if (i != index && (content[i].StartsWith("[CHARACTER]") || content[i].StartsWith("[AREA]")))
+                {
+                    break;
+                }
+            }
+        }
+
+        private static void LoadSequence(string[] content, int index, Area area, int characterIndex)
+        {
+            int type, count;
+            if (content[index + 1].StartsWith("INDEX="))
+            {
+                try
+                {
+                    type = int.Parse(content[index + 1].Substring("INDEX=".Length));
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                return;
+
+            if (content[index + 2].StartsWith("COUNT="))
+            {
+                try
+                {
+                    count = int.Parse(content[index + 2].Substring("COUNT=".Length));
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                return;
+
+            int offset = 3;
+            for (int i = 0; i < count; i++)
+            {
+                string dialogue = string.Empty;
+                string portrait = string.Empty;
+                string texture = string.Empty;
+                float duration = 0;
+                float delay = 0;
+                bool generate = true;
+                if (content[index + offset].StartsWith("CONTENT="))
+                {
+                    dialogue = content[index + offset].Substring("CONTENT=".Length);
+                }
+                offset++;
+                if (content[index + offset].StartsWith("PORTRAIT="))
+                {
+                    portrait = content[index + offset].Substring("PORTRAIT=".Length);
+                }
+                offset++;
+                if (content[index + offset].StartsWith("TEXTURE="))
+                {
+                    texture = content[index + offset].Substring("TEXTURE=".Length);
+                }
+                offset++;
+                if (content[index + offset].StartsWith("VALUES="))
+                {
+                    string[] values = content[index + offset].Substring("VALUES=".Length).Split(';');
+                    try
+                    {
+                        duration = int.Parse(values[0]);
+                        delay = int.Parse(values[1]);
+                        generate = values[2] == "1" ? true : false;
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+                offset++;
+                if (type < 0)
+                {
+                    area.CharacterDialogue[characterIndex].SoloDialogue.Add(new Area.Dialogue(dialogue, portrait, texture, duration, delay, generate));
+                }
+                else
+                {
+                    try
+                    {
+                        area.CharacterDialogue[characterIndex].TeamDialogues[type].Dialogues.Add(new Area.Dialogue(dialogue, portrait, texture, duration, delay, generate));
+                    }
+                    catch
+                    {
+                        return;
+                    }
                 }
             }
         }

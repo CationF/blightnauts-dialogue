@@ -268,6 +268,24 @@ namespace BlightnautsDialogue
                         return;
                 }
             }
+            dropdownTriggers.Items.Clear();
+            dropdownDialogues.Items.Clear();
+            dropdownTexture.Items.Clear();
+            sequence = 0;
+            initializing = true;
+            dropdownCharacters.SelectedIndex = 0;
+            initializing = false;
+            foreach (Area area in ProjectManager.Areas)
+            {
+                dropdownTriggers.Items.Add(area.Name);
+            }
+            if (dropdownTriggers.Items.Count > 0)
+            {
+                refreshing = true;
+                dropdownTriggers.SelectedIndex = 0;
+                refreshing = false;
+            }
+            RefreshWindow();
         }
 
         private void topBarSave_Click(object sender, EventArgs e)
@@ -424,9 +442,14 @@ namespace BlightnautsDialogue
 
         private void buttonSequenceNext_Click(object sender, EventArgs e)
         {
-            if (sequence >= ProjectManager.Areas[dropdownTriggers.SelectedIndex].
+            int type = dropdownDialogues.SelectedIndex - 1;
+            if (type < 0 && sequence >= ProjectManager.Areas[dropdownTriggers.SelectedIndex].
                 CharacterDialogue[dropdownCharacters.SelectedIndex].
                 SoloDialogue.Count - 1)
+                return;
+            else if (type >= 0 && sequence >= ProjectManager.Areas[dropdownTriggers.SelectedIndex].
+                CharacterDialogue[dropdownCharacters.SelectedIndex].
+                TeamDialogues[type].Dialogues.Count - 1)
                 return;
 
             sequence++;
