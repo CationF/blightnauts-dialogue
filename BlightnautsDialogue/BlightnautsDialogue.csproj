@@ -50,10 +50,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Area.cs" />
+    <Compile Include="EditorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditorWindow.Designer.cs">
+      <DependentUpon>EditorWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Exporter.cs" />
+    <Compile Include="MapList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapList.Designer.cs">
+      <DependentUpon>MapList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewTriggerWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewTriggerWindow.Designer.cs">
+      <DependentUpon>NewTriggerWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="EditorWindow.resx">
+      <DependentUpon>EditorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapList.resx">
+      <DependentUpon>MapList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewTriggerWindow.resx">
+      <DependentUpon>NewTriggerWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace BlightnautsDialogue
@@ -10,6 +11,7 @@ namespace BlightnautsDialogue
             public readonly string ClassName;
             public readonly string RealName;
             public readonly int SkinIndex;
+            public bool UseDefaultSkin { get; set; }
             public string IndexedName { get => ClassName.ToLower() + GetIndexString(SkinIndex); }
             private string GetIndexString(int index)
             {
@@ -25,11 +27,20 @@ namespace BlightnautsDialogue
                 return result + index.ToString();
             }
 
+            public void Reset()
+            {
+                if (SkinIndex == 1)
+                    UseDefaultSkin = true;
+                else
+                    UseDefaultSkin = false;
+            }
+
             public Actor(string className, string realName)
             {
                 ClassName = className;
                 RealName = realName;
                 SkinIndex = 1;
+                UseDefaultSkin = true;
             }
 
             public Actor(string className, string realName, int skinIndex)
@@ -39,6 +50,7 @@ namespace BlightnautsDialogue
                 if (skinIndex < 2)
                     skinIndex = 999;
                 SkinIndex = skinIndex;
+                UseDefaultSkin = false;
             }
         }
 
@@ -49,7 +61,7 @@ namespace BlightnautsDialogue
             new Actor("Assassin", "Cheerleader Penny", 3),
 
             new Actor("Bird", "Vinnie and Spike"),
-            new Actor("Bird", "Cap'n Vinnie & Seadog Spike", 2),
+            new Actor("Bird", "Cap'n Vinnie and Seadog Spike", 2),
             new Actor("Bird", "Cynical Vinnie and Total Spike", 3),
 
             new Actor("Blazer", "Coco Nebulon"),
@@ -199,49 +211,404 @@ namespace BlightnautsDialogue
             return null;
         }
 
-        public static string Path { get; private set; }
+        public static string FilePath { get; private set; }
+        public static string ModPath { get; set; }
+        public static string[] Maps { get; private set; }
         public static List<Area> Areas { get; private set; }
 
-        public static void LoadProject()
+        public static bool ModPathValid
         {
-            // No arguments for now.
+            get
+            {
+                if (!Directory.Exists(ModPath))
+                    return false;
+
+                if (!Directory.Exists(ModPath + "\\AnimationTemplates"))
+                    return false;
+
+                if (!Directory.Exists(ModPath + "\\Behaviours"))
+                    return false;
+
+                if (!Directory.Exists(ModPath + "\\Textures"))
+                    return false;
+
+                foreach (string map in Maps)
+                {
+                    if (!File.Exists(ModPath + "\\Maps\\" + map + "\\Gameplay.xml"))
+                        return false;
+                }
+
+                return true;
+            }
+        }
+
+        public static bool SaveFileExists { get => File.Exists(FilePath); }
+
+        public static void RegisterMaps(string maps)
+        {
+            Maps = maps.Split(';');
+        }
+
+        public static void NewProject()
+        {
+            FilePath = string.Empty;
+            ModPath = string.Empty;
             Areas = new List<Area>();
-            Areas.Add(new Area("test_area", 1));
-            Areas[0].GetCharacter("blinker001").SoloDialogue.Add(new Area.Dialogue
+            Maps = new string[0];
+
+            foreach (var actor in Characters)
+            {
+                actor.Reset();
+            }
+        }
+
+        public static int SaveProject(string path)
+        {
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                return 1;
+            }
+
+            string content = string.Format
             (
-                "ClementH doesn't like me :(",
-                "IconCharacterBlinker",
-                2,
-                0
-            ));
-            Areas[0].GetCharacter("blinker001").TeamDialogues[0].Dialogues.Add(new Area.Dialogue
+                "[GLOBAL]\nMODDIRECTORY={0}\nUSEDEFAULTSKIN=",
+                ModPath
+            );
+
+            foreach (Actor actor in Characters)
+            {
+                content += actor.UseDefaultSkin ? "1" : "0";
+            }
+
+            content += "\nMAPS=";
+
+            for (int i = 0; i < Maps.Length; i++)
+            {
+                if (i == 0)
+                {
+                    content += Maps[i];
+                }
+                else
+                {
+                    content += ";" + Maps[i];
+                }
+            }
+            content += "\n\n";
+
+            foreach (Area area in Areas)
+            {
+                content += SerializeArea(area) + "\n\n";
+            }
+
+            try
+            {
+                File.WriteAllText(path, content);
+                FilePath = path;
+            }
+            catch
+            {
+                return 2;
+            }
+            return 0;
+        }
+
+        private static string SerializeArea(Area area)
+        {
+            string content = string.Format("[AREA]\nNAME={0}\nDIALOGUES={1}\n", area.Name, area.TeamDialogues);
+
+            for (int i = 0; i < area.CharacterDialogue.Length; i++)
+            {
+                content += SerializeCharacter(area.CharacterDialogue[i], area, i);
+            }
+
+            return content;
+        }
+
+        private static string SerializeCharacter(Area.Character character, Area area, int characterIndex)
+        {
+            bool empty = true;
+            if (character.SoloDialogue.Count > 0)
+                empty = false;
+            for (int i = 0; i < area.TeamDialogues; i++)
+            {
+                if (character.TeamDialogues[i].Dialogues.Count > 0)
+                {
+                    empty = false;
+                    break;
+                }
+            }
+
+            if (empty)
+                return string.Empty;
+
+            string content = string.Format
             (
-                "If ClementH ever likes me, I'll give him an egg... not!",
-                "IconCharacterBlinker",
-                3,
-                0
-            ));
-            Areas[0].GetCharacter("cowboy001").SoloDialogue.Add(new Area.Dialogue
-            (
-                "This be an interestin' experiment, partner! This fella right here's trying somethin' fancy with \"Delays\" or somethin'.",
-                "IconCharacterCowboy",
-                4,
-                2
-            ));
-            Areas[0].GetCharacter("assassin001").SoloDialogue.Add(new Area.Dialogue
-            (
-                "Pah! You think that's interesting?! Then let me show you something much cooler!",
-                "IconCharacterAssassin",
-                4,
-                0
-            ));
-            Areas[0].GetCharacter("assassin001").SoloDialogue.Add(new Area.Dialogue
-            (
-                "You see, my internal name has not one but two bad words in a row: Ass Ass In!",
-                "IconCharacterAssassin",
-                Convert.ToDecimal(3.5f),
-                1
-            ));
+                "[CHARACTER]\nINDEX={0}\n",
+                characterIndex
+            );
+
+            if (character.SoloDialogue.Count > 0)
+            {
+                content += string.Format
+                (
+                    "[SEQUENCE]\nINDEX=-1\nCOUNT={0}\n",
+                    character.SoloDialogue.Count
+                );
+
+                foreach (var dialogue in character.SoloDialogue)
+                {
+                    content += string.Format
+                    (
+                        "CONTENT={0}\nPORTRAIT={1}\nTEXTURE={2}\nVALUES={3};{4};{5}\n",
+                        dialogue.Content,
+                        dialogue.Portrait,
+                        dialogue.Texture,
+                        dialogue.Duration,
+                        dialogue.Delay,
+                        dialogue.GenerateAnimationTemplate ? "1" : "0"
+                    );
+                }
+            }
+
+            for (int i = 0; i < area.TeamDialogues; i++)
+            {
+                if (character.TeamDialogues[i].Dialogues.Count > 0)
+                {
+                    content += string.Format
+                    (
+                        "[SEQUENCE]\nINDEX={0}\nCOUNT={1}\n",
+                        i,
+                        character.TeamDialogues[i].Dialogues.Count
+                    );
+
+                    foreach (var dialogue in character.TeamDialogues[i].Dialogues)
+                    {
+                        content += string.Format
+                        (
+                            "CONTENT={0}\nPORTRAIT={1}\nTEXTURE={2}\nVALUES={3};{4};{5}\n",
+                            dialogue.Content,
+                            dialogue.Portrait,
+                            dialogue.Texture,
+                            dialogue.Duration,
+                            dialogue.Delay,
+                            dialogue.GenerateAnimationTemplate ? "1" : "0"
+                        );
+                    }
+                }
+            }
+
+            return content;
+        }
+
+        public static int LoadProject(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return 1;
+            }
+
+            NewProject();
+
+            string[] content = File.ReadAllLines(path);
+
+            for (int i = 0; i < content.Length; i++)
+            {
+                string line = content[i];
+                if (line.StartsWith("[GLOBAL]"))
+                {
+                    if (content[i + 1].StartsWith("MODDIRECTORY="))
+                    {
+                        ModPath = content[i + 1].Substring("MODDIRECTORY=".Length);
+                    }
+                    if (content[i + 2].StartsWith("USEDEFAULTSKIN="))
+                    {
+                        LoadUseDefaultSkin(content[i + 2].Substring("USEDEFAULTSKIN=".Length));
+                    }
+                    if (content[i + 3].StartsWith("MAPS="))
+                    {
+                        RegisterMaps(content[i + 3].Substring("MAPS=".Length));
+                    }
+                }
+
+                if (line.StartsWith("[AREA]"))
+                {
+                    LoadArea(content, i);
+                }
+            }
+
+            FilePath = path;
+            return 0;
+        }
+
+        private static void LoadUseDefaultSkin(string content)
+        {
+            for (int i = 0; i < Characters.Length; i++)
+            {
+                if (content[i] == '1')
+                {
+                    Characters[i].UseDefaultSkin = true;
+                }
+                else
+                {
+                    Characters[i].UseDefaultSkin = false;
+                }
+            }
+        }
+
+        private static void LoadArea(string[] content, int index)
+        {
+            Area area;
+            string name;
+            int dialogues;
+            if (content[index + 1].StartsWith("NAME="))
+            {
+                name = content[index + 1].Substring("NAME=".Length);
+            }
+            else
+                return;
+
+            if (content[index + 2].StartsWith("DIALOGUES="))
+            {
+                try
+                {
+                    dialogues = int.Parse(content[index + 2].Substring("DIALOGUES=".Length));
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                return;
+
+            area = new Area(name, dialogues);
+            Areas.Add(area);
+
+            for (int i = index; i < content.Length; i++)
+            {
+                if (content[i].StartsWith("[CHARACTER]"))
+                {
+                    LoadCharacter(content, i, area);
+                }
+            }
+        }
+
+        private static void LoadCharacter(string[] content, int index, Area area)
+        {
+            int characterIndex;
+            if (content[index + 1].StartsWith("INDEX="))
+            {
+                try
+                {
+                    characterIndex = int.Parse(content[index + 1].Substring("INDEX=".Length));
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                return;
+
+            for (int i = index; i < content.Length; i++)
+            {
+                if (content[i].StartsWith("[SEQUENCE]"))
+                {
+                    LoadSequence(content, i, area, characterIndex);
+                }
+                else if (i != index && (content[i].StartsWith("[CHARACTER]") || content[i].StartsWith("[AREA]")))
+                {
+                    break;
+                }
+            }
+        }
+
+        private static void LoadSequence(string[] content, int index, Area area, int characterIndex)
+        {
+            int type, count;
+            if (content[index + 1].StartsWith("INDEX="))
+            {
+                try
+                {
+                    type = int.Parse(content[index + 1].Substring("INDEX=".Length));
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                return;
+
+            if (content[index + 2].StartsWith("COUNT="))
+            {
+                try
+                {
+                    count = int.Parse(content[index + 2].Substring("COUNT=".Length));
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                return;
+
+            int offset = 3;
+            for (int i = 0; i < count; i++)
+            {
+                string dialogue = string.Empty;
+                string portrait = string.Empty;
+                string texture = string.Empty;
+                float duration = 0;
+                float delay = 0;
+                bool generate = true;
+                if (content[index + offset].StartsWith("CONTENT="))
+                {
+                    dialogue = content[index + offset].Substring("CONTENT=".Length);
+                }
+                offset++;
+                if (content[index + offset].StartsWith("PORTRAIT="))
+                {
+                    portrait = content[index + offset].Substring("PORTRAIT=".Length);
+                }
+                offset++;
+                if (content[index + offset].StartsWith("TEXTURE="))
+                {
+                    texture = content[index + offset].Substring("TEXTURE=".Length);
+                }
+                offset++;
+                if (content[index + offset].StartsWith("VALUES="))
+                {
+                    string[] values = content[index + offset].Substring("VALUES=".Length).Split(';');
+                    try
+                    {
+                        duration = int.Parse(values[0]);
+                        delay = int.Parse(values[1]);
+                        generate = values[2] == "1" ? true : false;
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+                offset++;
+                if (type < 0)
+                {
+                    area.CharacterDialogue[characterIndex].SoloDialogue.Add(new Area.Dialogue(dialogue, portrait, texture, duration, delay, generate));
+                }
+                else
+                {
+                    try
+                    {
+                        area.CharacterDialogue[characterIndex].TeamDialogues[type].Dialogues.Add(new Area.Dialogue(dialogue, portrait, texture, duration, delay, generate));
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                }
+            }
         }
     }
 }
