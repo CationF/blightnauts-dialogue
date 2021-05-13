@@ -253,6 +253,7 @@ namespace BlightnautsDialogue
             initializing = true;
             dropdownCharacters.SelectedIndex = 0;
             initializing = false;
+            unsaved = false;
             RefreshWindow();
         }
 
@@ -285,6 +286,7 @@ namespace BlightnautsDialogue
                 dropdownTriggers.SelectedIndex = 0;
                 refreshing = false;
             }
+            unsaved = false;
             RefreshWindow();
         }
 
@@ -302,6 +304,7 @@ namespace BlightnautsDialogue
                         MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                 }
+                unsaved = false;
                 return;
             }
             DialogResult result = saveFileDialog.ShowDialog();
@@ -317,6 +320,7 @@ namespace BlightnautsDialogue
                         MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                 }
+                unsaved = false;
             }
         }
 
@@ -339,6 +343,7 @@ namespace BlightnautsDialogue
                         MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                 }
+                unsaved = false;
             }
         }
 
@@ -543,6 +548,47 @@ namespace BlightnautsDialogue
                 return;
             unsaved = true;
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].GenerateAnimationTemplate = checkBoxGenerateAnimationTemplate.Checked;
+        }
+
+        private void topBarAbout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                "Blightnauts Dialogue Editor version 0.1\n" +
+                "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
+                "No license, do whatever you want with this.\n\n" +
+                "Windows Forms and .NET framework are property of Microsoft Corporation",
+                "About",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.None
+            );
+        }
+
+        private void topBarExport_Click(object sender, EventArgs e)
+        {
+            if (!ProjectManager.ModPathValid)
+            {
+                MessageBox.Show("The mod directory is not valid, please check mod directory.\nAlso check maps to see if the names match.",
+                "Invalid Mod Directory",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+                return;
+            }
+
+            Exporter.DialogueExporter.Export(ProjectManager.ModPath + "\\AnimationTemplates");
+            Exporter.BehaviourExporter.Export(ProjectManager.ModPath + "\\Behaviours");
+            foreach (string map in ProjectManager.Maps)
+            {
+                Exporter.MapExporter.Export(ProjectManager.ModPath + "\\Maps\\" + map + "\\Gameplay.xml");
+            }
+        }
+
+        private void topBarSetMaps_Click(object sender, EventArgs e)
+        {
+            DialogResult result = new MapList().ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                unsaved = true;
+            }
         }
     }
 }

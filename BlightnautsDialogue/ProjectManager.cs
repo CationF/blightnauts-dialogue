@@ -213,15 +213,48 @@ namespace BlightnautsDialogue
 
         public static string FilePath { get; private set; }
         public static string ModPath { get; set; }
+        public static string[] Maps { get; private set; }
         public static List<Area> Areas { get; private set; }
 
+        public static bool ModPathValid
+        {
+            get
+            {
+                if (!Directory.Exists(ModPath))
+                    return false;
+
+                if (!Directory.Exists(ModPath + "\\AnimationTemplates"))
+                    return false;
+
+                if (!Directory.Exists(ModPath + "\\Behaviours"))
+                    return false;
+
+                if (!Directory.Exists(ModPath + "\\Textures"))
+                    return false;
+
+                foreach (string map in Maps)
+                {
+                    if (!File.Exists(ModPath + "\\Maps\\" + map + "\\Gameplay.xml"))
+                        return false;
+                }
+
+                return true;
+            }
+        }
+
         public static bool SaveFileExists { get => File.Exists(FilePath); }
+
+        public static void RegisterMaps(string maps)
+        {
+            Maps = maps.Split(';');
+        }
 
         public static void NewProject()
         {
             FilePath = string.Empty;
             ModPath = string.Empty;
             Areas = new List<Area>();
+            Maps = new string[0];
 
             foreach (var actor in Characters)
             {
@@ -246,7 +279,21 @@ namespace BlightnautsDialogue
             {
                 content += actor.UseDefaultSkin ? "1" : "0";
             }
-            content += "\n\n\n";
+
+            content += "\nMAPS=";
+
+            for (int i = 0; i < Maps.Length; i++)
+            {
+                if (i == 0)
+                {
+                    content += Maps[i];
+                }
+                else
+                {
+                    content += ";" + Maps[i];
+                }
+            }
+            content += "\n\n";
 
             foreach (Area area in Areas)
             {
@@ -377,6 +424,10 @@ namespace BlightnautsDialogue
                     {
                         LoadUseDefaultSkin(content[i + 2].Substring("USEDEFAULTSKIN=".Length));
                     }
+                    if (content[i + 3].StartsWith("MAPS="))
+                    {
+                        RegisterMaps(content[i + 3].Substring("MAPS=".Length));
+                    }
                 }
 
                 if (line.StartsWith("[AREA]"))
@@ -385,6 +436,7 @@ namespace BlightnautsDialogue
                 }
             }
 
+            FilePath = path;
             return 0;
         }
 
