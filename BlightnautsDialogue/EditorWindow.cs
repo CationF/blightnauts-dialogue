@@ -28,6 +28,14 @@ namespace BlightnautsDialogue
                 dropdownCharacters.Items.Add(naut.IndexedName + " (" + naut.RealName + ")");
             }
             dropdownCharacters.SelectedIndex = 0;
+
+            ImageLoader.LoadImages();
+            dropdownTexture.Items.Clear();
+            foreach (string image in ImageLoader.Images)
+            {
+                dropdownTexture.Items.Add(image);
+            }
+
             ProjectManager.NewProject();
             zoom = 12;
             SetFontSize(zoom);
@@ -260,7 +268,6 @@ namespace BlightnautsDialogue
             ProjectManager.NewProject();
             dropdownTriggers.Items.Clear();
             dropdownDialogues.Items.Clear();
-            dropdownTexture.Items.Clear();
             sequence = 0;
             initializing = true;
             dropdownCharacters.SelectedIndex = 0;
@@ -283,7 +290,6 @@ namespace BlightnautsDialogue
             }
             dropdownTriggers.Items.Clear();
             dropdownDialogues.Items.Clear();
-            dropdownTexture.Items.Clear();
             sequence = 0;
             initializing = true;
             dropdownCharacters.SelectedIndex = 0;
@@ -495,7 +501,10 @@ namespace BlightnautsDialogue
 
         private void buttonSequencePlus_Click(object sender, EventArgs e)
         {
-            GetDialogues(dropdownDialogues.SelectedIndex - 1).Add(new Area.Dialogue());
+            if (ImageLoader.DefaultValid)
+                GetDialogues(dropdownDialogues.SelectedIndex - 1).Add(new Area.Dialogue(ProjectManager.Characters[dropdownCharacters.SelectedIndex].PortraitName, ImageLoader.Default));
+            else
+                GetDialogues(dropdownDialogues.SelectedIndex - 1).Add(new Area.Dialogue(ProjectManager.Characters[dropdownCharacters.SelectedIndex].PortraitName));
             sequence = GetDialogues(dropdownDialogues.SelectedIndex - 1).Count - 1;
             unsaved = true;
             RefreshWindow();
@@ -507,6 +516,14 @@ namespace BlightnautsDialogue
                 return;
             unsaved = true;
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Portrait = textBoxPortrait.Text;
+        }
+
+        private void dropdownTexture_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (refreshing)
+                return;
+            unsaved = true;
+            GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Texture = dropdownTexture.Items[dropdownTexture.SelectedIndex].ToString();
         }
 
         private void dropdownTexture_TextUpdate(object sender, EventArgs e)
@@ -593,6 +610,7 @@ namespace BlightnautsDialogue
             {
                 Exporter.MapExporter.Export(ProjectManager.ModPath + "\\Maps\\" + map + "\\Gameplay.xml");
             }
+            Exporter.ImageExporter.CopyImages();
         }
 
         private void topBarSetMaps_Click(object sender, EventArgs e)

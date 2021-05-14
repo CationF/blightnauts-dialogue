@@ -86,6 +86,26 @@ namespace BlightnautsDialogue
                 GenerateAnimationTemplate = true;
             }
 
+            public Dialogue(string portrait)
+            {
+                Portrait = portrait;
+                Texture = string.Empty;
+                Content = string.Empty;
+                Duration = 0;
+                Delay = 0;
+                GenerateAnimationTemplate = true;
+            }
+
+            public Dialogue(string portrait, string texture)
+            {
+                Portrait = portrait;
+                Texture = texture;
+                Content = string.Empty;
+                Duration = 0;
+                Delay = 0;
+                GenerateAnimationTemplate = true;
+            }
+
             public Dialogue(string content, string portrait, string texture, float duration, float delay)
             {
                 Portrait = portrait;

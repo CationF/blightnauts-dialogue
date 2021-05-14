@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace BlightnautsDialogue
 {
@@ -3002,6 +3003,48 @@ namespace BlightnautsDialogue
                 catch
                 {
                     return 2;
+                }
+            }
+        }
+
+        public static class ImageExporter
+        {
+            public static void CopyImages()
+            {
+                if (!ProjectManager.ModPathValid)
+                    return;
+
+                List<string> images = new List<string>();
+
+                void GetImagesFromDialogues(Area.Dialogue[] dialogues)
+                {
+                    foreach (var dialogue in dialogues)
+                    {
+                        if (!images.Contains(dialogue.Texture))
+                            images.Add(dialogue.Texture);
+                    }
+                }
+
+                foreach (Area area in ProjectManager.Areas)
+                {
+                    foreach (var naut in area.CharacterDialogue)
+                    {
+                        GetImagesFromDialogues(naut.SoloDialogue.ToArray());
+                        for (int i = 0; i < area.TeamDialogues; i++)
+                        {
+                            GetImagesFromDialogues(naut.TeamDialogues[i].Dialogues.ToArray());
+                        }
+                    }
+                }
+
+                foreach (var image in images)
+                {
+                    string sourceFile = Program.Path + "\\images\\" + image + ".dds";
+                    string destinationFile = ProjectManager.ModPath + "\\Textures\\" + image + ".dds";
+                    if (!File.Exists(destinationFile) && File.Exists(sourceFile))
+                    {
+                        File.Copy(sourceFile, destinationFile);
+                    }
                 }
             }
         }

@@ -5,6 +5,8 @@ namespace BlightnautsDialogue
 {
     static class Program
     {
+        public static string Path { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -13,16 +15,8 @@ namespace BlightnautsDialogue
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             Application.Run(new EditorWindow());
-            //ProjectManager.LoadProject();
-            //FolderBrowserDialog dialog = new FolderBrowserDialog();
-            //DialogResult result = dialog.ShowDialog();
-            //if (result == DialogResult.OK)
-            //{
-            //    Exporter.DialogueExporter.Export(dialog.SelectedPath + "\\AnimationTemplates");
-            //    Exporter.BehaviourExporter.Export(dialog.SelectedPath + "\\Behaviours");
-            //    Exporter.MapExporter.Export(dialog.SelectedPath + "\\Maps\\externalToolTest\\Gameplay.xml");
-            //}
         }
     }
 }

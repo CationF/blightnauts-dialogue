@@ -13,6 +13,16 @@ namespace BlightnautsDialogue
             public readonly int SkinIndex;
             public bool UseDefaultSkin { get; set; }
             public string IndexedName { get => ClassName.ToLower() + GetIndexString(SkinIndex); }
+            public string PortraitName
+            {
+                get
+                {
+                    string result = "IconCharacter" + ClassName;
+                    if (SkinIndex != 1)
+                        result += GetIndexString(SkinIndex);
+                    return result;
+                }
+            }
             private string GetIndexString(int index)
             {
                 string result = "00";

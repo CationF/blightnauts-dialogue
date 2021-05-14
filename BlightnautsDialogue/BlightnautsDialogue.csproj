@@ -57,6 +57,7 @@
       <DependentUpon>EditorWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Exporter.cs" />
+    <Compile Include="ImageLoader.cs" />
     <Compile Include="MapList.cs">
       <SubType>Form</SubType>
     </Compile>
