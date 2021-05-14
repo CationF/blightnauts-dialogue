@@ -5,6 +5,8 @@ namespace BlightnautsDialogue
 {
     static class Program
     {
+        public static string Path { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -13,7 +15,8 @@ namespace BlightnautsDialogue
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormTeam());
+            Path = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            Application.Run(new EditorWindow());
         }
     }
 }
