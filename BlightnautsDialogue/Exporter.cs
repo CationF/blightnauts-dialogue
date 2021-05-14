@@ -146,7 +146,7 @@ namespace BlightnautsDialogue
                         "    </animationVisual>\n" +
                         "    <animationVisual>\n" +
                         "        <vector2 id=\"size\">0.947204 0.135316</vector2>\n" +
-                        "        <string id=\"textureName\">(mod) DialogueBox</string>\n" +
+                        "        <string id=\"textureName\">(mod) {6}</string>\n" +
                         "        <string id=\"colourCombineModeAlpha\">MULTIPLY</string>\n" +
                         "        <colour id=\"colourRGBA\" mode=\"KEY\" inCurveType=\"LINEAR_LINEAR_LINEAR_LINEAR\" outCurveType=\"LINEAR_LINEAR_LINEAR_LINEAR\" keyAnchor=\"0 0 0 0#{0}_0 0 0 255#{1}_0 0 0 255#{2}_0 0 0 0#{3}\">0 0 0 255</colour>\n" +
                         "        <int id=\"ownID\">866</int>\n" +
@@ -177,7 +177,8 @@ namespace BlightnautsDialogue
                         Convert.ToSingle(Area.GetEndTime(dialogue, dialogues)) - 0.1f,
                         Convert.ToSingle(Area.GetEndTime(dialogue, dialogues)),
                         dialogue.Portrait,
-                        dialogue.Content
+                        dialogue.Content,
+                        dialogue.Texture
                     );
                 }
             }
