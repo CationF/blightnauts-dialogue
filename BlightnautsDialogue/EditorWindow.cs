@@ -172,6 +172,18 @@ namespace BlightnautsDialogue
             textBoxDuration.Text = ValidateNumericInput(textBoxDuration.Text);
             textBoxDelay.Text = ValidateNumericInput(textBoxDelay.Text);
 
+            if (ProjectManager.Characters[dropdownCharacters.SelectedIndex].UseDefaultSkin && ProjectManager.Characters[dropdownCharacters.SelectedIndex].SkinIndex != 1)
+            {
+                textBoxPortrait.Enabled = false;
+                dropdownTexture.Enabled = false;
+                textBoxDuration.Enabled = false;
+                textBoxDelay.Enabled = false;
+                textBoxMain.Enabled = false;
+                checkBoxGenerateAnimationTemplate.Enabled = false;
+                buttonSequenceMinus.Enabled = false;
+                buttonSequencePlus.Enabled = false;
+            }
+
             refreshing = false;
         }
 
@@ -422,6 +434,7 @@ namespace BlightnautsDialogue
                 return;
             ProjectManager.Characters[dropdownCharacters.SelectedIndex].UseDefaultSkin = checkBoxUseDefault.Checked;
             unsaved = true;
+            RefreshWindow();
         }
 
         private void dropdownTriggers_SelectedIndexChanged(object sender, EventArgs e)

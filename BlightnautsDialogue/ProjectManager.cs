@@ -203,9 +203,25 @@ namespace BlightnautsDialogue
 
         public static Actor GetDefaultSkin(Actor actor)
         {
+            if (actor.SkinIndex == 1)
+                return actor;
+
             foreach (Actor character in Characters)
             {
-                if (character.ClassName == actor.ClassName && character.SkinIndex == 0)
+                if (character.SkinIndex == 1 && character.ClassName == actor.ClassName)
+                {
+                    return character;
+                }
+            }
+
+            return actor;
+        }
+
+        public static Actor GetActorFromIndexedName(string indexedName)
+        {
+            foreach (Actor character in Characters)
+            {
+                if (character.IndexedName == indexedName)
                     return character;
             }
             return null;
