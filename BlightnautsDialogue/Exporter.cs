@@ -311,66 +311,156 @@ namespace BlightnautsDialogue
                     }
                     else
                     {
-                        resultCheckCharacter += string.Format
-                        (
-                            "                <condition id=\"branch\">\n" +
-                            "                    <string id=\"Comment\">{0}</string>\n" +
-                            "                    <normal>\n" +
-                            "                        <action id=\"selectTarget\">\n" +
-                            "                            <string id=\"groups to select\" values=\"target groups\" multiselect=\"true\">PLAYERS;;</string>\n" +
-                            "                            <string id=\"teams\" values=\"teams\" multiselect=\"true\">OWN_TEAM;;</string>\n" +
-                            "                            <string id=\"class\">{1}</string>\n" +
-                            "                            <string id=\"only check parent\" values=\"yesno\">no</string>\n" +
-                            "                            <string id=\"remove if not found\" values=\"yesno\">yes</string>\n" +
-                            "                            <float id=\"xOffset\">0.00</float>\n" +
-                            "                            <float id=\"yOffset\">0.00</float>\n" +
-                            "                            <string id=\"width\">60</string>\n" +
-                            "                            <string id=\"height\">60</string>\n" +
-                            "                            <string id=\"horizontal alignment to character\" values=\"alignmentToCharacterHorizontal\">Centre</string>\n" +
-                            "                            <string id=\"vertical alignment to character\" values=\"alignmentToCharacterVertical\">Centre</string>\n" +
-                            "                            <string id=\"debugAreaColour\">0 0 0 0</string>\n" +
-                            "                            <string id=\"compare method\" values=\"valuecompare2\">greater or equal</string>\n" +
-                            "                            <string id=\"health value\"></string>\n" +
-                            "                            <string id=\"distance check\" values=\"distance check\">NONE</string>\n" +
-                            "                            <string id=\"check line of sight\" values=\"yesno\">no</string>\n" +
-                            "                            <string id=\"ignore invisibility\" values=\"yesno\">yes</string>\n" +
-                            "                            <string id=\"never detect invisible targets without character collision\" values=\"yesno\">no</string>\n" +
-                            "                        </action>\n" +
-                            "                        <andblock>\n" +
-                            "                            <normal>\n" +
-                            "                                <action id=\"setBool\">\n" +
-                            "                                    <string id=\"id\">actorExists_{2}</string>\n" +
-                            "                                    <string id=\"value\" values=\"flagtoggle\">yes</string>\n" +
-                            "                                </action>\n" +
-                            "                            </normal>\n" +
-                            "                            <else>\n" +
-                            "                                <action id=\"setBool\">\n" +
-                            "                                    <string id=\"id\">actorExists_{2}</string>\n" +
-                            "                                    <string id=\"value\" values=\"flagtoggle\">no</string>\n" +
-                            "                                </action>\n" +
-                            "                            </else>\n" +
-                            "                            <or>\n" +
-                            "                                <condition id=\"hasTarget\">\n" +
-                            "                                    <string id=\"condition\" values=\"yesno\">yes</string>\n" +
-                            "                                </condition>\n" +
-                            "                                <condition id=\"checkClass\">\n" +
-                            "                                    <string id=\"check on\" values=\"targetself\">target</string>\n" +
-                            "                                    <string id=\"class\">{1}</string>\n" +
-                            "                                </condition>\n" +
-                            "                                <condition id=\"skin\">\n" +
-                            "                                    <float id=\"skinIndex\">{3}.00</float>\n" +
-                            "                                    <string id=\"condition\" values=\"yesno\">yes</string>\n" +
-                            "                                    <string id=\"check on\" values=\"targetself\">target</string>\n" +
-                            "                                </condition>\n" +
-                            "                            </or>\n" +
-                            "                        </andblock>\n" +
-                            "                    </normal>\n" +
-                            "                </condition>",
-                            actor.RealName,
-                            actor.ClassName,
-                            actor.IndexedName,
-                            actor.SkinIndex
-                        );
+                        if (actor.SkinIndex == 1)
+                        {
+                            resultCheckCharacter += string.Format
+                            (
+                                "                <condition id=\"branch\">\n" +
+                                "                    <string id=\"Comment\">{0}</string>\n" +
+                                "                    <normal>\n" +
+                                "                        <action id=\"selectTarget\">\n" +
+                                "                            <string id=\"groups to select\" values=\"target groups\" multiselect=\"true\">PLAYERS;;</string>\n" +
+                                "                            <string id=\"teams\" values=\"teams\" multiselect=\"true\">OWN_TEAM;;</string>\n" +
+                                "                            <string id=\"class\">{1}</string>\n" +
+                                "                            <string id=\"only check parent\" values=\"yesno\">no</string>\n" +
+                                "                            <string id=\"remove if not found\" values=\"yesno\">yes</string>\n" +
+                                "                            <float id=\"xOffset\">0.00</float>\n" +
+                                "                            <float id=\"yOffset\">0.00</float>\n" +
+                                "                            <string id=\"width\">60</string>\n" +
+                                "                            <string id=\"height\">60</string>\n" +
+                                "                            <string id=\"horizontal alignment to character\" values=\"alignmentToCharacterHorizontal\">Centre</string>\n" +
+                                "                            <string id=\"vertical alignment to character\" values=\"alignmentToCharacterVertical\">Centre</string>\n" +
+                                "                            <string id=\"debugAreaColour\">0 0 0 0</string>\n" +
+                                "                            <string id=\"compare method\" values=\"valuecompare2\">greater or equal</string>\n" +
+                                "                            <string id=\"health value\"></string>\n" +
+                                "                            <string id=\"distance check\" values=\"distance check\">NONE</string>\n" +
+                                "                            <string id=\"check line of sight\" values=\"yesno\">no</string>\n" +
+                                "                            <string id=\"ignore invisibility\" values=\"yesno\">yes</string>\n" +
+                                "                            <string id=\"never detect invisible targets without character collision\" values=\"yesno\">no</string>\n" +
+                                "                        </action>\n" +
+                                "                        <andblock>\n" +
+                                "                            <normal>\n" +
+                                "                                <action id=\"setBool\">\n" +
+                                "                                    <string id=\"id\">actorExists_{2}</string>\n" +
+                                "                                    <string id=\"value\" values=\"flagtoggle\">yes</string>\n" +
+                                "                                </action>\n" +
+                                "                            </normal>\n" +
+                                "                            <else>\n" +
+                                "                                <andblock>\n" +
+                                "                                    <normal>\n" +
+                                "                                        <action id=\"setBool\">\n" +
+                                "                                            <string id=\"id\">actorExists_{2}</string>\n" +
+                                "                                            <string id=\"value\" values=\"flagtoggle\">yes</string>\n" +
+                                "                                        </action>\n" +
+                                "                                    </normal>\n" +
+                                "                                    <else>\n" +
+                                "                                        <action id=\"setBool\">\n" +
+                                "                                            <string id=\"id\">actorExists_{2}</string>\n" +
+                                "                                            <string id=\"value\" values=\"flagtoggle\">no</string>\n" +
+                                "                                        </action>\n" +
+                                "                                    </else>\n" +
+                                "                                    <or>\n" +
+                                "                                        <condition id=\"hasTarget\">\n" +
+                                "                                            <string id=\"condition\" values=\"yesno\">yes</string>\n" +
+                                "                                        </condition>\n" +
+                                "                                        <condition id=\"checkClass\">\n" +
+                                "                                            <string id=\"check on\" values=\"targetself\">target</string>\n" +
+                                "                                            <string id=\"class\">{1}</string>\n" +
+                                "                                        </condition>\n" +
+                                "                                        <condition id=\"hasUpgrade\">\n" +
+                                "                                            <string id=\"class\">{1}</string>\n" +
+                                "                                            <string id=\"team\" values=\"teamswithnumbers\">OWN_TEAM</string>\n" +
+                                "                                            <string id=\"upgrade name\">Bot</string>\n" +
+                                "                                        </condition>\n" +
+                                "                                    </or>\n" +
+                                "                                </andblock>\n" +
+                                "                            </else>\n" +
+                                "                            <or>\n" +
+                                "                                <condition id=\"hasTarget\">\n" +
+                                "                                    <string id=\"condition\" values=\"yesno\">yes</string>\n" +
+                                "                                </condition>\n" +
+                                "                                <condition id=\"checkClass\">\n" +
+                                "                                    <string id=\"check on\" values=\"targetself\">target</string>\n" +
+                                "                                    <string id=\"class\">{1}</string>\n" +
+                                "                                </condition>\n" +
+                                "                                <condition id=\"skin\">\n" +
+                                "                                    <float id=\"skinIndex\">{3}.00</float>\n" +
+                                "                                    <string id=\"condition\" values=\"yesno\">yes</string>\n" +
+                                "                                    <string id=\"check on\" values=\"targetself\">target</string>\n" +
+                                "                                </condition>\n" +
+                                "                            </or>\n" +
+                                "                        </andblock>\n" +
+                                "                    </normal>\n" +
+                                "                </condition>",
+                                actor.RealName,
+                                actor.ClassName,
+                                actor.IndexedName,
+                                actor.SkinIndex
+                            );
+                        }
+                        else
+                        {
+                            resultCheckCharacter += string.Format
+                            (
+                                "                <condition id=\"branch\">\n" +
+                                "                    <string id=\"Comment\">{0}</string>\n" +
+                                "                    <normal>\n" +
+                                "                        <action id=\"selectTarget\">\n" +
+                                "                            <string id=\"groups to select\" values=\"target groups\" multiselect=\"true\">PLAYERS;;</string>\n" +
+                                "                            <string id=\"teams\" values=\"teams\" multiselect=\"true\">OWN_TEAM;;</string>\n" +
+                                "                            <string id=\"class\">{1}</string>\n" +
+                                "                            <string id=\"only check parent\" values=\"yesno\">no</string>\n" +
+                                "                            <string id=\"remove if not found\" values=\"yesno\">yes</string>\n" +
+                                "                            <float id=\"xOffset\">0.00</float>\n" +
+                                "                            <float id=\"yOffset\">0.00</float>\n" +
+                                "                            <string id=\"width\">60</string>\n" +
+                                "                            <string id=\"height\">60</string>\n" +
+                                "                            <string id=\"horizontal alignment to character\" values=\"alignmentToCharacterHorizontal\">Centre</string>\n" +
+                                "                            <string id=\"vertical alignment to character\" values=\"alignmentToCharacterVertical\">Centre</string>\n" +
+                                "                            <string id=\"debugAreaColour\">0 0 0 0</string>\n" +
+                                "                            <string id=\"compare method\" values=\"valuecompare2\">greater or equal</string>\n" +
+                                "                            <string id=\"health value\"></string>\n" +
+                                "                            <string id=\"distance check\" values=\"distance check\">NONE</string>\n" +
+                                "                            <string id=\"check line of sight\" values=\"yesno\">no</string>\n" +
+                                "                            <string id=\"ignore invisibility\" values=\"yesno\">yes</string>\n" +
+                                "                            <string id=\"never detect invisible targets without character collision\" values=\"yesno\">no</string>\n" +
+                                "                        </action>\n" +
+                                "                        <andblock>\n" +
+                                "                            <normal>\n" +
+                                "                                <action id=\"setBool\">\n" +
+                                "                                    <string id=\"id\">actorExists_{2}</string>\n" +
+                                "                                    <string id=\"value\" values=\"flagtoggle\">yes</string>\n" +
+                                "                                </action>\n" +
+                                "                            </normal>\n" +
+                                "                            <else>\n" +
+                                "                                <action id=\"setBool\">\n" +
+                                "                                    <string id=\"id\">actorExists_{2}</string>\n" +
+                                "                                    <string id=\"value\" values=\"flagtoggle\">no</string>\n" +
+                                "                                </action>\n" +
+                                "                            </else>\n" +
+                                "                            <or>\n" +
+                                "                                <condition id=\"hasTarget\">\n" +
+                                "                                    <string id=\"condition\" values=\"yesno\">yes</string>\n" +
+                                "                                </condition>\n" +
+                                "                                <condition id=\"checkClass\">\n" +
+                                "                                    <string id=\"check on\" values=\"targetself\">target</string>\n" +
+                                "                                    <string id=\"class\">{1}</string>\n" +
+                                "                                </condition>\n" +
+                                "                                <condition id=\"skin\">\n" +
+                                "                                    <float id=\"skinIndex\">{3}.00</float>\n" +
+                                "                                    <string id=\"condition\" values=\"yesno\">yes</string>\n" +
+                                "                                    <string id=\"check on\" values=\"targetself\">target</string>\n" +
+                                "                                </condition>\n" +
+                                "                            </or>\n" +
+                                "                        </andblock>\n" +
+                                "                    </normal>\n" +
+                                "                </condition>",
+                                actor.RealName,
+                                actor.ClassName,
+                                actor.IndexedName,
+                                actor.SkinIndex
+                            );
+                        }
                     }
                 }
             }
@@ -862,7 +952,7 @@ namespace BlightnautsDialogue
                     "                                <condition id=\"branch\">\n" +
                     "                                    <string id=\"Comment\">Single Player</string>\n" +
                     "                                    <string id=\"Minimized\">yes</string>\n" +
-                    "                                    <normal>",
+                    "                                    <normal>\n",
                     area.Name
                 );
             }
@@ -920,7 +1010,7 @@ namespace BlightnautsDialogue
                         "                                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
                         "                                                </condition>\n" +
                         "                                            </or>\n" +
-                        "                                        </andblock>",
+                        "                                        </andblock>\n",
                         naut.Name,
                         naut.Name,
                         area.Name
@@ -934,12 +1024,11 @@ namespace BlightnautsDialogue
                     "                                <condition id=\"branch\">\n" +
                     "                                    <string id=\"Comment\">Co-op</string>\n" +
                     "                                    <string id=\"Minimized\">yes</string>\n" +
-                    "                                    <normal>";
+                    "                                    <normal>\n";
             }
 
             private static void DrawTextboxesAppendValues2(Area area)
             {
-                string end = string.Empty;
                 foreach (var naut in area.CharacterDialogue)
                 {
                     bool hasLines = false;
@@ -959,27 +1048,21 @@ namespace BlightnautsDialogue
                     (
                         "                                        <andblock>\n" +
                         "                                            <string id=\"Comment\">{0}</string>\n" +
-                        "                                            <normal>",
-                        naut.Name
+                        "                                            <normal>\n",
+                        ProjectManager.GetActorFromIndexedName(naut.Name).RealName
                     );
 
                     for (int i = 0; i < area.TeamDialogues; i++)
                     {
-                        if (i > 0)
-                        {
-                            resultDrawTextboxes += "                                                    <else>\n";
-                            end += "                                                            </else>\n";
-                        }
-
                         resultDrawTextboxes += string.Format
                         (
                             "                                                <condition id=\"checkCounter\">\n" +
-                            "                                                    <string id=\"id\">sequence_{1}</string>\n" +
+                            "                                                    <string id=\"id\">sequence_{0}</string>\n" +
                             "                                                    <string id=\"value\">{2}</string>\n" +
                             "                                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
                             "                                                    <normal>\n" +
                             "                                                        <action id=\"playAnimation\">\n" +
-                            "                                                            <string id=\"animationName\">(mod) speech_textbox_{0}_{1}_team{2}</string>\n" +
+                            "                                                            <string id=\"animationName\">(mod) speech_textbox_{1}_{0}_team{2}</string>\n" +
                             "                                                            <string id=\"location\" values=\"animationLocation\">HUD</string>\n" +
                             "                                                            <string id=\"dummyToFollow\"></string>\n" +
                             "                                                            <float id=\"xPosition\">0.00</float>\n" +
@@ -1003,42 +1086,40 @@ namespace BlightnautsDialogue
                             "                                                            <string id=\"textureReplace2VisualName\"></string>\n" +
                             "                                                            <string id=\"textureReplace2ReplacementName\"></string>\n" +
                             "                                                        </action>\n" +
-                            "                                                        <action id=\"adjustCounter\">\n" +
-                            "                                                            <string id=\"id\">sequence_{1}</string>\n" +
-                            "                                                            <string id=\"value\">1</string>\n" +
-                            "                                                            <string id=\"adjust method\" values=\"valueadjust\">add</string>\n" +
-                            "                                                        </action>\n" +
-                            "                                                    </normal>\n",
-                            naut.Name,
+                            "                                                    </normal>\n" +
+                            "                                                </condition>\n",
                             area.Name,
-                            i.ToString()
+                            naut.Name,
+                            i
                         );
-
-                        end += "                                                </condition>\n";
                     }
 
-                    resultDrawTextboxes += end;
                     resultDrawTextboxes += string.Format
                     (
                         "                                                <action id=\"adjustCounter\">\n" +
-                        "                                                    <string id=\"id\">speak_{1}</string>\n" +
+                        "                                                    <string id=\"id\">sequence_{0}</string>\n" +
+                        "                                                    <string id=\"value\">1</string>\n" +
+                        "                                                    <string id=\"adjust method\" values=\"valueadjust\">add</string>\n" +
+                        "                                                </action>\n" +
+                        "                                                <action id=\"adjustCounter\">\n" +
+                        "                                                    <string id=\"id\">speak_{0}</string>\n" +
                         "                                                    <string id=\"value\">5</string>\n" +
                         "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
                         "                                                </action>\n" +
                         "                                            </normal>\n" +
                         "                                            <or>\n" +
                         "                                                <condition id=\"IsLevelButtonDown\">\n" +
-                        "                                                    <string id=\"buttons\">speech_actorSpeaking_{0}</string>\n" +
+                        "                                                    <string id=\"buttons\">speech_actorSpeaking_{1}</string>\n" +
                         "                                                </condition>\n" +
                         "                                                <condition id=\"checkCounter\">\n" +
-                        "                                                    <string id=\"id\">speak_{1}</string>\n" +
+                        "                                                    <string id=\"id\">speak_{0}</string>\n" +
                         "                                                    <string id=\"value\">0</string>\n" +
                         "                                                    <string id=\"compare method\" values=\"valuecompare\">equal</string>\n" +
                         "                                                </condition>\n" +
                         "                                            </or>\n" +
-                        "                                        </andblock>",
-                        naut.Name,
-                        area.Name
+                        "                                        </andblock>\n",
+                        area.Name,
+                        naut.Name
                     );
                 }
             }
