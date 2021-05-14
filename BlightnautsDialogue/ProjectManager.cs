@@ -609,8 +609,8 @@ namespace BlightnautsDialogue
                     string[] values = content[index + offset].Substring("VALUES=".Length).Split(';');
                     try
                     {
-                        duration = int.Parse(values[0]);
-                        delay = int.Parse(values[1]);
+                        duration = float.Parse(values[0], System.Globalization.CultureInfo.InvariantCulture);
+                        delay = float.Parse(values[1], System.Globalization.CultureInfo.InvariantCulture);
                         generate = values[2] == "1" ? true : false;
                     }
                     catch

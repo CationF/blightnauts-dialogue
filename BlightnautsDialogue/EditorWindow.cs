@@ -29,11 +29,21 @@ namespace BlightnautsDialogue
             }
             dropdownCharacters.SelectedIndex = 0;
 
-            ImageLoader.LoadImages();
-            dropdownTexture.Items.Clear();
-            foreach (string image in ImageLoader.Images)
+            if (ImageLoader.DirectoryValid)
             {
-                dropdownTexture.Items.Add(image);
+                ImageLoader.LoadImages();
+                dropdownTexture.Items.Clear();
+                foreach (string image in ImageLoader.Images)
+                {
+                    dropdownTexture.Items.Add(image);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Cannot detect \"images\" folder, program will still work but will not be able to copy the necessary textures to the mod directory.",
+                "Folder not found",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
             }
 
             ProjectManager.NewProject();

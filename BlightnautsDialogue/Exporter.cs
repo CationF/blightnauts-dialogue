@@ -3011,7 +3011,7 @@ namespace BlightnautsDialogue
         {
             public static void CopyImages()
             {
-                if (!ProjectManager.ModPathValid)
+                if (!ProjectManager.ModPathValid || !ImageLoader.DirectoryValid)
                     return;
 
                 List<string> images = new List<string>();

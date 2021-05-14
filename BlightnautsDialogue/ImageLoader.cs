@@ -8,6 +8,7 @@ namespace BlightnautsDialogue
         private static List<string> images = new List<string>();
         public static string[] Images { get => images.ToArray(); }
         public static string Default { get; private set; }
+        public static bool DirectoryValid { get => Directory.Exists(Program.Path + "\\images"); }
         public static bool DefaultValid { get => File.Exists(Program.Path + "\\images\\" + Default + ".dds"); }
 
         public static void LoadImages()
