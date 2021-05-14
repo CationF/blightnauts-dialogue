@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace BlightnautsDialogue
 {
@@ -67,7 +68,7 @@ namespace BlightnautsDialogue
                                         naut.Name,
                                         area.Name,
                                         index == -1 ? "solo" : "team",
-                                        index >= 0 ? index.ToString() : string.Empty
+                                        index >= 0 ? index.ToString(CultureInfo.InvariantCulture) : string.Empty
                                     ),
                                     result
                                 );
@@ -106,7 +107,7 @@ namespace BlightnautsDialogue
                     "    <bool id=\"updateAnimationLength\">0</bool>\n" +
                     "    <Vector2 id=\"animationSize\">0.947 0.135</Vector2>\n" +
                     "    <bool id=\"updateAnimationSize\">1</bool>\n",
-                    Area.GetTotalDuration(dialogues)
+                    Area.GetTotalDuration(dialogues).ToString(CultureInfo.InvariantCulture)
                 );
             }
 
@@ -172,10 +173,10 @@ namespace BlightnautsDialogue
                         "        <int id=\"parentID\">39</int>\n" +
                         "        <int id=\"ownID\">689</int>\n" +
                         "    </animationText>\n",
-                        Convert.ToSingle(Area.GetStartTime(dialogue, dialogues)),
-                        Convert.ToSingle(Area.GetStartTime(dialogue, dialogues)) + 0.1f,
-                        Convert.ToSingle(Area.GetEndTime(dialogue, dialogues)) - 0.1f,
-                        Convert.ToSingle(Area.GetEndTime(dialogue, dialogues)),
+                        Convert.ToSingle(Area.GetStartTime(dialogue, dialogues)).ToString(CultureInfo.InvariantCulture),
+                        (Convert.ToSingle(Area.GetStartTime(dialogue, dialogues)) + 0.1f).ToString(CultureInfo.InvariantCulture),
+                        (Convert.ToSingle(Area.GetEndTime(dialogue, dialogues)) - 0.1f).ToString(CultureInfo.InvariantCulture),
+                        Convert.ToSingle(Area.GetEndTime(dialogue, dialogues)).ToString(CultureInfo.InvariantCulture),
                         dialogue.Portrait,
                         dialogue.Content,
                         dialogue.Texture
@@ -307,7 +308,7 @@ namespace BlightnautsDialogue
                             actor.RealName,
                             actor.ClassName,
                             ProjectManager.GetDefaultSkin(actor).IndexedName,
-                            actor.SkinIndex
+                            actor.SkinIndex.ToString(CultureInfo.InvariantCulture)
                         );
                     }
                     else
@@ -396,7 +397,7 @@ namespace BlightnautsDialogue
                                 actor.RealName,
                                 actor.ClassName,
                                 actor.IndexedName,
-                                actor.SkinIndex
+                                actor.SkinIndex.ToString(CultureInfo.InvariantCulture)
                             );
                         }
                         else
@@ -459,7 +460,7 @@ namespace BlightnautsDialogue
                                 actor.RealName,
                                 actor.ClassName,
                                 actor.IndexedName,
-                                actor.SkinIndex
+                                actor.SkinIndex.ToString(CultureInfo.InvariantCulture)
                             );
                         }
                     }
@@ -555,7 +556,6 @@ namespace BlightnautsDialogue
                     "                                            <string id=\"adjust method\" values=\"valueadjust\">add</string>\n" +
                     "                                        </action>\n" +
                     "                                    </normal>\n",
-                    //"                                    <else>",
                     area.Name
                 );
             }
@@ -599,7 +599,7 @@ namespace BlightnautsDialogue
                         "                                                            <string id=\"Minimized\">yes</string>\n" +
                         "                                                            <normal>",
                         area.Name,
-                        i + 2
+                        (i + 2).ToString(CultureInfo.InvariantCulture)
                     );
 
                     foreach (var naut in area.CharacterDialogue)
@@ -673,7 +673,7 @@ namespace BlightnautsDialogue
                             actor.RealName,
                             naut.Name,
                             area.Name,
-                            System.Convert.ToInt32((Area.GetTotalDuration(naut.TeamDialogues[i].Dialogues.ToArray()) * 10))
+                            System.Convert.ToInt32((Area.GetTotalDuration(naut.TeamDialogues[i].Dialogues.ToArray()) * 10)).ToString(CultureInfo.InvariantCulture)
                         );
                     }
 
@@ -845,7 +845,7 @@ namespace BlightnautsDialogue
                         actor.RealName,
                         naut.Name,
                         area.Name,
-                        System.Convert.ToInt32((Area.GetTotalDuration(naut.SoloDialogue.ToArray()) * 10))
+                        System.Convert.ToInt32((Area.GetTotalDuration(naut.SoloDialogue.ToArray()) * 10)).ToString(CultureInfo.InvariantCulture)
                     );
                 }
             }
@@ -1091,7 +1091,7 @@ namespace BlightnautsDialogue
                             "                                                </condition>\n",
                             area.Name,
                             naut.Name,
-                            i
+                            i.ToString(CultureInfo.InvariantCulture)
                         );
                     }
 
@@ -2966,8 +2966,8 @@ namespace BlightnautsDialogue
                         "        <int id=\"ownID\">-1</int>\n" +
                         "    </levelObjectButton>\n",
                         buttonName,
-                        positionX,
-                        positionY
+                        positionX.ToString(CultureInfo.InvariantCulture),
+                        positionY.ToString(CultureInfo.InvariantCulture)
                     );
                 }
 
@@ -3017,8 +3017,8 @@ namespace BlightnautsDialogue
                         "        <int id=\"ownID\">-1</int>\n" +
                         "    </levelObjectButton>\n",
                         buttonName,
-                        positionX,
-                        positionY
+                        positionX.ToString(CultureInfo.InvariantCulture),
+                        positionY.ToString(CultureInfo.InvariantCulture)
                     );
                 }
 
@@ -3066,8 +3066,8 @@ namespace BlightnautsDialogue
                         "        <int id=\"ownID\">-1</int>\n" +
                         "    </levelObjectButton>\n",
                         buttonName,
-                        positionX,
-                        positionY
+                        positionX.ToString(CultureInfo.InvariantCulture),
+                        positionY.ToString(CultureInfo.InvariantCulture)
                     );
                     positionX += 0.1f;
                     if (positionX > 10)

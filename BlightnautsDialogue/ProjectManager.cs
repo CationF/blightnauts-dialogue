@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace BlightnautsDialogue
 {
@@ -340,7 +341,7 @@ namespace BlightnautsDialogue
 
         private static string SerializeArea(Area area)
         {
-            string content = string.Format("[AREA]\nNAME={0}\nDIALOGUES={1}\n", area.Name, area.TeamDialogues);
+            string content = string.Format("[AREA]\nNAME={0}\nDIALOGUES={1}\n", area.Name, area.TeamDialogues.ToString(CultureInfo.InvariantCulture));
 
             for (int i = 0; i < area.CharacterDialogue.Length; i++)
             {
@@ -370,7 +371,7 @@ namespace BlightnautsDialogue
             string content = string.Format
             (
                 "[CHARACTER]\nINDEX={0}\n",
-                characterIndex
+                characterIndex.ToString(CultureInfo.InvariantCulture)
             );
 
             if (character.SoloDialogue.Count > 0)
@@ -378,7 +379,7 @@ namespace BlightnautsDialogue
                 content += string.Format
                 (
                     "[SEQUENCE]\nINDEX=-1\nCOUNT={0}\n",
-                    character.SoloDialogue.Count
+                    character.SoloDialogue.Count.ToString(CultureInfo.InvariantCulture)
                 );
 
                 foreach (var dialogue in character.SoloDialogue)
@@ -389,8 +390,8 @@ namespace BlightnautsDialogue
                         dialogue.Content,
                         dialogue.Portrait,
                         dialogue.Texture,
-                        dialogue.Duration,
-                        dialogue.Delay,
+                        dialogue.Duration.ToString(CultureInfo.InvariantCulture),
+                        dialogue.Delay.ToString(CultureInfo.InvariantCulture),
                         dialogue.GenerateAnimationTemplate ? "1" : "0"
                     );
                 }
@@ -403,8 +404,8 @@ namespace BlightnautsDialogue
                     content += string.Format
                     (
                         "[SEQUENCE]\nINDEX={0}\nCOUNT={1}\n",
-                        i,
-                        character.TeamDialogues[i].Dialogues.Count
+                        i.ToString(CultureInfo.InvariantCulture),
+                        character.TeamDialogues[i].Dialogues.Count.ToString(CultureInfo.InvariantCulture)
                     );
 
                     foreach (var dialogue in character.TeamDialogues[i].Dialogues)
@@ -415,8 +416,8 @@ namespace BlightnautsDialogue
                             dialogue.Content,
                             dialogue.Portrait,
                             dialogue.Texture,
-                            dialogue.Duration,
-                            dialogue.Delay,
+                            dialogue.Duration.ToString(CultureInfo.InvariantCulture),
+                            dialogue.Delay.ToString(CultureInfo.InvariantCulture),
                             dialogue.GenerateAnimationTemplate ? "1" : "0"
                         );
                     }
@@ -497,7 +498,7 @@ namespace BlightnautsDialogue
             {
                 try
                 {
-                    dialogues = int.Parse(content[index + 2].Substring("DIALOGUES=".Length));
+                    dialogues = int.Parse(content[index + 2].Substring("DIALOGUES=".Length), CultureInfo.InvariantCulture);
                 }
                 catch
                 {
@@ -526,7 +527,7 @@ namespace BlightnautsDialogue
             {
                 try
                 {
-                    characterIndex = int.Parse(content[index + 1].Substring("INDEX=".Length));
+                    characterIndex = int.Parse(content[index + 1].Substring("INDEX=".Length), CultureInfo.InvariantCulture);
                 }
                 catch
                 {
@@ -556,7 +557,7 @@ namespace BlightnautsDialogue
             {
                 try
                 {
-                    type = int.Parse(content[index + 1].Substring("INDEX=".Length));
+                    type = int.Parse(content[index + 1].Substring("INDEX=".Length), CultureInfo.InvariantCulture);
                 }
                 catch
                 {
@@ -570,7 +571,7 @@ namespace BlightnautsDialogue
             {
                 try
                 {
-                    count = int.Parse(content[index + 2].Substring("COUNT=".Length));
+                    count = int.Parse(content[index + 2].Substring("COUNT=".Length), CultureInfo.InvariantCulture);
                 }
                 catch
                 {
@@ -609,8 +610,8 @@ namespace BlightnautsDialogue
                     string[] values = content[index + offset].Substring("VALUES=".Length).Split(';');
                     try
                     {
-                        duration = float.Parse(values[0], System.Globalization.CultureInfo.InvariantCulture);
-                        delay = float.Parse(values[1], System.Globalization.CultureInfo.InvariantCulture);
+                        duration = float.Parse(values[0], CultureInfo.InvariantCulture);
+                        delay = float.Parse(values[1], CultureInfo.InvariantCulture);
                         generate = values[2] == "1" ? true : false;
                     }
                     catch

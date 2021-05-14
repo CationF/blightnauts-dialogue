@@ -551,7 +551,7 @@ namespace BlightnautsDialogue
             unsaved = true;
             try
             {
-                GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Duration = float.Parse(ValidateNumericInput(textBoxDuration.Text));
+                GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Duration = float.Parse(ValidateNumericInput(textBoxDuration.Text), System.Globalization.CultureInfo.InvariantCulture);
             }
             catch
             {
@@ -566,7 +566,7 @@ namespace BlightnautsDialogue
             unsaved = true;
             try
             {
-                GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Delay = float.Parse(ValidateNumericInput(textBoxDelay.Text));
+                GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Delay = float.Parse(ValidateNumericInput(textBoxDelay.Text), System.Globalization.CultureInfo.InvariantCulture);
             }
             catch
             {
@@ -614,13 +614,22 @@ namespace BlightnautsDialogue
                 return;
             }
 
-            Exporter.DialogueExporter.Export(ProjectManager.ModPath + "\\AnimationTemplates");
-            Exporter.BehaviourExporter.Export(ProjectManager.ModPath + "\\Behaviours");
+            bool failed = false;
+            if (Exporter.DialogueExporter.Export(ProjectManager.ModPath + "\\AnimationTemplates") != 0)
+                failed = true;
+            if (Exporter.BehaviourExporter.Export(ProjectManager.ModPath + "\\Behaviours") != 0)
+                failed = true;
             foreach (string map in ProjectManager.Maps)
             {
-                Exporter.MapExporter.Export(ProjectManager.ModPath + "\\Maps\\" + map + "\\Gameplay.xml");
+                if (Exporter.MapExporter.Export(ProjectManager.ModPath + "\\Maps\\" + map + "\\Gameplay.xml") != 0)
+                    failed = true;
             }
             Exporter.ImageExporter.CopyImages();
+
+            if (failed)
+                MessageBox.Show("An error has occurred during export.", "Export Result", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                MessageBox.Show("Export successful", "Export Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void topBarSetMaps_Click(object sender, EventArgs e)
