@@ -517,6 +517,10 @@ namespace BlightnautsDialogue
                 {
                     LoadCharacter(content, i, area);
                 }
+                else if (i != index && content[i].StartsWith("[AREA]"))
+                {
+                    break;
+                }
             }
         }
 
