@@ -44,15 +44,6 @@ namespace BlightnautsDialogue
             buttonOk = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // dropdownCharacters
-            // 
-            this.dropdownCharacters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.dropdownCharacters.FormattingEnabled = true;
-            this.dropdownCharacters.Location = new System.Drawing.Point(12, 86);
-            this.dropdownCharacters.Name = "dropdownCharacters";
-            this.dropdownCharacters.Size = new System.Drawing.Size(217, 21);
-            this.dropdownCharacters.TabIndex = 0;
-            // 
             // labelInfo
             // 
             labelInfo.AutoSize = true;
@@ -80,19 +71,12 @@ namespace BlightnautsDialogue
             labelFile.TabIndex = 3;
             labelFile.Text = "File";
             // 
-            // textBoxFile
-            // 
-            this.textBoxFile.Location = new System.Drawing.Point(12, 47);
-            this.textBoxFile.Name = "textBoxFile";
-            this.textBoxFile.Size = new System.Drawing.Size(265, 20);
-            this.textBoxFile.TabIndex = 4;
-            // 
             // buttonBrowse
             // 
             buttonBrowse.Location = new System.Drawing.Point(283, 46);
             buttonBrowse.Name = "buttonBrowse";
             buttonBrowse.Size = new System.Drawing.Size(27, 21);
-            buttonBrowse.TabIndex = 5;
+            buttonBrowse.TabIndex = 1;
             buttonBrowse.Text = "...";
             buttonBrowse.UseVisualStyleBackColor = true;
             buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
@@ -103,10 +87,26 @@ namespace BlightnautsDialogue
             buttonOk.Location = new System.Drawing.Point(235, 84);
             buttonOk.Name = "buttonOk";
             buttonOk.Size = new System.Drawing.Size(75, 23);
-            buttonOk.TabIndex = 6;
+            buttonOk.TabIndex = 3;
             buttonOk.Text = "Import";
             buttonOk.UseVisualStyleBackColor = true;
             buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
+            // 
+            // dropdownCharacters
+            // 
+            this.dropdownCharacters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dropdownCharacters.FormattingEnabled = true;
+            this.dropdownCharacters.Location = new System.Drawing.Point(12, 86);
+            this.dropdownCharacters.Name = "dropdownCharacters";
+            this.dropdownCharacters.Size = new System.Drawing.Size(217, 21);
+            this.dropdownCharacters.TabIndex = 2;
+            // 
+            // textBoxFile
+            // 
+            this.textBoxFile.Location = new System.Drawing.Point(12, 47);
+            this.textBoxFile.Name = "textBoxFile";
+            this.textBoxFile.Size = new System.Drawing.Size(265, 20);
+            this.textBoxFile.TabIndex = 0;
             // 
             // openFileDialog
             // 
@@ -132,6 +132,7 @@ namespace BlightnautsDialogue
             this.Name = "LegacyImportWindow";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Import Legacy Dialogue";
             this.TopMost = true;
             this.ResumeLayout(false);

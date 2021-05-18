@@ -103,6 +103,9 @@ namespace BlightnautsDialogue
                 dropdownDialogues.Enabled = true;
             }
 
+            labelCharacterStatus.Text = GetStatusTextCharacter(dropdownCharacters.SelectedIndex);
+            labelTriggerStatus.Text = string.Empty;
+
             // Dialogue
             var dialogues = GetDialogues(dropdownDialogues.SelectedIndex - 1);
 
@@ -263,6 +266,40 @@ namespace BlightnautsDialogue
             }
 
             return result.Replace(',', '.');
+        }
+
+        private string GetStatusTextCharacter(int character)
+        {
+            int total = 0;
+            int noDuration = 0;
+            for (int i = 0; i < ProjectManager.Areas.Count; i++)
+            {
+                foreach (var dialogue in ProjectManager.Areas[i].CharacterDialogue[character].SoloDialogue)
+                {
+                    total++;
+                    if (dialogue.Duration == 0)
+                        noDuration++;
+                }
+                for (int x = 0; x < ProjectManager.Areas[i].TeamDialogues; x++)
+                {
+                    foreach (var dialogue in ProjectManager.Areas[i].CharacterDialogue[character].TeamDialogues[x].Dialogues)
+                    {
+                        total++;
+                        if (dialogue.Duration == 0)
+                            noDuration++;
+                    }
+                }
+            }
+
+            string result = "Dialogue lines: " + total.ToString();
+            if (noDuration > 0)
+            {
+                string singular = "s";
+                if (noDuration == 1)
+                    singular = string.Empty;
+                result += " (" + noDuration.ToString() + " line" + singular + " with no duration)";
+            }
+            return result;
         }
 
         private void topBarNew_Click(object sender, EventArgs e)
@@ -593,7 +630,7 @@ namespace BlightnautsDialogue
         private void topBarAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Blightnauts Dialogue Editor version 0.1\n" +
+                "Blightnauts Dialogue Editor version 2.1.0\n" +
                 "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
                 "No license, do whatever you want with this.\n\n" +
                 "Windows Forms and .NET framework are property of Microsoft Corporation",
@@ -644,7 +681,11 @@ namespace BlightnautsDialogue
         private void topBarImportLegacy_Click(object sender, EventArgs e)
         {
             var dialog = new LegacyImportWindow();
-            dialog.ShowDialog();
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                RefreshWindow();
+            }
         }
     }
 }
