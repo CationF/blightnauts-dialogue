@@ -7,12 +7,49 @@ namespace Legacy
 {
     public static class LegacyLoader
     {
+        private static bool AreasValid
+        {
+            get
+            {
+                if (ProjectManager.Areas[0].Name.ToLower() != "intro" || ProjectManager.Areas[0].TeamDialogues != 3)
+                    return false;
+                else if (ProjectManager.Areas[1].Name.ToLower() != "obelisk" || ProjectManager.Areas[1].TeamDialogues != 2)
+                    return false;
+                else if (ProjectManager.Areas[2].Name.ToLower() != "spitblight" || ProjectManager.Areas[2].TeamDialogues != 2)
+                    return false;
+                else if (ProjectManager.Areas[3].Name.ToLower() != "key1" || ProjectManager.Areas[3].TeamDialogues != 1)
+                    return false;
+                else if (ProjectManager.Areas[4].Name.ToLower() != "turret" || ProjectManager.Areas[4].TeamDialogues != 2)
+                    return false;
+                else if (ProjectManager.Areas[5].Name.ToLower() != "water" || ProjectManager.Areas[5].TeamDialogues != 1)
+                    return false;
+                else if (ProjectManager.Areas[6].Name.ToLower() != "treasure" || ProjectManager.Areas[6].TeamDialogues != 1)
+                    return false;
+                else if (ProjectManager.Areas[7].Name.ToLower() != "key2" || ProjectManager.Areas[7].TeamDialogues != 1)
+                    return false;
+                else if (ProjectManager.Areas[8].Name.ToLower() != "switches" || ProjectManager.Areas[8].TeamDialogues != 2)
+                    return false;
+                else if (ProjectManager.Areas[9].Name.ToLower() != "bottom" || ProjectManager.Areas[9].TeamDialogues != 2)
+                    return false;
+                else if (ProjectManager.Areas[10].Name.ToLower() != "sawpuzzle" || ProjectManager.Areas[10].TeamDialogues != 2)
+                    return false;
+                else if (ProjectManager.Areas[11].Name.ToLower() != "sawtrap" || ProjectManager.Areas[11].TeamDialogues != 1)
+                    return false;
+                else if (ProjectManager.Areas[12].Name.ToLower() != "finalintro" || ProjectManager.Areas[12].TeamDialogues != 3)
+                    return false;
+                else if (ProjectManager.Areas[13].Name.ToLower() != "finalshield" || ProjectManager.Areas[13].TeamDialogues != 1)
+                    return false;
+                return true;
+            }
+        }
+
         public static int Load(string path, int character)
         {
             if (!File.Exists(path))
-            {
                 return 2;
-            }
+
+            if (ProjectManager.Areas.Count < 12 || !AreasValid)
+                return 3;
 
             string[] file = File.ReadAllLines(path);
             List<Area.Dialogue>[] areas = new List<Area.Dialogue>[38];
@@ -54,6 +91,45 @@ namespace Legacy
             areas[35] = ProjectManager.Areas[12].CharacterDialogue[character].TeamDialogues[2].Dialogues;   // FinalIntro3_Team
             areas[36] = ProjectManager.Areas[13].CharacterDialogue[character].SoloDialogue;                 // FinalShield_Solo
             areas[37] = ProjectManager.Areas[13].CharacterDialogue[character].TeamDialogues[0].Dialogues;   // FinalShield_Team
+
+            areas[0].Clear();
+            areas[1].Clear();
+            areas[2].Clear();
+            areas[3].Clear();
+            areas[4].Clear();
+            areas[5].Clear();
+            areas[6].Clear();
+            areas[7].Clear();
+            areas[8].Clear();
+            areas[9].Clear();
+            areas[10].Clear();
+            areas[11].Clear();
+            areas[12].Clear();
+            areas[13].Clear();
+            areas[14].Clear();
+            areas[15].Clear();
+            areas[16].Clear();
+            areas[17].Clear();
+            areas[18].Clear();
+            areas[19].Clear();
+            areas[20].Clear();
+            areas[21].Clear();
+            areas[22].Clear();
+            areas[23].Clear();
+            areas[24].Clear();
+            areas[25].Clear();
+            areas[26].Clear();
+            areas[27].Clear();
+            areas[28].Clear();
+            areas[29].Clear();
+            areas[30].Clear();
+            areas[31].Clear();
+            areas[32].Clear();
+            areas[33].Clear();
+            areas[34].Clear();
+            areas[35].Clear();
+            areas[36].Clear();
+            areas[37].Clear();
 
             try
             {

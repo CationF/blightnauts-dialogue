@@ -640,5 +640,11 @@ namespace BlightnautsDialogue
                 unsaved = true;
             }
         }
+
+        private void topBarImportLegacy_Click(object sender, EventArgs e)
+        {
+            var dialog = new LegacyImportWindow();
+            dialog.ShowDialog();
+        }
     }
 }
