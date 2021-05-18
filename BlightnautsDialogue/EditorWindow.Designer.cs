@@ -45,6 +45,7 @@ namespace BlightnautsDialogue
             System.Windows.Forms.ToolStripMenuItem topBarSetDirectory;
             System.Windows.Forms.ToolStripMenuItem topBarSetMaps;
             System.Windows.Forms.ToolStripMenuItem topBarNewTrigger;
+            System.Windows.Forms.ToolStripMenuItem topBarImportLegacy;
             System.Windows.Forms.ToolStripMenuItem topBarAbout;
             System.Windows.Forms.TableLayoutPanel generalLayout;
             System.Windows.Forms.TableLayoutPanel topLayout;
@@ -60,7 +61,6 @@ namespace BlightnautsDialogue
             System.Windows.Forms.Label labelPortrait;
             System.Windows.Forms.ToolTip toolTipSimple;
             System.Windows.Forms.ToolTip toolTipLong;
-            System.Windows.Forms.ToolStripMenuItem topBarImportLegacy;
             this.topBarNew = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSave = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,6 +104,7 @@ namespace BlightnautsDialogue
             topBarSetDirectory = new System.Windows.Forms.ToolStripMenuItem();
             topBarSetMaps = new System.Windows.Forms.ToolStripMenuItem();
             topBarNewTrigger = new System.Windows.Forms.ToolStripMenuItem();
+            topBarImportLegacy = new System.Windows.Forms.ToolStripMenuItem();
             topBarAbout = new System.Windows.Forms.ToolStripMenuItem();
             generalLayout = new System.Windows.Forms.TableLayoutPanel();
             topLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -118,7 +119,6 @@ namespace BlightnautsDialogue
             labelPortrait = new System.Windows.Forms.Label();
             toolTipSimple = new System.Windows.Forms.ToolTip(this.components);
             toolTipLong = new System.Windows.Forms.ToolTip(this.components);
-            topBarImportLegacy = new System.Windows.Forms.ToolStripMenuItem();
             topBar.SuspendLayout();
             generalLayout.SuspendLayout();
             topLayout.SuspendLayout();
@@ -299,6 +299,13 @@ namespace BlightnautsDialogue
             topBarNewTrigger.Size = new System.Drawing.Size(200, 22);
             topBarNewTrigger.Text = "New Trigger";
             topBarNewTrigger.Click += new System.EventHandler(this.topBarNewTrigger_Click);
+            // 
+            // topBarImportLegacy
+            // 
+            topBarImportLegacy.Name = "topBarImportLegacy";
+            topBarImportLegacy.Size = new System.Drawing.Size(200, 22);
+            topBarImportLegacy.Text = "Import Legacy Dialogue";
+            topBarImportLegacy.Click += new System.EventHandler(this.topBarImportLegacy_Click);
             // 
             // topBarAbout
             // 
@@ -658,13 +665,6 @@ namespace BlightnautsDialogue
             this.openFileDialog.DefaultExt = "bnp";
             this.openFileDialog.Filter = "Blightnauts Project|*.bnp";
             // 
-            // topBarImportLegacy
-            // 
-            topBarImportLegacy.Name = "topBarImportLegacy";
-            topBarImportLegacy.Size = new System.Drawing.Size(200, 22);
-            topBarImportLegacy.Text = "Import Legacy Dialogue";
-            topBarImportLegacy.Click += new System.EventHandler(this.topBarImportLegacy_Click);
-            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -677,6 +677,7 @@ namespace BlightnautsDialogue
             this.MinimumSize = new System.Drawing.Size(617, 500);
             this.Name = "EditorWindow";
             this.Text = "Blightnauts Dialogue Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditorWindow_FormClosing);
             topBar.ResumeLayout(false);
             topBar.PerformLayout();
             generalLayout.ResumeLayout(false);

@@ -310,7 +310,39 @@ namespace BlightnautsDialogue
                     MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Cancel)
                     return;
-                // else if yes, save.
+                else if (result == DialogResult.Yes)
+                {
+                    if (ProjectManager.SaveFileExists)
+                    {
+                        switch (ProjectManager.SaveProject(ProjectManager.FilePath))
+                        {
+                            case 1:
+                                MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+
+                            case 2:
+                                MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                        }
+                        unsaved = false;
+                        return;
+                    }
+                    result = saveFileDialog.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        switch (ProjectManager.SaveProject(saveFileDialog.FileName))
+                        {
+                            case 1:
+                                MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+
+                            case 2:
+                                MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                        }
+                        unsaved = false;
+                    }
+                }
             }
             ProjectManager.NewProject();
             dropdownTriggers.Items.Clear();
@@ -685,6 +717,50 @@ namespace BlightnautsDialogue
             if (result == DialogResult.OK)
             {
                 RefreshWindow();
+            }
+        }
+
+        private void EditorWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (unsaved)
+            {
+                DialogResult result = MessageBox.Show("All unsaved changes will be lost, do you want to save them before creating a new project?", "New Project",
+                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Cancel)
+                    e.Cancel = true;
+                else if (result == DialogResult.Yes)
+                {
+                    if (ProjectManager.SaveFileExists)
+                    {
+                        switch (ProjectManager.SaveProject(ProjectManager.FilePath))
+                        {
+                            case 1:
+                                MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+
+                            case 2:
+                                MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                        }
+                        unsaved = false;
+                        return;
+                    }
+                    result = saveFileDialog.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        switch (ProjectManager.SaveProject(saveFileDialog.FileName))
+                        {
+                            case 1:
+                                MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+
+                            case 2:
+                                MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                        }
+                        unsaved = false;
+                    }
+                }
             }
         }
     }
