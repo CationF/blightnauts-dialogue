@@ -1,60 +1,59 @@
+using BlightnautsDialogue;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+
 namespace Legacy
 {
     public static class LegacyLoader
     {
-        public static int Load(string path, out Area[] areas, out string character)
+        public static int Load(string path, int character)
         {
             if (!File.Exists(path))
             {
-                areas = null;
                 return 2;
             }
 
             string[] file = File.ReadAllLines(path);
-            Area[] newAreas = new Area[38];
-            newAreas[0] = new Area("Intro_Solo");
-            newAreas[1] = new Area("Intro_Team");
-            newAreas[2] = new Area("Intro2_Team");
-            newAreas[3] = new Area("Intro3_Team");
-            newAreas[4] = new Area("Obelisk_Solo");
-            newAreas[5] = new Area("Obelisk_Team");
-            newAreas[6] = new Area("Obelisk2_Team");
-            newAreas[7] = new Area("Spitblight_Solo");
-            newAreas[8] = new Area("Spitblight_Team");
-            newAreas[9] = new Area("Spitblight2_Team");
-            newAreas[10] = new Area("Key1_Solo");
-            newAreas[11] = new Area("Key1_Team");
-            newAreas[12] = new Area("Turret_Solo");
-            newAreas[13] = new Area("Turret_Team");
-            newAreas[14] = new Area("Turret2_Team");
-            newAreas[15] = new Area("Water_Solo");
-            newAreas[16] = new Area("Water_Team");
-            newAreas[17] = new Area("Treasure_Solo");
-            newAreas[18] = new Area("Treasure_Team");
-            newAreas[19] = new Area("Key2_Solo");
-            newAreas[20] = new Area("Key2_Team");
-            newAreas[21] = new Area("Switches_Solo");
-            newAreas[22] = new Area("Switches_Team");
-            newAreas[23] = new Area("Switches2_Team");
-            newAreas[24] = new Area("Bottom_Solo");
-            newAreas[25] = new Area("Bottom_Team");
-            newAreas[26] = new Area("Bottom2_Team");
-            newAreas[27] = new Area("SawPuzzle_Solo");
-            newAreas[28] = new Area("SawPuzzle_Team");
-            newAreas[29] = new Area("SawPuzzle2_Team");
-            newAreas[30] = new Area("SawTrap_Solo");
-            newAreas[31] = new Area("SawTrap_Team");
-            newAreas[32] = new Area("FinalIntro_Solo");
-            newAreas[33] = new Area("FinalIntro_Team");
-            newAreas[34] = new Area("FinalIntro2_Team");
-            newAreas[35] = new Area("FinalIntro3_Team");
-            newAreas[36] = new Area("FinalShield_Solo");
-            newAreas[37] = new Area("FinalShield_Team");
-
-            foreach (Area area in newAreas)
-            {
-                area.Dialogues.Clear();
-            }
+            List<Area.Dialogue>[] areas = new List<Area.Dialogue>[38];
+            areas[0] = ProjectManager.Areas[0].CharacterDialogue[character].SoloDialogue;                   // Intro_Solo
+            areas[1] = ProjectManager.Areas[0].CharacterDialogue[character].TeamDialogues[0].Dialogues;     // Intro_Team
+            areas[2] = ProjectManager.Areas[0].CharacterDialogue[character].TeamDialogues[1].Dialogues;     // Intro2_Team
+            areas[3] = ProjectManager.Areas[0].CharacterDialogue[character].TeamDialogues[2].Dialogues;     // Intro3_Team
+            areas[4] = ProjectManager.Areas[1].CharacterDialogue[character].SoloDialogue;                   // Obelisk_Solo
+            areas[5] = ProjectManager.Areas[1].CharacterDialogue[character].TeamDialogues[0].Dialogues;     // Obelisk_Team
+            areas[6] = ProjectManager.Areas[1].CharacterDialogue[character].TeamDialogues[1].Dialogues;     // Obelisk2_Team
+            areas[7] = ProjectManager.Areas[2].CharacterDialogue[character].SoloDialogue;                   // Spitblight_Solo
+            areas[8] = ProjectManager.Areas[2].CharacterDialogue[character].TeamDialogues[0].Dialogues;     // Spitblight_Team
+            areas[9] = ProjectManager.Areas[2].CharacterDialogue[character].TeamDialogues[1].Dialogues;     // Spitblight2_Team
+            areas[10] = ProjectManager.Areas[3].CharacterDialogue[character].SoloDialogue;                  // Key1_Solo
+            areas[11] = ProjectManager.Areas[3].CharacterDialogue[character].TeamDialogues[0].Dialogues;    // Key1_Team
+            areas[12] = ProjectManager.Areas[4].CharacterDialogue[character].SoloDialogue;                  // Turret_Solo
+            areas[13] = ProjectManager.Areas[4].CharacterDialogue[character].TeamDialogues[0].Dialogues;    // Turret_Team
+            areas[14] = ProjectManager.Areas[4].CharacterDialogue[character].TeamDialogues[1].Dialogues;    // Turret2_Team
+            areas[15] = ProjectManager.Areas[5].CharacterDialogue[character].SoloDialogue;                  // Water_Solo
+            areas[16] = ProjectManager.Areas[5].CharacterDialogue[character].TeamDialogues[0].Dialogues;    // Water_Team
+            areas[17] = ProjectManager.Areas[6].CharacterDialogue[character].SoloDialogue;                  // Treasure_Solo
+            areas[18] = ProjectManager.Areas[6].CharacterDialogue[character].TeamDialogues[0].Dialogues;    // Treasure_Team
+            areas[19] = ProjectManager.Areas[7].CharacterDialogue[character].SoloDialogue;                  // Key2_Solo
+            areas[20] = ProjectManager.Areas[7].CharacterDialogue[character].TeamDialogues[0].Dialogues;    // Key2_Team
+            areas[21] = ProjectManager.Areas[8].CharacterDialogue[character].SoloDialogue;                  // Switches_Solo
+            areas[22] = ProjectManager.Areas[8].CharacterDialogue[character].TeamDialogues[0].Dialogues;    // Switches_Team
+            areas[23] = ProjectManager.Areas[8].CharacterDialogue[character].TeamDialogues[1].Dialogues;    // Switches2_Team
+            areas[24] = ProjectManager.Areas[9].CharacterDialogue[character].SoloDialogue;                  // Bottom_Solo
+            areas[25] = ProjectManager.Areas[9].CharacterDialogue[character].TeamDialogues[0].Dialogues;    // Bottom_Team
+            areas[26] = ProjectManager.Areas[9].CharacterDialogue[character].TeamDialogues[1].Dialogues;    // Bottom2_Team
+            areas[27] = ProjectManager.Areas[10].CharacterDialogue[character].SoloDialogue;                 // SawPuzzle_Solo
+            areas[28] = ProjectManager.Areas[10].CharacterDialogue[character].TeamDialogues[0].Dialogues;   // SawPuzzle_Team
+            areas[29] = ProjectManager.Areas[10].CharacterDialogue[character].TeamDialogues[1].Dialogues;   // SawPuzzle2_Team
+            areas[30] = ProjectManager.Areas[11].CharacterDialogue[character].SoloDialogue;                 // SawTrap_Solo
+            areas[31] = ProjectManager.Areas[11].CharacterDialogue[character].TeamDialogues[0].Dialogues;   // SawTrap_Team
+            areas[32] = ProjectManager.Areas[12].CharacterDialogue[character].SoloDialogue;                 // FinalIntro_Solo
+            areas[33] = ProjectManager.Areas[12].CharacterDialogue[character].TeamDialogues[0].Dialogues;   // FinalIntro_Team
+            areas[34] = ProjectManager.Areas[12].CharacterDialogue[character].TeamDialogues[1].Dialogues;   // FinalIntro2_Team
+            areas[35] = ProjectManager.Areas[12].CharacterDialogue[character].TeamDialogues[2].Dialogues;   // FinalIntro3_Team
+            areas[36] = ProjectManager.Areas[13].CharacterDialogue[character].SoloDialogue;                 // FinalShield_Solo
+            areas[37] = ProjectManager.Areas[13].CharacterDialogue[character].TeamDialogues[0].Dialogues;   // FinalShield_Team
 
             try
             {
@@ -62,29 +61,34 @@ namespace Legacy
                 {
                     if (file[i].Contains("[DIALOGUE]"))
                     {
-                        LoadData(file, i, newAreas);
+                        LoadData(file, i, areas);
                     }
                 }
             }
             catch
             {
-                areas = null;
                 return 1;
             }
 
-            areas = newAreas;
             return 0;
         }
 
-        private static void LoadData(string[] file, int index, Area[] areas)
+        private static void LoadData(string[] file, int index, List<Area.Dialogue>[] areas)
         {
             int area = int.Parse(file[index + 1].Substring(5));
             string portrait = file[index + 2].Substring(9);
             string content = file[index + 3].Substring(8);
-            decimal start = decimal.Parse(file[index + 4].Substring(6));
-            decimal end = decimal.Parse(file[index + 5].Substring(4));
+            float start = float.Parse(file[index + 4].Substring(6), CultureInfo.InvariantCulture);
+            float end = float.Parse(file[index + 5].Substring(4), CultureInfo.InvariantCulture);
 
-            areas[area].Dialogues.Add(new Area.Dialogue { Portrait = portrait, Content = content, Start = start, End = end });
+            Area.Dialogue dialogue = new Area.Dialogue(content, portrait, ImageLoader.Default, 0, 0);
+            dialogue.Duration = Area.GetDurationFromStartEnd(start, end);
+            float delay = start - Area.GetTotalDuration(areas[area].ToArray());
+            if (delay < 0)
+                delay = 0;
+            dialogue.Delay = delay;
+
+            areas[area].Add(dialogue);
         }
     }
 }

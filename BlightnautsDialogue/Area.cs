@@ -37,6 +37,10 @@ namespace BlightnautsDialogue
             }
             return -1;
         }
+        public static float GetDurationFromStartEnd(float start, float end)
+        {
+            return end - start;
+        }
 
         public static float GetEndTime(Dialogue dialogue, Dialogue[] dialogueArray)
         {
