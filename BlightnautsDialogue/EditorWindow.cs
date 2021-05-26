@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BlightnautsDialogue
@@ -47,8 +42,11 @@ namespace BlightnautsDialogue
             }
 
             ProjectManager.NewProject();
-            zoom = 12;
+            Color fore, back;
+            Settings.Load(out zoom, out fore, out back);
             SetFontSize(zoom);
+            textBoxMain.ForeColor = fore;
+            textBoxMain.BackColor = back;
             initializing = false;
             RefreshWindow();
         }
@@ -481,6 +479,7 @@ namespace BlightnautsDialogue
             {
                 zoom += 4;
                 SetFontSize(zoom);
+                Settings.Save(zoom, textBoxMain.ForeColor, textBoxMain.BackColor);
             }
         }
 
@@ -490,6 +489,7 @@ namespace BlightnautsDialogue
             {
                 zoom -= 4;
                 SetFontSize(zoom);
+                Settings.Save(zoom, textBoxMain.ForeColor, textBoxMain.BackColor);
             }
         }
 
@@ -497,12 +497,14 @@ namespace BlightnautsDialogue
         {
             colorDialogTextboxMain.ShowDialog();
             textBoxMain.BackColor = colorDialogTextboxMain.Color;
+            Settings.Save(zoom, textBoxMain.ForeColor, textBoxMain.BackColor);
         }
 
         private void topBarTextboxForegroundColor_Click(object sender, EventArgs e)
         {
             colorDialogTextboxMain.ShowDialog();
             textBoxMain.ForeColor = colorDialogTextboxMain.Color;
+            Settings.Save(zoom, textBoxMain.ForeColor, textBoxMain.BackColor);
         }
 
         private void dropdownCharacters_SelectedIndexChanged(object sender, EventArgs e)
