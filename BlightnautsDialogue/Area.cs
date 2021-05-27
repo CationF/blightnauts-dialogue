@@ -144,6 +144,23 @@ namespace BlightnautsDialogue
             {
                 CharacterDialogue[i] = new Character(ProjectManager.Characters[i].IndexedName, TeamDialogues);
             }
+            Interruptable = false;
+            Repeatable = false;
+        }
+
+        public Area(string name, int teamDialogues, bool interruptable, bool repeatable)
+        {
+            Name = name;
+            if (teamDialogues < 1)
+                teamDialogues = 1;
+            TeamDialogues = teamDialogues;
+            CharacterDialogue = new Character[ProjectManager.Characters.Length];
+            for (int i = 0; i < CharacterDialogue.Length; i++)
+            {
+                CharacterDialogue[i] = new Character(ProjectManager.Characters[i].IndexedName, TeamDialogues);
+            }
+            Interruptable = interruptable;
+            Repeatable = repeatable;
         }
     }
 }

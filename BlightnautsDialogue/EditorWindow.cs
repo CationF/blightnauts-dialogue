@@ -547,6 +547,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             ProjectManager.Areas[dropdownTriggers.SelectedIndex].Repeatable = checkBoxRepeatable.Checked;
+            unsaved = true;
         }
 
         private void checkBoxInterruptable_CheckedChanged(object sender, EventArgs e)
@@ -554,6 +555,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             ProjectManager.Areas[dropdownTriggers.SelectedIndex].Interruptable = checkBoxInterruptable.Checked;
+            unsaved = true;
         }
 
         private void dropdownDialogues_SelectedIndexChanged(object sender, EventArgs e)
@@ -683,10 +685,11 @@ namespace BlightnautsDialogue
         private void topBarAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Blightnauts Dialogue Editor version 2.1.0\n" +
+                "Blightnauts Dialogue Editor version 2.2.0\n" +
                 "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
                 "No license, do whatever you want with this.\n\n" +
-                "Windows Forms and .NET framework are property of Microsoft Corporation",
+                "Windows Forms and .NET framework are property of Microsoft Corporation\n\n" +
+                "Instructions can be found in the readme file",
                 "About",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.None

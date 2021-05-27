@@ -341,7 +341,14 @@ namespace BlightnautsDialogue
 
         private static string SerializeArea(Area area)
         {
-            string content = string.Format("[AREA]\nNAME={0}\nDIALOGUES={1}\n", area.Name, area.TeamDialogues.ToString(CultureInfo.InvariantCulture));
+            string content = string.Format
+            (
+                "[AREA]\nNAME={0}\nDIALOGUES={1}\nINTERRUPTABLE={2}\nREPEATABLE={3}\n",
+                area.Name,
+                area.TeamDialogues.ToString(CultureInfo.InvariantCulture),
+                area.Interruptable ? "1" : "0",
+                area.Repeatable ? "1" : "0"
+            );
 
             for (int i = 0; i < area.CharacterDialogue.Length; i++)
             {
@@ -487,6 +494,7 @@ namespace BlightnautsDialogue
             Area area;
             string name;
             int dialogues;
+            bool interruptable, repeatable;
             if (content[index + 1].StartsWith("NAME="))
             {
                 name = content[index + 1].Substring("NAME=".Length);
@@ -508,7 +516,40 @@ namespace BlightnautsDialogue
             else
                 return;
 
-            area = new Area(name, dialogues);
+            if (content[index + 3].StartsWith("INTERRUPTABLE="))
+            {
+                try
+                {
+                    if (int.Parse(content[index + 3].Substring("INTERRUPTABLE=".Length), CultureInfo.InvariantCulture) == 1)
+                        interruptable = true;
+                    else
+                        interruptable = false;
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                interruptable = false;
+            if (content[index + 4].StartsWith("REPEATABLE="))
+            {
+                try
+                {
+                    if (int.Parse(content[index + 4].Substring("REPEATABLE=".Length), CultureInfo.InvariantCulture) == 1)
+                        repeatable = true;
+                    else
+                        repeatable = false;
+                }
+                catch
+                {
+                    return;
+                }
+            }
+            else
+                repeatable = false;
+
+            area = new Area(name, dialogues, interruptable, repeatable);
             Areas.Add(area);
 
             for (int i = index; i < content.Length; i++)
