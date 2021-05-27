@@ -512,6 +512,30 @@ namespace BlightnautsDialogue
                         (area.TeamDialogues + 1).ToString(CultureInfo.InvariantCulture)
                     );
 
+                string interrupting = string.Empty;
+                if (area.Interruptable)
+                    interrupting = string.Format
+                    (
+                        "                <condition id=\"IsLevelButtonDown\">\n" +
+                        "                    <string id=\"buttons\">speech_interrupt_{0}</string>\n" +
+                        "                    <string id=\"Comment\">Interrupting</string>\n" +
+                        "                    <normal>\n" +
+                        "                        <action id=\"adjustCounter\">\n" +
+                        "                            <string id=\"id\">count_{0}</string>\n" +
+                        "                            <string id=\"value\">{1}</string>\n" +
+                        "                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                        "                        </action>\n" +
+                        "                        <action id=\"adjustCounter\">\n" +
+                        "                            <string id=\"id\">cooldown_{0}</string>\n" +
+                        "                            <string id=\"value\">5</string>\n" +
+                        "                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                        "                        </action>\n" +
+                        "                    </normal>\n" +
+                        "                </condition>\n",
+                        area.Name,
+                        (area.TeamDialogues + 2).ToString(CultureInfo.InvariantCulture)
+                    );
+
                 resultSpeechLogic += string.Format
                 (
                     "<?xml version=\"1.0\" ?>\n" +
@@ -532,7 +556,7 @@ namespace BlightnautsDialogue
                     "                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
                     "                        </action>\n" +
                     "                    </normal>\n" +
-                    "                </condition>\n" +
+                    "                </condition>\n{2}" +
                     "                <condition id=\"isCharacterInArea\">\n" +
                     "                    <string id=\"groups\" values=\"target receive groups\" multiselect=\"true\">PLAYERS;;</string>\n" +
                     "                    <string id=\"teams\" values=\"teams\" multiselect=\"true\">OWN_TEAM;;</string>\n" +
@@ -592,7 +616,8 @@ namespace BlightnautsDialogue
                     "                                        </action>\n" +
                     "                                    </normal>\n",
                     area.Name,
-                    repeating
+                    repeating,
+                    interrupting
                 );
             }
 
@@ -994,6 +1019,110 @@ namespace BlightnautsDialogue
                         (area.TeamDialogues - 1).ToString(CultureInfo.InvariantCulture)
                     );
 
+                string interruptable = string.Empty;
+                if (area.Interruptable)
+                {
+                    string resetCounter = string.Empty;
+                    if (area.Repeatable)
+                        resetCounter = string.Format
+                        (
+                            "                                        <action id=\"adjustCounter\">\n" +
+                            "                                            <string id=\"id\">sequence_{0}</string>\n" +
+                            "                                            <string id=\"value\">0</string>\n" +
+                            "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                            "                                        </action>\n",
+                            area.Name
+                        );
+
+                    interruptable = string.Format
+                    (
+                        "                <condition id=\"branch\">\n" +
+                        "                    <string id=\"Comment\">Interrupting</string>\n" +
+                        "                    <normal>\n" +
+                        "                        <condition id=\"getBoolEquals\">\n" +
+                        "                            <string id=\"id\">interrupted_{0}</string>\n" +
+                        "                            <string id=\"value\" values=\"yesno\">no</string>\n" +
+                        "                            <normal>\n" +
+                        "                                <condition id=\"IsLevelButtonDown\">\n" +
+                        "                                    <string id=\"buttons\">speech_interrupt_{0}</string>\n" +
+                        "                                    <normal>\n" +
+                        "                                        <action id=\"setBool\">\n" +
+                        "                                            <string id=\"id\">interrupted_{0}</string>\n" +
+                        "                                            <string id=\"value\" values=\"flagtoggle\">yes</string>\n" +
+                        "                                        </action>\n" +
+                        "                                        <action id=\"adjustCounter\">\n" +
+                        "                                            <string id=\"id\">speak_{0}</string>\n" +
+                        "                                            <string id=\"value\">5</string>\n" +
+                        "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                        "                                        </action>\n{1}" +
+                        "                                        <condition id=\"branch\">\n" +
+                        "                                            <string id=\"Comment\">Stop All Animations</string>\n" +
+                        "                                            <string id=\"Minimized\">yes</string>\n" +
+                        "                                            <normal>\n",
+                        area.Name,
+                        resetCounter
+                    );
+
+                    for (int i = 0; i < area.CharacterDialogue.Length; i++)
+                    {
+                        if (Area.GetTotalDuration(area.CharacterDialogue[i].SoloDialogue.ToArray()) != 0)
+                        {
+                            interruptable += string.Format
+                            (
+                                "                                                <action id=\"stopAnimation\">\n" +
+                                "                                                    <string id=\"animationName\">(mod) speech_textbox_{1}_{0}_solo</string>\n" +
+                                "                                                </action>\n",
+                                area.Name,
+                                area.CharacterDialogue[i].Name
+                            );
+                        }
+
+                        for (int team = 0; team < area.TeamDialogues; team++)
+                        {
+                            if (Area.GetTotalDuration(area.CharacterDialogue[i].TeamDialogues[team].Dialogues.ToArray()) != 0)
+                            {
+                                interruptable += string.Format
+                                (
+                                    "                                                <action id=\"stopAnimation\">\n" +
+                                    "                                                    <string id=\"animationName\">(mod) speech_textbox_{1}_{0}_team{2}</string>\n" +
+                                    "                                                </action>\n",
+                                    area.Name,
+                                    area.CharacterDialogue[i].Name,
+                                    team.ToString(CultureInfo.InvariantCulture)
+                                );
+                            }
+                        }
+                    }
+
+                    interruptable += "                                            </normal>\n" +
+                        "                                        </condition>\n" +
+                        "                                    </normal>\n" +
+                        "                                </condition>\n" +
+                        "                            </normal>\n";
+
+                    if (area.Repeatable)
+                        interruptable += string.Format
+                        (
+                            "                            <else>\n" +
+                            "                                <condition id=\"IsLevelButtonDown\">\n" +
+                            "                                    <string id=\"buttons\">speech_active_{0}</string>\n" +
+                            "                                    <string id=\"Comment\">If Repeating</string>\n" +
+                            "                                    <normal>\n" +
+                            "                                        <action id=\"setBool\">\n" +
+                            "                                            <string id=\"id\">interrupted_{0}</string>\n" +
+                            "                                            <string id=\"value\" values=\"flagtoggle\">no</string>\n" +
+                            "                                        </action>\n" +
+                            "                                    </normal>\n" +
+                            "                                </condition>\n" +
+                            "                            </else>\n",
+                            area.Name
+                        );
+
+                    interruptable += "                        </condition>\n" +
+                        "                    </normal>\n" +
+                        "                </condition>\n";
+                }
+
                 resultDrawTextboxes += string.Format
                 (
                     "<?xml version=\"1.0\" ?>\n" +
@@ -1008,6 +1137,10 @@ namespace BlightnautsDialogue
                     "                            <string id=\"value\">0</string>\n" +
                     "                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
                     "                        </action>\n" +
+                    "                        <action id=\"setBool\">\n" +
+                    "                            <string id=\"id\">interrupted_{0}</string>\n" +
+                    "                            <string id=\"value\" values=\"flagtoggle\">no</string>\n" +
+                    "                        </action>\n" +
                     "                    </normal>\n" +
                     "                </condition>\n" +
                     "                <condition id=\"checkCounter\">\n" +
@@ -1021,7 +1154,7 @@ namespace BlightnautsDialogue
                     "                            <string id=\"adjust method\" values=\"valueadjust\">add</string>\n" +
                     "                        </action>\n" +
                     "                    </normal>\n" +
-                    "                </condition>\n" +
+                    "                </condition>\n{2}" +
                     "                <condition id=\"IsLevelButtonDown\">\n" +
                     "                    <string id=\"buttons\">speech_active_{0}</string>\n" +
                     "                    <normal>\n" +
@@ -1049,7 +1182,8 @@ namespace BlightnautsDialogue
                     "                                    <string id=\"Minimized\">yes</string>\n" +
                     "                                    <normal>\n{1}",
                     area.Name,
-                    repeating
+                    repeating,
+                    interruptable
                 );
             }
 
@@ -1107,7 +1241,7 @@ namespace BlightnautsDialogue
                         "                                                </condition>\n" +
                         "                                            </or>\n" +
                         "                                        </andblock>\n",
-                        naut.Name,
+                        ProjectManager.GetActorFromIndexedName(naut.Name).RealName,
                         naut.Name,
                         area.Name
                     );
@@ -3147,6 +3281,58 @@ namespace BlightnautsDialogue
                 foreach (Area area in ProjectManager.Areas)
                 {
                     string buttonName = "speech_trigger_" + area.Name;
+
+                    // Skip if it already exists to avoid duplicates.
+                    if (content.Contains("<string id=\"influenceName\">" + buttonName + "</string>"))
+                        continue;
+
+                    result += string.Format
+                    (
+                        "    <levelObjectButton>\n" +
+                        "        <vector2 id=\"position\">{1} {2}</vector2>\n" +
+                        "        <vector2 id=\"size\">0.1 0.1</vector2>\n" +
+                        "        <bool id=\"pressableByHumanPlayers\">1</bool>\n" +
+                        "        <bool id=\"pressableByBotPlayers\">1</bool>\n" +
+                        "        <bool id=\"pressableByCreeps\">0</bool>\n" +
+                        "        <bool id=\"pressableByTeamZero\">1</bool>\n" +
+                        "        <bool id=\"pressableByTeamOne\">1</bool>\n" +
+                        "        <bool id=\"pressableByTeamNone\">1</bool>\n" +
+                        "        <string id=\"pressableOnlyByClass\"></string>\n" +
+                        "        <bool id=\"notPressableWhileTeamZeroOnIt\">0</bool>\n" +
+                        "        <bool id=\"notPressableWhileTeamOneOnIt\">0</bool>\n" +
+                        "        <bool id=\"notPressableWhileTeamNoneOnIt\">0</bool>\n" +
+                        "        <int id=\"minimumCharactersRequired\">1</int>\n" +
+                        "        <int id=\"maximumCharactersAllowed\">999</int>\n" +
+                        "        <float id=\"timeRequiredBeforeCountsAsPress\">0</float>\n" +
+                        "        <float id=\"timeToRemainPressedAfter\">0</float>\n" +
+                        "        <bool id=\"invertOnOff\">0</bool>\n" +
+                        "        <string id=\"influenceName\">{0}</string>\n" +
+                        "        <float id=\"reactionSpeedForward\">10</float>\n" +
+                        "        <float id=\"reactionSpeedBackward\">10</float>\n" +
+                        "        <float id=\"autoPressAfterGameTime\">-1</float>\n" +
+                        "        <bool id=\"networkSynchingEnabled\">1</bool>\n" +
+                        "        <bool id=\"frozen\">0</bool>\n" +
+                        "        <bool id=\"hidden\">0</bool>\n" +
+                        "        <int id=\"ownID\">-1</int>\n" +
+                        "    </levelObjectButton>\n",
+                        buttonName,
+                        positionX.ToString(CultureInfo.InvariantCulture),
+                        positionY.ToString(CultureInfo.InvariantCulture)
+                    );
+                    positionX += 0.1f;
+                    if (positionX > 10)
+                    {
+                        positionX = 0;
+                        positionY -= 0.1f;
+                    }
+                }
+
+                foreach (Area area in ProjectManager.Areas)
+                {
+                    if (!area.Interruptable)
+                        continue;
+
+                    string buttonName = "speech_interrupt_" + area.Name;
 
                     // Skip if it already exists to avoid duplicates.
                     if (content.Contains("<string id=\"influenceName\">" + buttonName + "</string>"))
