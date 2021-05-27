@@ -7,6 +7,8 @@ namespace BlightnautsDialogue
         public string Name;
         public readonly int TeamDialogues;
         public Character[] CharacterDialogue { get; private set; }
+        public bool Repeatable { get; set; }
+        public bool Interruptable { get; set; }
         public Character GetCharacter(string name)
         {
             foreach (var character in CharacterDialogue)

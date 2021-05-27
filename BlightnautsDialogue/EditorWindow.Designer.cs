@@ -71,7 +71,8 @@ namespace BlightnautsDialogue
             this.labelCharacterStatus = new System.Windows.Forms.Label();
             this.checkBoxUseDefault = new System.Windows.Forms.CheckBox();
             this.dropdownCharacters = new System.Windows.Forms.ComboBox();
-            this.labelTriggerStatus = new System.Windows.Forms.Label();
+            this.checkBoxInterruptable = new System.Windows.Forms.CheckBox();
+            this.checkBoxRepeatable = new System.Windows.Forms.CheckBox();
             this.dropdownTriggers = new System.Windows.Forms.ComboBox();
             this.buttonSequencePrevious = new System.Windows.Forms.Button();
             this.buttonSequenceNext = new System.Windows.Forms.Button();
@@ -393,7 +394,8 @@ namespace BlightnautsDialogue
             // 
             // groupTrigger
             // 
-            groupTrigger.Controls.Add(this.labelTriggerStatus);
+            groupTrigger.Controls.Add(this.checkBoxInterruptable);
+            groupTrigger.Controls.Add(this.checkBoxRepeatable);
             groupTrigger.Controls.Add(this.dropdownTriggers);
             groupTrigger.Dock = System.Windows.Forms.DockStyle.Fill;
             groupTrigger.Location = new System.Drawing.Point(303, 3);
@@ -403,14 +405,27 @@ namespace BlightnautsDialogue
             groupTrigger.TabStop = false;
             groupTrigger.Text = "Trigger";
             // 
-            // labelTriggerStatus
+            // checkBoxInterruptable
             // 
-            this.labelTriggerStatus.Location = new System.Drawing.Point(7, 47);
-            this.labelTriggerStatus.Name = "labelTriggerStatus";
-            this.labelTriggerStatus.Size = new System.Drawing.Size(281, 17);
-            this.labelTriggerStatus.TabIndex = 1;
-            this.labelTriggerStatus.Text = "Status";
-            this.labelTriggerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.checkBoxInterruptable.AutoSize = true;
+            this.checkBoxInterruptable.Location = new System.Drawing.Point(116, 47);
+            this.checkBoxInterruptable.Name = "checkBoxInterruptable";
+            this.checkBoxInterruptable.Size = new System.Drawing.Size(85, 17);
+            this.checkBoxInterruptable.TabIndex = 2;
+            this.checkBoxInterruptable.Text = "Interruptable";
+            this.checkBoxInterruptable.UseVisualStyleBackColor = true;
+            this.checkBoxInterruptable.CheckedChanged += new System.EventHandler(this.checkBoxInterruptable_CheckedChanged);
+            // 
+            // checkBoxRepeatable
+            // 
+            this.checkBoxRepeatable.AutoSize = true;
+            this.checkBoxRepeatable.Location = new System.Drawing.Point(207, 47);
+            this.checkBoxRepeatable.Name = "checkBoxRepeatable";
+            this.checkBoxRepeatable.Size = new System.Drawing.Size(81, 17);
+            this.checkBoxRepeatable.TabIndex = 1;
+            this.checkBoxRepeatable.Text = "Repeatable";
+            this.checkBoxRepeatable.UseVisualStyleBackColor = true;
+            this.checkBoxRepeatable.CheckedChanged += new System.EventHandler(this.checkBoxRepeatable_CheckedChanged);
             // 
             // dropdownTriggers
             // 
@@ -685,6 +700,7 @@ namespace BlightnautsDialogue
             groupCharacter.ResumeLayout(false);
             groupCharacter.PerformLayout();
             groupTrigger.ResumeLayout(false);
+            groupTrigger.PerformLayout();
             groupBoxDialogue.ResumeLayout(false);
             dialogueLayout.ResumeLayout(false);
             dialogueLayout.PerformLayout();
@@ -705,7 +721,6 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ComboBox dropdownTriggers;
         private System.Windows.Forms.Label labelCharacterStatus;
         private System.Windows.Forms.CheckBox checkBoxUseDefault;
-        private System.Windows.Forms.Label labelTriggerStatus;
         private System.Windows.Forms.TextBox textBoxPortrait;
         private System.Windows.Forms.TextBox textBoxDelay;
         private System.Windows.Forms.TextBox textBoxDuration;
@@ -724,5 +739,7 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogModDirectory;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.CheckBox checkBoxInterruptable;
+        private System.Windows.Forms.CheckBox checkBoxRepeatable;
     }
 }

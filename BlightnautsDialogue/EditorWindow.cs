@@ -88,21 +88,29 @@ namespace BlightnautsDialogue
             else
                 checkBoxUseDefault.Enabled = true;
 
+            labelCharacterStatus.Text = GetStatusTextCharacter(dropdownCharacters.SelectedIndex);
+
+            // Triggers
             if (dropdownTriggers.Items.Count == 0)
             {
                 dropdownTriggers.Enabled = false;
                 buttonSequencePlus.Enabled = false;
                 dropdownDialogues.Enabled = false;
+                checkBoxRepeatable.Checked = false;
+                checkBoxInterruptable.Checked = false;
+                checkBoxRepeatable.Enabled = false;
+                checkBoxInterruptable.Enabled = false;
             }
             else
             {
                 dropdownTriggers.Enabled = true;
                 buttonSequencePlus.Enabled = true;
                 dropdownDialogues.Enabled = true;
+                checkBoxRepeatable.Enabled = true;
+                checkBoxInterruptable.Enabled = true;
+                checkBoxRepeatable.Checked = ProjectManager.Areas[dropdownTriggers.SelectedIndex].Repeatable;
+                checkBoxInterruptable.Checked = ProjectManager.Areas[dropdownTriggers.SelectedIndex].Interruptable;
             }
-
-            labelCharacterStatus.Text = GetStatusTextCharacter(dropdownCharacters.SelectedIndex);
-            labelTriggerStatus.Text = string.Empty;
 
             // Dialogue
             var dialogues = GetDialogues(dropdownDialogues.SelectedIndex - 1);
@@ -289,13 +297,10 @@ namespace BlightnautsDialogue
                 }
             }
 
-            string result = "Dialogue lines: " + total.ToString();
+            string result = "Lines: " + total.ToString();
             if (noDuration > 0)
             {
-                string singular = "s";
-                if (noDuration == 1)
-                    singular = string.Empty;
-                result += " (" + noDuration.ToString() + " line" + singular + " with no duration)";
+                result += " (" + noDuration.ToString() + " with no duration)";
             }
             return result;
         }
@@ -535,6 +540,20 @@ namespace BlightnautsDialogue
             dropdownDialogues.SelectedIndex = 0;
             sequence = 0;
             RefreshWindow();
+        }
+
+        private void checkBoxRepeatable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (refreshing)
+                return;
+            ProjectManager.Areas[dropdownTriggers.SelectedIndex].Repeatable = checkBoxRepeatable.Checked;
+        }
+
+        private void checkBoxInterruptable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (refreshing)
+                return;
+            ProjectManager.Areas[dropdownTriggers.SelectedIndex].Interruptable = checkBoxInterruptable.Checked;
         }
 
         private void dropdownDialogues_SelectedIndexChanged(object sender, EventArgs e)

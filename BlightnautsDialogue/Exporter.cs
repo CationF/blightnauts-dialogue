@@ -477,6 +477,41 @@ namespace BlightnautsDialogue
 
             private static void SpeechLogicAppendStartText1(Area area)
             {
+                string repeating = string.Empty;
+                if (area.Repeatable)
+                    repeating = string.Format
+                    (
+                        "                        <condition id=\"checkCounter\">\n" +
+                        "                            <string id=\"id\">count_{0}</string>\n" +
+                        "                            <string id=\"value\">{1}</string>\n" +
+                        "                            <string id=\"compare method\" values=\"valuecompare\">greater</string>\n" +
+                        "                            <string id=\"Comment\">Repeating</string>\n" +
+                        "                            <normal>\n" +
+                        "                                <condition id=\"checkCounter\">\n" +
+                        "                                    <string id=\"id\">cooldown_{0}</string>\n" +
+                        "                                    <string id=\"value\">0</string>\n" +
+                        "                                    <string id=\"compare method\" values=\"valuecompare\">greater</string>\n" +
+                        "                                    <normal>\n" +
+                        "                                        <action id=\"adjustCounter\">\n" +
+                        "                                            <string id=\"id\">cooldown_{0}</string>\n" +
+                        "                                            <string id=\"value\">-1</string>\n" +
+                        "                                            <string id=\"adjust method\" values=\"valueadjust\">add</string>\n" +
+                        "                                        </action>\n" +
+                        "                                    </normal>\n" +
+                        "                                    <else>\n" +
+                        "                                        <action id=\"adjustCounter\">\n" +
+                        "                                            <string id=\"id\">count_{0}</string>\n" +
+                        "                                            <string id=\"value\">0</string>\n" +
+                        "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                        "                                        </action>\n" +
+                        "                                    </else>\n" +
+                        "                                </condition>\n" +
+                        "                            </normal>\n" +
+                        "                        </condition>\n",
+                        area.Name,
+                        (area.TeamDialogues + 1).ToString(CultureInfo.InvariantCulture)
+                    );
+
                 resultSpeechLogic += string.Format
                 (
                     "<?xml version=\"1.0\" ?>\n" +
@@ -520,7 +555,7 @@ namespace BlightnautsDialogue
                     "                    <string id=\"ignore invisibility\" values=\"yesno\">yes</string>\n" +
                     "                    <string id=\"never detect invisible targets without character collision\" values=\"yesno\">no</string>\n" +
                     "                    <string id=\"Comment\">Check if not in single player</string>\n" +
-                    "                    <normal>\n" +
+                    "                    <normal>\n{1}" +
                     "                        <condition id=\"checkCounter\">\n" +
                     "                            <string id=\"id\">count_{0}</string>\n" +
                     "                            <string id=\"value\">0</string>\n" +
@@ -556,7 +591,8 @@ namespace BlightnautsDialogue
                     "                                            <string id=\"adjust method\" values=\"valueadjust\">add</string>\n" +
                     "                                        </action>\n" +
                     "                                    </normal>\n",
-                    area.Name
+                    area.Name,
+                    repeating
                 );
             }
 
@@ -698,9 +734,44 @@ namespace BlightnautsDialogue
 
             private static void SpeechLogicAppendStartText2(Area area)
             {
+                string repeating = string.Empty;
+                if (area.Repeatable)
+                    repeating = string.Format
+                    (
+                        "                        <condition id=\"checkCounter\">\n" +
+                        "                            <string id=\"id\">count_{0}</string>\n" +
+                        "                            <string id=\"value\">{1}</string>\n" +
+                        "                            <string id=\"compare method\" values=\"valuecompare\">greater</string>\n" +
+                        "                            <string id=\"Comment\">Repeating</string>\n" +
+                        "                            <normal>\n" +
+                        "                                <condition id=\"checkCounter\">\n" +
+                        "                                    <string id=\"id\">cooldown_{0}</string>\n" +
+                        "                                    <string id=\"value\">0</string>\n" +
+                        "                                    <string id=\"compare method\" values=\"valuecompare\">greater</string>\n" +
+                        "                                    <normal>\n" +
+                        "                                        <action id=\"adjustCounter\">\n" +
+                        "                                            <string id=\"id\">cooldown_{0}</string>\n" +
+                        "                                            <string id=\"value\">-1</string>\n" +
+                        "                                            <string id=\"adjust method\" values=\"valueadjust\">add</string>\n" +
+                        "                                        </action>\n" +
+                        "                                    </normal>\n" +
+                        "                                    <else>\n" +
+                        "                                        <action id=\"adjustCounter\">\n" +
+                        "                                            <string id=\"id\">count_{0}</string>\n" +
+                        "                                            <string id=\"value\">0</string>\n" +
+                        "                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                        "                                        </action>\n" +
+                        "                                    </else>\n" +
+                        "                                </condition>\n" +
+                        "                            </normal>\n" +
+                        "                        </condition>\n",
+                        area.Name,
+                        (area.TeamDialogues + 1).ToString(CultureInfo.InvariantCulture)
+                    );
+
                 resultSpeechLogic += string.Format
                 (
-                    "                    <else>\n" +
+                    "                    <else>\n{2}" +
                     "                        <condition id=\"checkCounter\">\n" +
                     "                            <string id=\"id\">count_{0}</string>\n" +
                     "                            <string id=\"value\">0</string>\n" +
@@ -750,13 +821,13 @@ namespace BlightnautsDialogue
                     "                                                        <action id=\"adjustCounter\">\n" +
                     "                                                            <string id=\"id\">cooldown_{0}</string>\n" +
                     "                                                            <string id=\"value\">-1</string>\n" +
-                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                    "                                                            <string id=\"adjust method\" values=\"valueadjust\">add</string>\n" +
                     "                                                        </action>\n" +
                     "                                                    </normal>\n" +
                     "                                                    <else>\n" +
                     "                                                        <action id=\"adjustCounter\">\n" +
                     "                                                            <string id=\"id\">count_{0}</string>\n" +
-                    "                                                            <string id=\"value\">5</string>\n" +
+                    "                                                            <string id=\"value\">{1}</string>\n" +
                     "                                                            <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
                     "                                                        </action>\n" +
                     "                                                        <action id=\"executeBehaviourTree\">\n" +
@@ -767,7 +838,9 @@ namespace BlightnautsDialogue
                     "                                                            <string id=\"Comment\">Pick speaker</string>\n" +
                     "                                                            <string id=\"Minimized\">yes</string>\n" +
                     "                                                            <normal>",
-                    area.Name
+                    area.Name,
+                    (area.TeamDialogues + 2).ToString(CultureInfo.InvariantCulture),
+                    repeating
                 );
             }
 
@@ -900,6 +973,27 @@ namespace BlightnautsDialogue
 
             private static void DrawTextboxesAppendStartText(Area area)
             {
+                string repeating = string.Empty;
+                if (area.Repeatable)
+                    repeating = string.Format
+                    (
+                        "                                        <condition id=\"checkCounter\">\n" +
+                        "                                            <string id=\"id\">sequence_{0}</string>\n" +
+                        "                                            <string id=\"value\">{1}</string>\n" +
+                        "                                            <string id=\"compare method\" values=\"valuecompare\">greater</string>\n" +
+                        "                                            <string id=\"Comment\">Repeating</string>\n" +
+                        "                                            <normal>\n" +
+                        "                                                <action id=\"adjustCounter\">\n" +
+                        "                                                    <string id=\"id\">sequence_{0}</string>\n" +
+                        "                                                    <string id=\"value\">0</string>\n" +
+                        "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                        "                                                </action>\n" +
+                        "                                            </normal>\n" +
+                        "                                        </condition>\n",
+                        area.Name,
+                        (area.TeamDialogues - 1).ToString(CultureInfo.InvariantCulture)
+                    );
+
                 resultDrawTextboxes += string.Format
                 (
                     "<?xml version=\"1.0\" ?>\n" +
@@ -953,8 +1047,9 @@ namespace BlightnautsDialogue
                     "                                <condition id=\"branch\">\n" +
                     "                                    <string id=\"Comment\">Single Player</string>\n" +
                     "                                    <string id=\"Minimized\">yes</string>\n" +
-                    "                                    <normal>\n",
-                    area.Name
+                    "                                    <normal>\n{1}",
+                    area.Name,
+                    repeating
                 );
             }
 
@@ -1018,6 +1113,27 @@ namespace BlightnautsDialogue
                     );
                 }
 
+                string repeating = string.Empty;
+                if (area.Repeatable)
+                    repeating = string.Format
+                    (
+                        "                                        <condition id=\"checkCounter\">\n" +
+                        "                                            <string id=\"id\">sequence_{0}</string>\n" +
+                        "                                            <string id=\"value\">{1}</string>\n" +
+                        "                                            <string id=\"compare method\" values=\"valuecompare\">greater</string>\n" +
+                        "                                            <string id=\"Comment\">Repeating</string>\n" +
+                        "                                            <normal>\n" +
+                        "                                                <action id=\"adjustCounter\">\n" +
+                        "                                                    <string id=\"id\">sequence_{0}</string>\n" +
+                        "                                                    <string id=\"value\">0</string>\n" +
+                        "                                                    <string id=\"adjust method\" values=\"valueadjust\">set</string>\n" +
+                        "                                                </action>\n" +
+                        "                                            </normal>\n" +
+                        "                                        </condition>\n",
+                        area.Name,
+                        (area.TeamDialogues - 1).ToString(CultureInfo.InvariantCulture)
+                    );
+
                 resultDrawTextboxes += "                                    </normal>\n" +
                     "                                </condition>\n" +
                     "                            </normal>\n" +
@@ -1025,7 +1141,7 @@ namespace BlightnautsDialogue
                     "                                <condition id=\"branch\">\n" +
                     "                                    <string id=\"Comment\">Co-op</string>\n" +
                     "                                    <string id=\"Minimized\">yes</string>\n" +
-                    "                                    <normal>\n";
+                    "                                    <normal>\n" + repeating;
             }
 
             private static void DrawTextboxesAppendValues2(Area area)
