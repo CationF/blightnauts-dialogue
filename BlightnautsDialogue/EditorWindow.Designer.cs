@@ -379,6 +379,8 @@ namespace BlightnautsDialogue
             this.checkBoxUseDefault.Size = new System.Drawing.Size(102, 17);
             this.checkBoxUseDefault.TabIndex = 1;
             this.checkBoxUseDefault.Text = "Use default skin";
+            toolTipSimple.SetToolTip(this.checkBoxUseDefault, "If enabled, will not generate any dialogue and will make anyone playing\r\nwith thi" +
+        "s skin use the default dialogue.");
             this.checkBoxUseDefault.UseVisualStyleBackColor = true;
             this.checkBoxUseDefault.CheckedChanged += new System.EventHandler(this.checkBoxUseDefault_CheckedChanged);
             // 
@@ -413,6 +415,7 @@ namespace BlightnautsDialogue
             this.checkBoxInterruptable.Size = new System.Drawing.Size(85, 17);
             this.checkBoxInterruptable.TabIndex = 2;
             this.checkBoxInterruptable.Text = "Interruptable";
+            toolTipSimple.SetToolTip(this.checkBoxInterruptable, "If enabled, will allow the dialogue from this trigger to be interrupted.");
             this.checkBoxInterruptable.UseVisualStyleBackColor = true;
             this.checkBoxInterruptable.CheckedChanged += new System.EventHandler(this.checkBoxInterruptable_CheckedChanged);
             // 
@@ -424,6 +427,7 @@ namespace BlightnautsDialogue
             this.checkBoxRepeatable.Size = new System.Drawing.Size(81, 17);
             this.checkBoxRepeatable.TabIndex = 1;
             this.checkBoxRepeatable.Text = "Repeatable";
+            toolTipSimple.SetToolTip(this.checkBoxRepeatable, "If enabled, will allow this trigger to be activated more than once.");
             this.checkBoxRepeatable.UseVisualStyleBackColor = true;
             this.checkBoxRepeatable.CheckedChanged += new System.EventHandler(this.checkBoxRepeatable_CheckedChanged);
             // 
@@ -517,7 +521,6 @@ namespace BlightnautsDialogue
             this.dropdownTexture.Name = "dropdownTexture";
             this.dropdownTexture.Size = new System.Drawing.Size(192, 21);
             this.dropdownTexture.TabIndex = 2;
-            toolTipLong.SetToolTip(this.dropdownTexture, resources.GetString("dropdownTexture.ToolTip"));
             this.dropdownTexture.SelectedIndexChanged += new System.EventHandler(this.dropdownTexture_SelectedIndexChanged);
             this.dropdownTexture.TextUpdate += new System.EventHandler(this.dropdownTexture_TextUpdate);
             // 
@@ -625,6 +628,7 @@ namespace BlightnautsDialogue
             labelTexture.Size = new System.Drawing.Size(80, 13);
             labelTexture.TabIndex = 2;
             labelTexture.Text = "Textbox texture";
+            toolTipLong.SetToolTip(labelTexture, resources.GetString("labelTexture.ToolTip"));
             // 
             // labelPortrait
             // 
