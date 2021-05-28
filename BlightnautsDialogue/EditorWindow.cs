@@ -671,7 +671,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             unsaved = true;
-            GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Content = textBoxMain.Text;
+            GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Content = System.Text.RegularExpressions.Regex.Replace(textBoxMain.Text, @"\t|\n|\r", string.Empty);
         }
 
         private void checkBoxGenerateAnimationTemplate_CheckedChanged(object sender, EventArgs e)
@@ -685,7 +685,7 @@ namespace BlightnautsDialogue
         private void topBarAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Blightnauts Dialogue Editor version 2.2.0\n" +
+                "Blightnauts Dialogue Editor version 2.2.1\n" +
                 "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
                 "No license, do whatever you want with this.\n\n" +
                 "Windows Forms and .NET framework are property of Microsoft Corporation\n\n" +
