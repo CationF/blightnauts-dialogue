@@ -368,22 +368,24 @@ namespace BlightnautsDialogue
                                 return;
                         }
                         unsaved = false;
-                        return;
                     }
-                    result = saveFileDialog.ShowDialog();
-                    if (result == DialogResult.OK)
+                    else
                     {
-                        switch (ProjectManager.SaveProject(saveFileDialog.FileName))
+                        result = saveFileDialog.ShowDialog();
+                        if (result == DialogResult.OK)
                         {
-                            case 1:
-                                MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
+                            switch (ProjectManager.SaveProject(saveFileDialog.FileName))
+                            {
+                                case 1:
+                                    MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
 
-                            case 2:
-                                MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
+                                case 2:
+                                    MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                            }
+                            unsaved = false;
                         }
-                        unsaved = false;
                     }
                 }
             }
@@ -400,38 +402,130 @@ namespace BlightnautsDialogue
 
         private void topBarOpen_Click(object sender, EventArgs e)
         {
-            DialogResult result = openFileDialog.ShowDialog();
+            DialogResult result;
+            if (unsaved)
+            {
+                result = MessageBox.Show("All unsaved changes will be lost, do you want to save them before creating a new project?", "New Project",
+                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Cancel)
+                    return;
+                else if (result == DialogResult.Yes)
+                {
+                    if (ProjectManager.SaveFileExists)
+                    {
+                        switch (ProjectManager.SaveProject(ProjectManager.FilePath))
+                        {
+                            case 1:
+                                MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+
+                            case 2:
+                                MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                        }
+                        unsaved = false;
+                        RefreshTitle();
+                    }
+                    else
+                    {
+                        result = saveFileDialog.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            switch (ProjectManager.SaveProject(saveFileDialog.FileName))
+                            {
+                                case 1:
+                                    MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+
+                                case 2:
+                                    MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                            }
+                            unsaved = false;
+                            RefreshTitle();
+                        }
+                    }
+                }
+            }
+            result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
                 if (ProjectManager.LoadProject(openFileDialog.FileName) == 1)
                 {
                     MessageBox.Show("An error has occurred while opening the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                else
+                {
+                    dropdownTriggers.Items.Clear();
+                    dropdownDialogues.Items.Clear();
+                    sequence = 0;
+                    initializing = true;
+                    dropdownCharacters.SelectedIndex = 0;
+                    initializing = false;
+                    foreach (Area area in ProjectManager.Areas)
+                    {
+                        dropdownTriggers.Items.Add(area.Name);
+                    }
+                    if (dropdownTriggers.Items.Count > 0)
+                    {
+                        refreshing = true;
+                        dropdownTriggers.SelectedIndex = 0;
+                        refreshing = false;
+                    }
+                    unsaved = false;
+                    Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
+                    RefreshWindow();
+                    RefreshMostRecentAvailable();
+                }
             }
-            dropdownTriggers.Items.Clear();
-            dropdownDialogues.Items.Clear();
-            sequence = 0;
-            initializing = true;
-            dropdownCharacters.SelectedIndex = 0;
-            initializing = false;
-            foreach (Area area in ProjectManager.Areas)
-            {
-                dropdownTriggers.Items.Add(area.Name);
-            }
-            if (dropdownTriggers.Items.Count > 0)
-            {
-                refreshing = true;
-                dropdownTriggers.SelectedIndex = 0;
-                refreshing = false;
-            }
-            unsaved = false;
-            Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
-            RefreshWindow();
-            RefreshMostRecentAvailable();
         }
 
         private void topBarOpenRecent_Click(object sender, EventArgs e)
         {
+            if (unsaved)
+            {
+                DialogResult result = MessageBox.Show("All unsaved changes will be lost, do you want to save them before creating a new project?", "New Project",
+                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Cancel)
+                    return;
+                else if (result == DialogResult.Yes)
+                {
+                    if (ProjectManager.SaveFileExists)
+                    {
+                        switch (ProjectManager.SaveProject(ProjectManager.FilePath))
+                        {
+                            case 1:
+                                MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+
+                            case 2:
+                                MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                        }
+                        unsaved = false;
+                        RefreshTitle();
+                    }
+                    else
+                    {
+                        result = saveFileDialog.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            switch (ProjectManager.SaveProject(saveFileDialog.FileName))
+                            {
+                                case 1:
+                                    MessageBox.Show("Specified directory does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+
+                                case 2:
+                                    MessageBox.Show("An error has occurred during saving.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                            }
+                            unsaved = false;
+                            RefreshTitle();
+                        }
+                    }
+                }
+            }
             if (!ProjectManager.LastSaveFileExists)
             {
                 MessageBox.Show("Most recent file not detected.", "Open Last", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -443,24 +537,27 @@ namespace BlightnautsDialogue
             {
                 MessageBox.Show("An error has occurred while opening the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            dropdownTriggers.Items.Clear();
-            dropdownDialogues.Items.Clear();
-            sequence = 0;
-            initializing = true;
-            dropdownCharacters.SelectedIndex = 0;
-            initializing = false;
-            foreach (Area area in ProjectManager.Areas)
+            else
             {
-                dropdownTriggers.Items.Add(area.Name);
+                dropdownTriggers.Items.Clear();
+                dropdownDialogues.Items.Clear();
+                sequence = 0;
+                initializing = true;
+                dropdownCharacters.SelectedIndex = 0;
+                initializing = false;
+                foreach (Area area in ProjectManager.Areas)
+                {
+                    dropdownTriggers.Items.Add(area.Name);
+                }
+                if (dropdownTriggers.Items.Count > 0)
+                {
+                    refreshing = true;
+                    dropdownTriggers.SelectedIndex = 0;
+                    refreshing = false;
+                }
+                unsaved = false;
+                RefreshWindow();
             }
-            if (dropdownTriggers.Items.Count > 0)
-            {
-                refreshing = true;
-                dropdownTriggers.SelectedIndex = 0;
-                refreshing = false;
-            }
-            unsaved = false;
-            RefreshWindow();
         }
 
         private void topBarSave_Click(object sender, EventArgs e)
@@ -856,7 +953,7 @@ namespace BlightnautsDialogue
         private void topBarAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Blightnauts Dialogue Editor version 2.3.0\n" +
+                "Blightnauts Dialogue Editor version 2.3.1\n" +
                 "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
                 "No license, do whatever you want with this.\n\n" +
                 "Windows Forms and .NET framework are property of Microsoft Corporation\n\n" +
