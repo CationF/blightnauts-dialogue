@@ -507,6 +507,7 @@ namespace BlightnautsDialogue
         {
             string result = string.Empty;
             bool missing = false;
+            int count = 0;
 
             void CheckMissing(Area area, Area.Character character)
             {
@@ -515,7 +516,10 @@ namespace BlightnautsDialogue
                     if (dialogue.Duration == 0)
                     {
                         missing = true;
-                        result += string.Format("{0} ({1}_solo)\n", character.Name, area.Name);
+                        if (count < 20)
+                            result += string.Format("{0} ({1}_solo)\n", character.Name, area.Name);
+                        count++;
+                        break;
                     }
                 }
 
@@ -526,7 +530,10 @@ namespace BlightnautsDialogue
                         if (dialogue.Duration == 0)
                         {
                             missing = true;
-                            result += string.Format("{0} ({1}_team{2})\n", character.Name, area.Name, i);
+                            if (count < 20)
+                                result += string.Format("{0} ({1}_team{2})\n", character.Name, area.Name, i);
+                            count++;
+                            break;
                         }
                     }
                 }
@@ -536,13 +543,25 @@ namespace BlightnautsDialogue
             {
                 foreach (var character in area.CharacterDialogue)
                 {
+                    var actor = ProjectManager.GetActorFromIndexedName(character.Name);
+                    if (actor.SkinIndex != 1 && actor.UseDefaultSkin)
+                        continue;
+
                     CheckMissing(area, character);
                 }
             }
 
             if (missing)
             {
-                string message = "The following sequences have dialogues with 0 duration:\n\n" + result;
+                string limit = string.Empty;
+                if (count > 20)
+                {
+                    limit = "...";
+                }
+                string plural = "s";
+                if (count == 1)
+                    plural = string.Empty;
+                string message = string.Format("Found {0} sequence{1} with 0 duration dialogue:\n\n{2}{3}", count, plural, result, limit);
                 MessageBox.Show(message, "Check 0 Duration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
