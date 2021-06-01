@@ -45,7 +45,7 @@ namespace BlightnautsDialogue
             Font font;
             Color fore, back;
             Settings.Load(out font, out fore, out back);
-            textBoxMain.Font = font;
+            SetFont(font);
             textBoxMain.ForeColor = fore;
             textBoxMain.BackColor = back;
             initializing = false;
@@ -239,6 +239,19 @@ namespace BlightnautsDialogue
             }
 
             refreshing = false;
+        }
+
+        private void SetFont(Font font)
+        {
+            try
+            {
+                textBoxMain.Font = font;
+            }
+            catch
+            {
+                textBoxMain.Font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Regular, GraphicsUnit.Point);
+                MessageBox.Show("An error has occurred while setting the font.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private string ValidateNumericInput(string numericText)
@@ -550,11 +563,27 @@ namespace BlightnautsDialogue
 
         private void topBarTextboxSetFont_Click(object sender, EventArgs e)
         {
-            DialogResult result = fontDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            try
             {
-                textBoxMain.Font = fontDialog.Font;
-                Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
+                DialogResult result = fontDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    SetFont(fontDialog.Font);
+                    Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
+                }
+            }
+            catch (Exception error)
+            {
+                if (error is ArgumentException)
+                {
+                    MessageBox.Show
+                    (
+                        "An error has occurred, likely because you've selected a TrueType font, which is not supported by Windows Forms.\nBlame Cringesoft for that.",
+                        "Cringe",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
             }
         }
 
