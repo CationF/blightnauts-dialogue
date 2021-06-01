@@ -1,24 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 
 namespace BlightnautsDialogue
 {
     public static class Settings
     {
         private static string Path { get => Program.Path + "\\config.ini"; }
-        private const string fontSize = "FONTSIZE=";
+        private const string font = "FONT=";
         private const string foregroundColor = "FOREGROUNDCOLOR=";
         private const string backgroundColor = "BACKGROUNDCOLOR=";
 
-        public static int Save(float zoom, Color fore, Color back)
+        public static int Save(Font font, Color fore, Color back)
         {
-            string content = fontSize + zoom.ToString("F1", CultureInfo.InvariantCulture);
+            int effect = 0;
+            if (font.Bold && font.Italic)
+                effect = 3;
+            else if (font.Bold)
+                effect = 1;
+            else if (font.Italic)
+                effect = 2;
+
+            string content = string.Format("{0}{1};{2};{3}",
+            Settings.font,
+            font.FontFamily.Name,
+            font.Size.ToString("F2", CultureInfo.InvariantCulture),
+            effect.ToString(CultureInfo.InvariantCulture));
+
             content += string.Format
             (
                 "\n{0}{1} {2} {3}",
@@ -48,11 +57,11 @@ namespace BlightnautsDialogue
             return 0;
         }
 
-        public static int Load(out float zoom, out Color fore, out Color back)
+        public static int Load(out Font font, out Color fore, out Color back)
         {
-            zoom = 12;
-            fore = System.Windows.Forms.TextBox.DefaultForeColor;
-            back = System.Windows.Forms.TextBox.DefaultBackColor;
+            font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Regular, GraphicsUnit.Point);
+            fore = SystemColors.WindowText;
+            back = SystemColors.Window;
 
             if (!File.Exists(Path))
                 return 1;
@@ -63,9 +72,19 @@ namespace BlightnautsDialogue
 
                 for (int i = 0; i < content.Length; i++)
                 {
-                    if (content[i].StartsWith(fontSize))
+                    if (content[i].StartsWith(Settings.font))
                     {
-                        zoom = float.Parse(content[i].Substring(fontSize.Length), CultureInfo.InvariantCulture);
+                        string[] info = content[i].Substring(Settings.font.Length).Split(';');
+                        FontFamily fontFamily = FontFamily.Families.FirstOrDefault(n => n.Name == info[0]);
+                        float fontSize = float.Parse(info[1], CultureInfo.InvariantCulture);
+                        FontStyle fontStyle = FontStyle.Regular;
+                        if (info[2] == "1")
+                            fontStyle = FontStyle.Bold;
+                        else if (info[2] == "2")
+                            fontStyle = FontStyle.Italic;
+                        else if (info[2] == "3")
+                            fontStyle = FontStyle.Bold | FontStyle.Italic;
+                        font = new Font(fontFamily, fontSize, fontStyle, GraphicsUnit.Point);
                     }
                     else if (content[i].StartsWith(foregroundColor))
                     {

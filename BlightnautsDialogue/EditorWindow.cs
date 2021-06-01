@@ -10,7 +10,6 @@ namespace BlightnautsDialogue
         private bool initializing;
         private bool refreshing;
         private int sequence;
-        private float zoom;
         private bool unsaved;
 
         public EditorWindow()
@@ -42,9 +41,10 @@ namespace BlightnautsDialogue
             }
 
             ProjectManager.NewProject();
+            Font font;
             Color fore, back;
-            Settings.Load(out zoom, out fore, out back);
-            SetFontSize(zoom);
+            Settings.Load(out font, out fore, out back);
+            textBoxMain.Font = font;
             textBoxMain.ForeColor = fore;
             textBoxMain.BackColor = back;
             initializing = false;
@@ -70,11 +70,6 @@ namespace BlightnautsDialogue
                     CharacterDialogue[dropdownCharacters.SelectedIndex].
                     TeamDialogues[index].Dialogues;
             }
-        }
-
-        private void SetFontSize(float size)
-        {
-            textBoxMain.Font = new Font(textBoxMain.Font.FontFamily, size, textBoxMain.Font.Style, textBoxMain.Font.Unit);
         }
 
         private void RefreshWindow()
@@ -478,23 +473,13 @@ namespace BlightnautsDialogue
             }
         }
 
-        private void topBarTextboxZoomIn_Click(object sender, EventArgs e)
+        private void topBarTextboxSetFont_Click(object sender, EventArgs e)
         {
-            if (zoom < 40)
+            DialogResult result = fontDialog.ShowDialog();
+            if (result == DialogResult.OK)
             {
-                zoom += 4;
-                SetFontSize(zoom);
-                Settings.Save(zoom, textBoxMain.ForeColor, textBoxMain.BackColor);
-            }
-        }
-
-        private void topBarTextboxZoomOut_Click(object sender, EventArgs e)
-        {
-            if (zoom > 8)
-            {
-                zoom -= 4;
-                SetFontSize(zoom);
-                Settings.Save(zoom, textBoxMain.ForeColor, textBoxMain.BackColor);
+                textBoxMain.Font = fontDialog.Font;
+                Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
             }
         }
 
@@ -502,14 +487,68 @@ namespace BlightnautsDialogue
         {
             colorDialogTextboxMain.ShowDialog();
             textBoxMain.BackColor = colorDialogTextboxMain.Color;
-            Settings.Save(zoom, textBoxMain.ForeColor, textBoxMain.BackColor);
+            Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
         }
 
         private void topBarTextboxForegroundColor_Click(object sender, EventArgs e)
         {
             colorDialogTextboxMain.ShowDialog();
             textBoxMain.ForeColor = colorDialogTextboxMain.Color;
-            Settings.Save(zoom, textBoxMain.ForeColor, textBoxMain.BackColor);
+            Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
+        }
+
+        private void topBarMaximize_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+                WindowState = FormWindowState.Maximized;
+        }
+
+        private void topBarCheckMissing_Click(object sender, EventArgs e)
+        {
+            string result = string.Empty;
+            bool missing = false;
+
+            void CheckMissing(Area area, Area.Character character)
+            {
+                foreach (var dialogue in character.SoloDialogue)
+                {
+                    if (dialogue.Duration == 0)
+                    {
+                        missing = true;
+                        result += string.Format("{0} ({1}_solo)\n", character.Name, area.Name);
+                    }
+                }
+
+                for (int i = 0; i < area.TeamDialogues; i++)
+                {
+                    foreach (var dialogue in character.TeamDialogues[i].Dialogues)
+                    {
+                        if (dialogue.Duration == 0)
+                        {
+                            missing = true;
+                            result += string.Format("{0} ({1}_team{2})\n", character.Name, area.Name, i);
+                        }
+                    }
+                }
+            }
+
+            foreach (Area area in ProjectManager.Areas)
+            {
+                foreach (var character in area.CharacterDialogue)
+                {
+                    CheckMissing(area, character);
+                }
+            }
+
+            if (missing)
+            {
+                string message = "The following sequences have dialogues with 0 duration:\n\n" + result;
+                MessageBox.Show(message, "Check 0 Duration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                MessageBox.Show("All dialogues have a duration.", "Check 0 Duration", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void dropdownCharacters_SelectedIndexChanged(object sender, EventArgs e)

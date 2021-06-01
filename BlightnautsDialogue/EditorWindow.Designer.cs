@@ -66,8 +66,7 @@ namespace BlightnautsDialogue
             this.topBarSave = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.topBarTextboxZoomIn = new System.Windows.Forms.ToolStripMenuItem();
-            this.topBarTextboxZoomOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarTextboxSetFont = new System.Windows.Forms.ToolStripMenuItem();
             this.labelCharacterStatus = new System.Windows.Forms.Label();
             this.checkBoxUseDefault = new System.Windows.Forms.CheckBox();
             this.dropdownCharacters = new System.Windows.Forms.ComboBox();
@@ -90,6 +89,9 @@ namespace BlightnautsDialogue
             this.folderBrowserDialogModDirectory = new System.Windows.Forms.FolderBrowserDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.topBarMaximize = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarCheckMissing = new System.Windows.Forms.ToolStripMenuItem();
             topBar = new System.Windows.Forms.MenuStrip();
             topBarFile = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -225,7 +227,9 @@ namespace BlightnautsDialogue
             // topBarView
             // 
             topBarView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            topBarTextbox});
+            topBarTextbox,
+            this.topBarMaximize,
+            this.topBarCheckMissing});
             topBarView.Name = "topBarView";
             topBarView.Size = new System.Drawing.Size(44, 20);
             topBarView.Text = "View";
@@ -233,27 +237,19 @@ namespace BlightnautsDialogue
             // topBarTextbox
             // 
             topBarTextbox.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.topBarTextboxZoomIn,
-            this.topBarTextboxZoomOut,
+            this.topBarTextboxSetFont,
             topBarTextboxBackgroundColor,
             topBarTextboxForegroundColor});
             topBarTextbox.Name = "topBarTextbox";
-            topBarTextbox.Size = new System.Drawing.Size(115, 22);
+            topBarTextbox.Size = new System.Drawing.Size(200, 22);
             topBarTextbox.Text = "Textbox";
             // 
-            // topBarTextboxZoomIn
+            // topBarTextboxSetFont
             // 
-            this.topBarTextboxZoomIn.Name = "topBarTextboxZoomIn";
-            this.topBarTextboxZoomIn.Size = new System.Drawing.Size(170, 22);
-            this.topBarTextboxZoomIn.Text = "Zoom In";
-            this.topBarTextboxZoomIn.Click += new System.EventHandler(this.topBarTextboxZoomIn_Click);
-            // 
-            // topBarTextboxZoomOut
-            // 
-            this.topBarTextboxZoomOut.Name = "topBarTextboxZoomOut";
-            this.topBarTextboxZoomOut.Size = new System.Drawing.Size(170, 22);
-            this.topBarTextboxZoomOut.Text = "Zoom Out";
-            this.topBarTextboxZoomOut.Click += new System.EventHandler(this.topBarTextboxZoomOut_Click);
+            this.topBarTextboxSetFont.Name = "topBarTextboxSetFont";
+            this.topBarTextboxSetFont.Size = new System.Drawing.Size(170, 22);
+            this.topBarTextboxSetFont.Text = "Set Font";
+            this.topBarTextboxSetFont.Click += new System.EventHandler(this.topBarTextboxSetFont_Click);
             // 
             // topBarTextboxBackgroundColor
             // 
@@ -684,6 +680,27 @@ namespace BlightnautsDialogue
             this.openFileDialog.DefaultExt = "bnp";
             this.openFileDialog.Filter = "Blightnauts Project|*.bnp";
             // 
+            // fontDialog
+            // 
+            this.fontDialog.AllowVerticalFonts = false;
+            this.fontDialog.FontMustExist = true;
+            this.fontDialog.ScriptsOnly = true;
+            this.fontDialog.ShowEffects = false;
+            // 
+            // topBarMaximize
+            // 
+            this.topBarMaximize.Name = "topBarMaximize";
+            this.topBarMaximize.Size = new System.Drawing.Size(200, 22);
+            this.topBarMaximize.Text = "Maximize";
+            this.topBarMaximize.Click += new System.EventHandler(this.topBarMaximize_Click);
+            // 
+            // topBarCheckMissing
+            // 
+            this.topBarCheckMissing.Name = "topBarCheckMissing";
+            this.topBarCheckMissing.Size = new System.Drawing.Size(200, 22);
+            this.topBarCheckMissing.Text = "Check Invalid Dialogues";
+            this.topBarCheckMissing.Click += new System.EventHandler(this.topBarCheckMissing_Click);
+            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -737,13 +754,15 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ComboBox dropdownTexture;
         private System.Windows.Forms.Button buttonSequencePrevious;
         private System.Windows.Forms.Button buttonSequenceNext;
-        private System.Windows.Forms.ToolStripMenuItem topBarTextboxZoomIn;
-        private System.Windows.Forms.ToolStripMenuItem topBarTextboxZoomOut;
         private System.Windows.Forms.ColorDialog colorDialogTextboxMain;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogModDirectory;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.CheckBox checkBoxInterruptable;
         private System.Windows.Forms.CheckBox checkBoxRepeatable;
+        private System.Windows.Forms.FontDialog fontDialog;
+        private System.Windows.Forms.ToolStripMenuItem topBarTextboxSetFont;
+        private System.Windows.Forms.ToolStripMenuItem topBarMaximize;
+        private System.Windows.Forms.ToolStripMenuItem topBarCheckMissing;
     }
 }
