@@ -67,6 +67,8 @@ namespace BlightnautsDialogue
             this.topBarSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarExit = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarTextboxSetFont = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarMaximize = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarCheckMissing = new System.Windows.Forms.ToolStripMenuItem();
             this.labelCharacterStatus = new System.Windows.Forms.Label();
             this.checkBoxUseDefault = new System.Windows.Forms.CheckBox();
             this.dropdownCharacters = new System.Windows.Forms.ComboBox();
@@ -90,8 +92,7 @@ namespace BlightnautsDialogue
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.topBarMaximize = new System.Windows.Forms.ToolStripMenuItem();
-            this.topBarCheckMissing = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarOpenRecent = new System.Windows.Forms.ToolStripMenuItem();
             topBar = new System.Windows.Forms.MenuStrip();
             topBarFile = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -151,6 +152,7 @@ namespace BlightnautsDialogue
             this.topBarNew,
             toolStripSeparator1,
             this.topBarOpen,
+            this.topBarOpenRecent,
             toolStripSeparator2,
             this.topBarSave,
             this.topBarSaveAs,
@@ -165,62 +167,62 @@ namespace BlightnautsDialogue
             // topBarNew
             // 
             this.topBarNew.Name = "topBarNew";
-            this.topBarNew.Size = new System.Drawing.Size(112, 22);
+            this.topBarNew.Size = new System.Drawing.Size(180, 22);
             this.topBarNew.Text = "New";
             this.topBarNew.Click += new System.EventHandler(this.topBarNew_Click);
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(109, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // topBarOpen
             // 
             this.topBarOpen.Name = "topBarOpen";
-            this.topBarOpen.Size = new System.Drawing.Size(112, 22);
+            this.topBarOpen.Size = new System.Drawing.Size(180, 22);
             this.topBarOpen.Text = "Open";
             this.topBarOpen.Click += new System.EventHandler(this.topBarOpen_Click);
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(109, 6);
+            toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // topBarSave
             // 
             this.topBarSave.Name = "topBarSave";
-            this.topBarSave.Size = new System.Drawing.Size(112, 22);
+            this.topBarSave.Size = new System.Drawing.Size(180, 22);
             this.topBarSave.Text = "Save";
             this.topBarSave.Click += new System.EventHandler(this.topBarSave_Click);
             // 
             // topBarSaveAs
             // 
             this.topBarSaveAs.Name = "topBarSaveAs";
-            this.topBarSaveAs.Size = new System.Drawing.Size(112, 22);
+            this.topBarSaveAs.Size = new System.Drawing.Size(180, 22);
             this.topBarSaveAs.Text = "Save as";
             this.topBarSaveAs.Click += new System.EventHandler(this.topBarSaveAs_Click);
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(109, 6);
+            toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // topBarExport
             // 
             topBarExport.Name = "topBarExport";
-            topBarExport.Size = new System.Drawing.Size(112, 22);
+            topBarExport.Size = new System.Drawing.Size(180, 22);
             topBarExport.Text = "Export";
             topBarExport.Click += new System.EventHandler(this.topBarExport_Click);
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(109, 6);
+            toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // topBarExit
             // 
             this.topBarExit.Name = "topBarExit";
-            this.topBarExit.Size = new System.Drawing.Size(112, 22);
+            this.topBarExit.Size = new System.Drawing.Size(180, 22);
             this.topBarExit.Text = "Exit";
             this.topBarExit.Click += new System.EventHandler(this.topBarExit_Click);
             // 
@@ -264,6 +266,20 @@ namespace BlightnautsDialogue
             topBarTextboxForegroundColor.Size = new System.Drawing.Size(170, 22);
             topBarTextboxForegroundColor.Text = "Foreground Color";
             topBarTextboxForegroundColor.Click += new System.EventHandler(this.topBarTextboxForegroundColor_Click);
+            // 
+            // topBarMaximize
+            // 
+            this.topBarMaximize.Name = "topBarMaximize";
+            this.topBarMaximize.Size = new System.Drawing.Size(200, 22);
+            this.topBarMaximize.Text = "Maximize";
+            this.topBarMaximize.Click += new System.EventHandler(this.topBarMaximize_Click);
+            // 
+            // topBarCheckMissing
+            // 
+            this.topBarCheckMissing.Name = "topBarCheckMissing";
+            this.topBarCheckMissing.Size = new System.Drawing.Size(200, 22);
+            this.topBarCheckMissing.Text = "Check Invalid Dialogues";
+            this.topBarCheckMissing.Click += new System.EventHandler(this.topBarCheckMissing_Click);
             // 
             // topBarProject
             // 
@@ -687,19 +703,12 @@ namespace BlightnautsDialogue
             this.fontDialog.ScriptsOnly = true;
             this.fontDialog.ShowEffects = false;
             // 
-            // topBarMaximize
+            // topBarOpenRecent
             // 
-            this.topBarMaximize.Name = "topBarMaximize";
-            this.topBarMaximize.Size = new System.Drawing.Size(200, 22);
-            this.topBarMaximize.Text = "Maximize";
-            this.topBarMaximize.Click += new System.EventHandler(this.topBarMaximize_Click);
-            // 
-            // topBarCheckMissing
-            // 
-            this.topBarCheckMissing.Name = "topBarCheckMissing";
-            this.topBarCheckMissing.Size = new System.Drawing.Size(200, 22);
-            this.topBarCheckMissing.Text = "Check Invalid Dialogues";
-            this.topBarCheckMissing.Click += new System.EventHandler(this.topBarCheckMissing_Click);
+            this.topBarOpenRecent.Name = "topBarOpenRecent";
+            this.topBarOpenRecent.Size = new System.Drawing.Size(180, 22);
+            this.topBarOpenRecent.Text = "Open Last";
+            this.topBarOpenRecent.Click += new System.EventHandler(this.topBarOpenRecent_Click);
             // 
             // EditorWindow
             // 
@@ -764,5 +773,6 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ToolStripMenuItem topBarTextboxSetFont;
         private System.Windows.Forms.ToolStripMenuItem topBarMaximize;
         private System.Windows.Forms.ToolStripMenuItem topBarCheckMissing;
+        private System.Windows.Forms.ToolStripMenuItem topBarOpenRecent;
     }
 }

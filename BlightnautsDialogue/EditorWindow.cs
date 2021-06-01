@@ -11,6 +11,7 @@ namespace BlightnautsDialogue
         private bool refreshing;
         private int sequence;
         private bool unsaved;
+        private const string title = "Blightnauts Dialogue Editor";
 
         public EditorWindow()
         {
@@ -49,6 +50,7 @@ namespace BlightnautsDialogue
             textBoxMain.BackColor = back;
             initializing = false;
             RefreshWindow();
+            RefreshMostRecentAvailable();
         }
 
         private List<Area.Dialogue> GetDialogues(int index)
@@ -72,9 +74,39 @@ namespace BlightnautsDialogue
             }
         }
 
+        private void RefreshTitle()
+        {
+            string unsavedMark = string.Empty;
+            if (unsaved)
+                unsavedMark = "*";
+            if (ProjectManager.FilePath != string.Empty && ProjectManager.SaveFileExists)
+            {
+                Text = title + " - " + ProjectManager.FilePath + unsavedMark;
+            }
+            else
+            {
+                Text = title + unsavedMark;
+            }
+        }
+
+        private void RefreshMostRecentAvailable()
+        {
+            if (ProjectManager.LastSaveFileExists)
+            {
+                topBarOpenRecent.Enabled = true;
+            }
+            else
+            {
+                topBarOpenRecent.Enabled = false;
+            }
+        }
+
         private void RefreshWindow()
         {
             refreshing = true;
+
+            // Title
+            RefreshTitle();
 
             // Character
             checkBoxUseDefault.Checked = ProjectManager.Characters[dropdownCharacters.SelectedIndex].UseDefaultSkin;
@@ -358,12 +390,45 @@ namespace BlightnautsDialogue
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                switch (ProjectManager.LoadProject(openFileDialog.FileName))
+                if (ProjectManager.LoadProject(openFileDialog.FileName) == 1)
                 {
-                    case 1:
-                        MessageBox.Show("An error has occurred while opening the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                    MessageBox.Show("An error has occurred while opening the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            dropdownTriggers.Items.Clear();
+            dropdownDialogues.Items.Clear();
+            sequence = 0;
+            initializing = true;
+            dropdownCharacters.SelectedIndex = 0;
+            initializing = false;
+            foreach (Area area in ProjectManager.Areas)
+            {
+                dropdownTriggers.Items.Add(area.Name);
+            }
+            if (dropdownTriggers.Items.Count > 0)
+            {
+                refreshing = true;
+                dropdownTriggers.SelectedIndex = 0;
+                refreshing = false;
+            }
+            unsaved = false;
+            Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
+            RefreshWindow();
+            RefreshMostRecentAvailable();
+        }
+
+        private void topBarOpenRecent_Click(object sender, EventArgs e)
+        {
+            if (!ProjectManager.LastSaveFileExists)
+            {
+                MessageBox.Show("Most recent file not detected.", "Open Last", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RefreshMostRecentAvailable();
+                return;
+            }
+
+            if (ProjectManager.LoadProject(ProjectManager.LastFilePath) == 1)
+            {
+                MessageBox.Show("An error has occurred while opening the file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             dropdownTriggers.Items.Clear();
             dropdownDialogues.Items.Clear();
@@ -400,6 +465,9 @@ namespace BlightnautsDialogue
                         return;
                 }
                 unsaved = false;
+                Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
+                RefreshTitle();
+                RefreshMostRecentAvailable();
                 return;
             }
             DialogResult result = saveFileDialog.ShowDialog();
@@ -416,6 +484,9 @@ namespace BlightnautsDialogue
                         return;
                 }
                 unsaved = false;
+                Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
+                RefreshTitle();
+                RefreshMostRecentAvailable();
             }
         }
 
@@ -439,6 +510,9 @@ namespace BlightnautsDialogue
                         return;
                 }
                 unsaved = false;
+                Settings.Save(textBoxMain.Font, textBoxMain.ForeColor, textBoxMain.BackColor);
+                RefreshTitle();
+                RefreshMostRecentAvailable();
             }
         }
 
@@ -454,6 +528,7 @@ namespace BlightnautsDialogue
             {
                 ProjectManager.ModPath = folderBrowserDialogModDirectory.SelectedPath;
                 unsaved = true;
+                RefreshTitle();
             }
         }
 
@@ -606,6 +681,7 @@ namespace BlightnautsDialogue
                 return;
             ProjectManager.Areas[dropdownTriggers.SelectedIndex].Repeatable = checkBoxRepeatable.Checked;
             unsaved = true;
+            RefreshTitle();
         }
 
         private void checkBoxInterruptable_CheckedChanged(object sender, EventArgs e)
@@ -614,6 +690,7 @@ namespace BlightnautsDialogue
                 return;
             ProjectManager.Areas[dropdownTriggers.SelectedIndex].Interruptable = checkBoxInterruptable.Checked;
             unsaved = true;
+            RefreshTitle();
         }
 
         private void dropdownDialogues_SelectedIndexChanged(object sender, EventArgs e)
@@ -675,6 +752,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             unsaved = true;
+            RefreshTitle();
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Portrait = textBoxPortrait.Text;
         }
 
@@ -683,6 +761,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             unsaved = true;
+            RefreshTitle();
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Texture = dropdownTexture.Items[dropdownTexture.SelectedIndex].ToString();
         }
 
@@ -691,6 +770,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             unsaved = true;
+            RefreshTitle();
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Texture = dropdownTexture.Text;
         }
 
@@ -699,6 +779,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             unsaved = true;
+            RefreshTitle();
             try
             {
                 GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Duration = float.Parse(ValidateNumericInput(textBoxDuration.Text), System.Globalization.CultureInfo.InvariantCulture);
@@ -714,6 +795,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             unsaved = true;
+            RefreshTitle();
             try
             {
                 GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Delay = float.Parse(ValidateNumericInput(textBoxDelay.Text), System.Globalization.CultureInfo.InvariantCulture);
@@ -729,6 +811,7 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             unsaved = true;
+            RefreshTitle();
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].Content = System.Text.RegularExpressions.Regex.Replace(textBoxMain.Text, @"\t|\n|\r", string.Empty);
         }
 
@@ -737,13 +820,14 @@ namespace BlightnautsDialogue
             if (refreshing)
                 return;
             unsaved = true;
+            RefreshTitle();
             GetDialogues(dropdownDialogues.SelectedIndex - 1)[sequence].GenerateAnimationTemplate = checkBoxGenerateAnimationTemplate.Checked;
         }
 
         private void topBarAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Blightnauts Dialogue Editor version 2.2.1\n" +
+                "Blightnauts Dialogue Editor version 2.3.0\n" +
                 "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
                 "No license, do whatever you want with this.\n\n" +
                 "Windows Forms and .NET framework are property of Microsoft Corporation\n\n" +
@@ -789,6 +873,7 @@ namespace BlightnautsDialogue
             if (result == DialogResult.OK)
             {
                 unsaved = true;
+                RefreshTitle();
             }
         }
 
@@ -798,6 +883,7 @@ namespace BlightnautsDialogue
             DialogResult result = dialog.ShowDialog();
             if (result == DialogResult.OK)
             {
+                unsaved = true;
                 RefreshWindow();
             }
         }

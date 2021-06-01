@@ -62,6 +62,7 @@ namespace BlightnautsDialogue
             // 
             // buttonOk
             // 
+            buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             buttonOk.Location = new System.Drawing.Point(311, 99);
             buttonOk.Name = "buttonOk";
             buttonOk.Size = new System.Drawing.Size(75, 23);

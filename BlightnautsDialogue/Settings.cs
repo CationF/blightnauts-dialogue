@@ -11,6 +11,7 @@ namespace BlightnautsDialogue
         private const string font = "FONT=";
         private const string foregroundColor = "FOREGROUNDCOLOR=";
         private const string backgroundColor = "BACKGROUNDCOLOR=";
+        private const string lastSaveFile = "LASTFILE=";
 
         public static int Save(Font font, Color fore, Color back)
         {
@@ -43,6 +44,12 @@ namespace BlightnautsDialogue
                 back.R.ToString(CultureInfo.InvariantCulture),
                 back.G.ToString(CultureInfo.InvariantCulture),
                 back.B.ToString(CultureInfo.InvariantCulture)
+            );
+            content += string.Format
+            (
+                "\n{0}{1}",
+                lastSaveFile,
+                ProjectManager.LastFilePath
             );
 
             try
@@ -101,6 +108,10 @@ namespace BlightnautsDialogue
                         int g = int.Parse(colors[1], CultureInfo.InvariantCulture);
                         int b = int.Parse(colors[2], CultureInfo.InvariantCulture);
                         back = Color.FromArgb(r, g, b);
+                    }
+                    else if (content[i].StartsWith(lastSaveFile))
+                    {
+                        ProjectManager.TestLastSaveFile(content[i].Substring(lastSaveFile.Length));
                     }
                 }
             }

@@ -239,6 +239,7 @@ namespace BlightnautsDialogue
         }
 
         public static string FilePath { get; private set; }
+        public static string LastFilePath { get; private set; }
         public static string ModPath { get; set; }
         public static string[] Maps { get; private set; }
         public static List<Area> Areas { get; private set; }
@@ -270,10 +271,19 @@ namespace BlightnautsDialogue
         }
 
         public static bool SaveFileExists { get => File.Exists(FilePath); }
+        public static bool LastSaveFileExists { get => File.Exists(LastFilePath); }
 
         public static void RegisterMaps(string maps)
         {
             Maps = maps.Split(';');
+        }
+
+        public static void TestLastSaveFile(string path)
+        {
+            if (File.Exists(path) && Path.GetExtension(path) == ".bnp")
+            {
+                LastFilePath = path;
+            }
         }
 
         public static void NewProject()
@@ -331,6 +341,7 @@ namespace BlightnautsDialogue
             {
                 File.WriteAllText(path, content);
                 FilePath = path;
+                LastFilePath = path;
             }
             catch
             {
@@ -471,6 +482,7 @@ namespace BlightnautsDialogue
             }
 
             FilePath = path;
+            LastFilePath = path;
             return 0;
         }
 
