@@ -63,6 +63,7 @@ namespace BlightnautsDialogue
             System.Windows.Forms.ToolTip toolTipLong;
             this.topBarNew = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.topBarOpenRecent = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSave = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.topBarExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +76,7 @@ namespace BlightnautsDialogue
             this.checkBoxInterruptable = new System.Windows.Forms.CheckBox();
             this.checkBoxRepeatable = new System.Windows.Forms.CheckBox();
             this.dropdownTriggers = new System.Windows.Forms.ComboBox();
+            this.buttonCopyFromSolo = new System.Windows.Forms.Button();
             this.buttonSequencePrevious = new System.Windows.Forms.Button();
             this.buttonSequenceNext = new System.Windows.Forms.Button();
             this.dropdownTexture = new System.Windows.Forms.ComboBox();
@@ -92,7 +94,6 @@ namespace BlightnautsDialogue
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.topBarOpenRecent = new System.Windows.Forms.ToolStripMenuItem();
             topBar = new System.Windows.Forms.MenuStrip();
             topBarFile = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -167,62 +168,69 @@ namespace BlightnautsDialogue
             // topBarNew
             // 
             this.topBarNew.Name = "topBarNew";
-            this.topBarNew.Size = new System.Drawing.Size(180, 22);
+            this.topBarNew.Size = new System.Drawing.Size(127, 22);
             this.topBarNew.Text = "New";
             this.topBarNew.Click += new System.EventHandler(this.topBarNew_Click);
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(124, 6);
             // 
             // topBarOpen
             // 
             this.topBarOpen.Name = "topBarOpen";
-            this.topBarOpen.Size = new System.Drawing.Size(180, 22);
+            this.topBarOpen.Size = new System.Drawing.Size(127, 22);
             this.topBarOpen.Text = "Open";
             this.topBarOpen.Click += new System.EventHandler(this.topBarOpen_Click);
+            // 
+            // topBarOpenRecent
+            // 
+            this.topBarOpenRecent.Name = "topBarOpenRecent";
+            this.topBarOpenRecent.Size = new System.Drawing.Size(127, 22);
+            this.topBarOpenRecent.Text = "Open Last";
+            this.topBarOpenRecent.Click += new System.EventHandler(this.topBarOpenRecent_Click);
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator2.Size = new System.Drawing.Size(124, 6);
             // 
             // topBarSave
             // 
             this.topBarSave.Name = "topBarSave";
-            this.topBarSave.Size = new System.Drawing.Size(180, 22);
+            this.topBarSave.Size = new System.Drawing.Size(127, 22);
             this.topBarSave.Text = "Save";
             this.topBarSave.Click += new System.EventHandler(this.topBarSave_Click);
             // 
             // topBarSaveAs
             // 
             this.topBarSaveAs.Name = "topBarSaveAs";
-            this.topBarSaveAs.Size = new System.Drawing.Size(180, 22);
+            this.topBarSaveAs.Size = new System.Drawing.Size(127, 22);
             this.topBarSaveAs.Text = "Save as";
             this.topBarSaveAs.Click += new System.EventHandler(this.topBarSaveAs_Click);
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator3.Size = new System.Drawing.Size(124, 6);
             // 
             // topBarExport
             // 
             topBarExport.Name = "topBarExport";
-            topBarExport.Size = new System.Drawing.Size(180, 22);
+            topBarExport.Size = new System.Drawing.Size(127, 22);
             topBarExport.Text = "Export";
             topBarExport.Click += new System.EventHandler(this.topBarExport_Click);
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator4.Size = new System.Drawing.Size(124, 6);
             // 
             // topBarExit
             // 
             this.topBarExit.Name = "topBarExit";
-            this.topBarExit.Size = new System.Drawing.Size(180, 22);
+            this.topBarExit.Size = new System.Drawing.Size(127, 22);
             this.topBarExit.Text = "Exit";
             this.topBarExit.Click += new System.EventHandler(this.topBarExit_Click);
             // 
@@ -481,6 +489,7 @@ namespace BlightnautsDialogue
             // 
             // groupBoxDialogueOptions
             // 
+            groupBoxDialogueOptions.Controls.Add(this.buttonCopyFromSolo);
             groupBoxDialogueOptions.Controls.Add(this.buttonSequencePrevious);
             groupBoxDialogueOptions.Controls.Add(this.buttonSequenceNext);
             groupBoxDialogueOptions.Controls.Add(this.dropdownTexture);
@@ -503,6 +512,17 @@ namespace BlightnautsDialogue
             groupBoxDialogueOptions.TabIndex = 3;
             groupBoxDialogueOptions.TabStop = false;
             groupBoxDialogueOptions.Text = "Options";
+            // 
+            // buttonCopyFromSolo
+            // 
+            this.buttonCopyFromSolo.Location = new System.Drawing.Point(481, 15);
+            this.buttonCopyFromSolo.Name = "buttonCopyFromSolo";
+            this.buttonCopyFromSolo.Size = new System.Drawing.Size(96, 23);
+            this.buttonCopyFromSolo.TabIndex = 14;
+            this.buttonCopyFromSolo.Text = "Copy from solo";
+            toolTipSimple.SetToolTip(this.buttonCopyFromSolo, "Copy the dialogue from solo to this dialogue sequence.");
+            this.buttonCopyFromSolo.UseVisualStyleBackColor = true;
+            this.buttonCopyFromSolo.Click += new System.EventHandler(this.buttonCopyFromSolo_Click);
             // 
             // buttonSequencePrevious
             // 
@@ -542,7 +562,7 @@ namespace BlightnautsDialogue
             this.dropdownDialogues.FormattingEnabled = true;
             this.dropdownDialogues.Location = new System.Drawing.Point(360, 16);
             this.dropdownDialogues.Name = "dropdownDialogues";
-            this.dropdownDialogues.Size = new System.Drawing.Size(217, 21);
+            this.dropdownDialogues.Size = new System.Drawing.Size(115, 21);
             this.dropdownDialogues.TabIndex = 2;
             toolTipLong.SetToolTip(this.dropdownDialogues, resources.GetString("dropdownDialogues.ToolTip"));
             this.dropdownDialogues.SelectedIndexChanged += new System.EventHandler(this.dropdownDialogues_SelectedIndexChanged);
@@ -703,13 +723,6 @@ namespace BlightnautsDialogue
             this.fontDialog.ScriptsOnly = true;
             this.fontDialog.ShowEffects = false;
             // 
-            // topBarOpenRecent
-            // 
-            this.topBarOpenRecent.Name = "topBarOpenRecent";
-            this.topBarOpenRecent.Size = new System.Drawing.Size(180, 22);
-            this.topBarOpenRecent.Text = "Open Last";
-            this.topBarOpenRecent.Click += new System.EventHandler(this.topBarOpenRecent_Click);
-            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -774,5 +787,6 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ToolStripMenuItem topBarMaximize;
         private System.Windows.Forms.ToolStripMenuItem topBarCheckMissing;
         private System.Windows.Forms.ToolStripMenuItem topBarOpenRecent;
+        private System.Windows.Forms.Button buttonCopyFromSolo;
     }
 }

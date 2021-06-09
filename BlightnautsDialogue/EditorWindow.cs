@@ -168,6 +168,8 @@ namespace BlightnautsDialogue
                 buttonSequenceNext.Enabled = false;
                 buttonSequenceMinus.Enabled = false;
 
+                buttonCopyFromSolo.Enabled = false;
+
                 textBoxDuration.Text = "0";
                 textBoxDelay.Text = "0";
                 refreshing = false;
@@ -222,6 +224,11 @@ namespace BlightnautsDialogue
             buttonSequencePrevious.Enabled = sequence > 0 ? true : false;
             buttonSequenceNext.Enabled = sequence < dialogues.Count - 1 ? true : false;
             buttonSequenceMinus.Enabled = dialogues.Count > 0 ? true : false;
+
+            if (dropdownDialogues.SelectedIndex == 0)
+                buttonCopyFromSolo.Enabled = false;
+            else
+                buttonCopyFromSolo.Enabled = ProjectManager.Areas[dropdownTriggers.SelectedIndex].CharacterDialogue[dropdownCharacters.SelectedIndex].SoloDialogue.Count > 0 ? true : false;
 
             textBoxDuration.Text = ValidateNumericInput(textBoxDuration.Text);
             textBoxDelay.Text = ValidateNumericInput(textBoxDelay.Text);
@@ -827,6 +834,33 @@ namespace BlightnautsDialogue
             RefreshWindow();
         }
 
+        private void buttonCopyFromSolo_Click(object sender, EventArgs e)
+        {
+            Area.Character character = ProjectManager.Areas[dropdownTriggers.SelectedIndex].CharacterDialogue[dropdownCharacters.SelectedIndex];
+            if (character.SoloDialogue.Count == 0 || dropdownDialogues.SelectedIndex == 0)
+                return;
+
+            character.TeamDialogues[dropdownDialogues.SelectedIndex - 1].Dialogues.Clear();
+
+            foreach (var dialogue in character.SoloDialogue)
+            {
+                character.TeamDialogues[dropdownDialogues.SelectedIndex - 1].Dialogues.Add
+                (
+                    new Area.Dialogue
+                    (
+                        dialogue.Content,
+                        dialogue.Portrait,
+                        dialogue.Texture,
+                        dialogue.Duration,
+                        dialogue.Delay,
+                        dialogue.GenerateAnimationTemplate
+                    )
+                );
+            }
+            unsaved = true;
+            RefreshWindow();
+        }
+
         private void buttonSequenceNext_Click(object sender, EventArgs e)
         {
             int type = dropdownDialogues.SelectedIndex - 1;
@@ -953,7 +987,7 @@ namespace BlightnautsDialogue
         private void topBarAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Blightnauts Dialogue Editor version 2.3.1\n" +
+                "Blightnauts Dialogue Editor version 2.4.0\n" +
                 "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
                 "No license, do whatever you want with this.\n\n" +
                 "Windows Forms and .NET framework are property of Microsoft Corporation\n\n" +
