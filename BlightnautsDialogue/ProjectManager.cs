@@ -139,7 +139,7 @@ namespace BlightnautsDialogue
             new Actor("Gantlet", "Dark Masquerade Qi'Tara", 2),
 
             new Actor("Gladiator", "Snork Gunk"),
-            new Actor("Galdiator", "Bozo Gunk", 2),
+            new Actor("Gladiator", "Bozo Gunk", 2),
 
             new Actor("Heavy", "Derpl Zork"),
             new Actor("Heavy", "Hotrod Derpl", 2),
