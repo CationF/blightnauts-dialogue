@@ -12,6 +12,7 @@ namespace BlightnautsDialogue
         private int sequence;
         private bool unsaved;
         private const string title = "Blightnauts Dialogue Editor";
+        private List<Area.Dialogue> clipboard = new List<Area.Dialogue>();
 
         public EditorWindow()
         {
@@ -127,6 +128,7 @@ namespace BlightnautsDialogue
                 checkBoxInterruptable.Checked = false;
                 checkBoxRepeatable.Enabled = false;
                 checkBoxInterruptable.Enabled = false;
+                buttonPaste.Enabled = false;
             }
             else
             {
@@ -137,6 +139,11 @@ namespace BlightnautsDialogue
                 checkBoxInterruptable.Enabled = true;
                 checkBoxRepeatable.Checked = ProjectManager.Areas[dropdownTriggers.SelectedIndex].Repeatable;
                 checkBoxInterruptable.Checked = ProjectManager.Areas[dropdownTriggers.SelectedIndex].Interruptable;
+
+                if (clipboard.Count == 0)
+                    buttonPaste.Enabled = false;
+                else
+                    buttonPaste.Enabled = true;
             }
 
             // Dialogue
@@ -168,7 +175,7 @@ namespace BlightnautsDialogue
                 buttonSequenceNext.Enabled = false;
                 buttonSequenceMinus.Enabled = false;
 
-                buttonCopyFromSolo.Enabled = false;
+                buttonCopy.Enabled = false;
 
                 textBoxDuration.Text = "0";
                 textBoxDelay.Text = "0";
@@ -197,6 +204,8 @@ namespace BlightnautsDialogue
                 textBoxMain.Enabled = true;
 
                 labelSequence.Text = "Sequence: " + (sequence + 1) + " of " + dialogues.Count;
+
+                buttonCopy.Enabled = true;
             }
             else
             {
@@ -219,16 +228,13 @@ namespace BlightnautsDialogue
                 textBoxMain.Enabled = false;
 
                 labelSequence.Text = "No dialogue";
+
+                buttonCopy.Enabled = false;
             }
 
             buttonSequencePrevious.Enabled = sequence > 0 ? true : false;
             buttonSequenceNext.Enabled = sequence < dialogues.Count - 1 ? true : false;
             buttonSequenceMinus.Enabled = dialogues.Count > 0 ? true : false;
-
-            if (dropdownDialogues.SelectedIndex == 0)
-                buttonCopyFromSolo.Enabled = false;
-            else
-                buttonCopyFromSolo.Enabled = ProjectManager.Areas[dropdownTriggers.SelectedIndex].CharacterDialogue[dropdownCharacters.SelectedIndex].SoloDialogue.Count > 0 ? true : false;
 
             textBoxDuration.Text = ValidateNumericInput(textBoxDuration.Text);
             textBoxDelay.Text = ValidateNumericInput(textBoxDelay.Text);
@@ -861,6 +867,63 @@ namespace BlightnautsDialogue
             RefreshWindow();
         }
 
+        private void buttonCopy_Click(object sender, EventArgs e)
+        {
+            Area.Character character = ProjectManager.Areas[dropdownTriggers.SelectedIndex].CharacterDialogue[dropdownCharacters.SelectedIndex];
+
+            void CopyToClipboard(List<Area.Dialogue> sequence)
+            {
+                clipboard.Clear();
+                foreach (var dialogue in sequence)
+                {
+                    clipboard.Add(new Area.Dialogue(dialogue.Content, dialogue.Portrait, dialogue.Texture, dialogue.Duration, dialogue.Delay, dialogue.GenerateAnimationTemplate));
+                }
+            }
+
+            if (dropdownDialogues.SelectedIndex == 0)
+            {
+                if (character.SoloDialogue.Count == 0)
+                    return;
+                CopyToClipboard(character.SoloDialogue);
+            }
+            else
+            {
+                if (character.TeamDialogues[dropdownDialogues.SelectedIndex - 1].Dialogues.Count == 0)
+                    return;
+                CopyToClipboard(character.TeamDialogues[dropdownDialogues.SelectedIndex - 1].Dialogues);
+            }
+            RefreshWindow();
+        }
+
+        private void buttonPaste_Click(object sender, EventArgs e)
+        {
+            if (clipboard.Count == 0)
+                return;
+
+            Area.Character character = ProjectManager.Areas[dropdownTriggers.SelectedIndex].CharacterDialogue[dropdownCharacters.SelectedIndex];
+
+            void PasteFromClipboard(List<Area.Dialogue> sequence)
+            {
+                sequence.Clear();
+                foreach (var dialogue in clipboard)
+                {
+                    sequence.Add(new Area.Dialogue(dialogue.Content, dialogue.Portrait, dialogue.Texture, dialogue.Duration, dialogue.Delay, dialogue.GenerateAnimationTemplate));
+                }
+            }
+
+            if (dropdownDialogues.SelectedIndex == 0)
+            {
+                PasteFromClipboard(character.SoloDialogue);
+            }
+            else
+            {
+                PasteFromClipboard(character.TeamDialogues[dropdownDialogues.SelectedIndex - 1].Dialogues);
+            }
+            unsaved = true;
+            sequence = 0;
+            RefreshWindow();
+        }
+
         private void buttonSequenceNext_Click(object sender, EventArgs e)
         {
             int type = dropdownDialogues.SelectedIndex - 1;
@@ -987,7 +1050,7 @@ namespace BlightnautsDialogue
         private void topBarAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Blightnauts Dialogue Editor version 2.4.0\n" +
+                "Blightnauts Dialogue Editor version 2.5.0\n" +
                 "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
                 "No license, do whatever you want with this.\n\n" +
                 "Windows Forms and .NET framework are property of Microsoft Corporation\n\n" +

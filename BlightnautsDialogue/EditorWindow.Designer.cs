@@ -76,7 +76,6 @@ namespace BlightnautsDialogue
             this.checkBoxInterruptable = new System.Windows.Forms.CheckBox();
             this.checkBoxRepeatable = new System.Windows.Forms.CheckBox();
             this.dropdownTriggers = new System.Windows.Forms.ComboBox();
-            this.buttonCopyFromSolo = new System.Windows.Forms.Button();
             this.buttonSequencePrevious = new System.Windows.Forms.Button();
             this.buttonSequenceNext = new System.Windows.Forms.Button();
             this.dropdownTexture = new System.Windows.Forms.ComboBox();
@@ -94,6 +93,8 @@ namespace BlightnautsDialogue
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.buttonCopy = new System.Windows.Forms.Button();
+            this.buttonPaste = new System.Windows.Forms.Button();
             topBar = new System.Windows.Forms.MenuStrip();
             topBarFile = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -489,7 +490,8 @@ namespace BlightnautsDialogue
             // 
             // groupBoxDialogueOptions
             // 
-            groupBoxDialogueOptions.Controls.Add(this.buttonCopyFromSolo);
+            groupBoxDialogueOptions.Controls.Add(this.buttonPaste);
+            groupBoxDialogueOptions.Controls.Add(this.buttonCopy);
             groupBoxDialogueOptions.Controls.Add(this.buttonSequencePrevious);
             groupBoxDialogueOptions.Controls.Add(this.buttonSequenceNext);
             groupBoxDialogueOptions.Controls.Add(this.dropdownTexture);
@@ -512,17 +514,6 @@ namespace BlightnautsDialogue
             groupBoxDialogueOptions.TabIndex = 3;
             groupBoxDialogueOptions.TabStop = false;
             groupBoxDialogueOptions.Text = "Options";
-            // 
-            // buttonCopyFromSolo
-            // 
-            this.buttonCopyFromSolo.Location = new System.Drawing.Point(481, 15);
-            this.buttonCopyFromSolo.Name = "buttonCopyFromSolo";
-            this.buttonCopyFromSolo.Size = new System.Drawing.Size(96, 23);
-            this.buttonCopyFromSolo.TabIndex = 14;
-            this.buttonCopyFromSolo.Text = "Copy from solo";
-            toolTipSimple.SetToolTip(this.buttonCopyFromSolo, "Copy the dialogue from solo to this dialogue sequence.");
-            this.buttonCopyFromSolo.UseVisualStyleBackColor = true;
-            this.buttonCopyFromSolo.Click += new System.EventHandler(this.buttonCopyFromSolo_Click);
             // 
             // buttonSequencePrevious
             // 
@@ -723,6 +714,26 @@ namespace BlightnautsDialogue
             this.fontDialog.ScriptsOnly = true;
             this.fontDialog.ShowEffects = false;
             // 
+            // buttonCopy
+            // 
+            this.buttonCopy.Location = new System.Drawing.Point(481, 16);
+            this.buttonCopy.Name = "buttonCopy";
+            this.buttonCopy.Size = new System.Drawing.Size(48, 21);
+            this.buttonCopy.TabIndex = 14;
+            this.buttonCopy.Text = "Copy";
+            this.buttonCopy.UseVisualStyleBackColor = true;
+            this.buttonCopy.Click += new System.EventHandler(this.buttonCopy_Click);
+            // 
+            // buttonPaste
+            // 
+            this.buttonPaste.Location = new System.Drawing.Point(529, 16);
+            this.buttonPaste.Name = "buttonPaste";
+            this.buttonPaste.Size = new System.Drawing.Size(48, 21);
+            this.buttonPaste.TabIndex = 15;
+            this.buttonPaste.Text = "Paste";
+            this.buttonPaste.UseVisualStyleBackColor = true;
+            this.buttonPaste.Click += new System.EventHandler(this.buttonPaste_Click);
+            // 
             // EditorWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -787,6 +798,7 @@ namespace BlightnautsDialogue
         private System.Windows.Forms.ToolStripMenuItem topBarMaximize;
         private System.Windows.Forms.ToolStripMenuItem topBarCheckMissing;
         private System.Windows.Forms.ToolStripMenuItem topBarOpenRecent;
-        private System.Windows.Forms.Button buttonCopyFromSolo;
+        private System.Windows.Forms.Button buttonPaste;
+        private System.Windows.Forms.Button buttonCopy;
     }
 }
