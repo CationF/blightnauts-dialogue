@@ -143,7 +143,14 @@ namespace BlightnautsDialogue
                 if (clipboard.Count == 0)
                     buttonPaste.Enabled = false;
                 else
-                    buttonPaste.Enabled = true;
+                {
+                    if (ProjectManager.Characters[dropdownCharacters.SelectedIndex].SkinIndex == 1)
+                        buttonPaste.Enabled = true;
+                    else if (!ProjectManager.Characters[dropdownCharacters.SelectedIndex].UseDefaultSkin)
+                        buttonPaste.Enabled = true;
+                    else
+                        buttonPaste.Enabled = false;
+                }
             }
 
             // Dialogue
@@ -1050,7 +1057,7 @@ namespace BlightnautsDialogue
         private void topBarAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
-                "Blightnauts Dialogue Editor version 2.5.0\n" +
+                "Blightnauts Dialogue Editor version 2.5.1\n" +
                 "Tool developed by Cláudio Fernandes A.K.A. CationF\n" +
                 "No license, do whatever you want with this.\n\n" +
                 "Windows Forms and .NET framework are property of Microsoft Corporation\n\n" +
